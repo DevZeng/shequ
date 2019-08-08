@@ -3,6 +3,8 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:dio/dio.dart';
 import 'api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+
 
 class MoneyPage extends StatefulWidget {
   @override
@@ -85,14 +87,51 @@ class Page extends State<MoneyPage> {
                 height: 40.0,
                 child: new RaisedButton(
                   onPressed: () {
-//                print(detailController.text);
-//                fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B');
                     showDialog(
                         context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return new addDialog();
-                        });
+                        builder: (ctx) {
+                          TextEditingController _controller = new TextEditingController();
+                          return SimpleDialog(
+                            title: Text("请输入金额"),
+                            titlePadding: EdgeInsets.all(10),
+//                            backgroundColor: Colors.amber,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(6))),
+                            children: <Widget>[
+                              ListTile(
+                                title: TextField(
+                                  controller: _controller,
+                                  keyboardType: TextInputType.phone,
+                                  inputFormatters: [
+//                              WhitelistingTextInputFormatter(RegExp(r'^\d+\.\d{2}\$'))
+//                                  TextInputFormatter();
+                                    _UsNumberTextInputFormatter(),//只允许输入小数
+                                  ],
+                                ),
+                              ),
+                              ListTile(
+                                leading: FlatButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('取消')),
+                                trailing: FlatButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(_controller.text);
+                                    },
+                                    child: Text('确认')),
+
+                              ),
+
+                            ],
+                          );
+                        }).then((val){
+                          print(val);
+                    });
+//                print(detailController.text);
+//                fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B');
+//                    showGeneralDialog(context: null, pageBuilder: null)
                   },
                   color: Colors.orange,
                   child: new Text("保存地址",
@@ -128,99 +167,97 @@ class addDialog extends Dialog {
   Widget build(BuildContext context) {
     return new Padding(
       padding: EdgeInsets.all(12),
-      child: new Material(
-        type: MaterialType.transparency,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Container(
-                decoration: ShapeDecoration(
-                    color: Color(0xFFFFFFFF),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                      Radius.circular(8.0),
-                    ))),
-                margin: const EdgeInsets.all(12.0),
-                child: new Column(children: <Widget>[
-                  new Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 28.0),
-                      child: Center(
-                          child: new Text('请输入金额',
-                              style: new TextStyle(
-                                fontSize: 20.0,
-                              )))),
-                  new Padding(
-                      padding: EdgeInsets.all(10),
-                      child: TextField(
-                        controller: textEditingController,
-                      )),
-                  new Padding(
+      child:  Expanded(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Container(
+              decoration: ShapeDecoration(
+                  color: Color.fromARGB(1, 255, 255, 255),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.0),
+                      ))),
+              margin: const EdgeInsets.all(12.0),
+              child: new Column(children: <Widget>[
+                new Padding(
+                    padding:
+                    const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 28.0),
+                    child: Center(
+                        child: new Text('请输入金额',
+                            style: new TextStyle(
+                              fontSize: 20.0,
+                            )))),
+                new Padding(
                     padding: EdgeInsets.all(10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 68) / 2,
-                          child: FlatButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('取消')),
-                        ),
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 68) / 2,
-                          child: FlatButton(
-                              onPressed: () {
-                                //"${int.parse(textEditingController.text)}"
-                                getUser().then((val) {
-                                  var formData =
-                                      '{"token": "$val", "moFeeValue":1 }';
-                                  Dio()
-                                      .post(api.postHUserMemberOrder,
-                                          data: formData)
-                                      .then((response) {
-                                    var data = response.data;
-                                    if (data['code'] == 200) {
-                                      var moId = data['data']['moId'];
-                                      var formData =
-                                          '{"token": "$val", "orderid": "${moId}","orderType": 4}';
-                                      Dio()
-                                          .post(api.wxpay, data: formData)
-                                          .then((response) {
-                                        data = response.data;
-                                        if (data['code'] == 200) {
-                                          print(data['data']);
-                                          fluwx
-                                              .pay(
-                                                  appId: data['data']['appId']
-                                                      .toString(),
-                                                  partnerId: data['data']
-                                                          ['partnerId']
-                                                      .toString(),
-                                                  prepayId: data['data']
-                                                          ['prepayId']
-                                                      .toString(),
-                                                  packageValue: data['data']
-                                                          ['packAge']
-                                                      .toString(),
-                                                  nonceStr: data['data']
-                                                          ['nonceStr']
-                                                      .toString(),
-                                                  timeStamp: int.parse(
-                                                      data['data']
-                                                          ['timeStamp']),
-                                                  sign: data['data']['sign']
-                                                      .toString())
-                                              .then((val) {
-                                            print(val);
-                                          }).catchError((error) {
-                                            print(error);
-                                          });
-                                        }
-                                      });
-                                    }
-                                  });
+                    child: TextField(
+                      controller: textEditingController,
+                    )),
+                new Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: (MediaQuery.of(context).size.width - 68) / 2,
+                        child: FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('取消')),
+                      ),
+                      Container(
+                        width: (MediaQuery.of(context).size.width - 68) / 2,
+                        child: FlatButton(
+                            onPressed: () {
+                              //"${int.parse(textEditingController.text)}"
+                              getUser().then((val) {
+                                var formData =
+                                    '{"token": "$val", "moFeeValue":1 }';
+                                Dio()
+                                    .post(api.postHUserMemberOrder,
+                                    data: formData)
+                                    .then((response) {
+                                  var data = response.data;
+                                  if (data['code'] == 200) {
+                                    var moId = data['data']['moId'];
+                                    var formData =
+                                        '{"token": "$val", "orderid": "${moId}","orderType": 4}';
+                                    Dio()
+                                        .post(api.wxpay, data: formData)
+                                        .then((response) {
+                                      data = response.data;
+                                      if (data['code'] == 200) {
+                                        print(data['data']);
+                                        fluwx
+                                            .pay(
+                                            appId: data['data']['appId']
+                                                .toString(),
+                                            partnerId: data['data']
+                                            ['partnerId']
+                                                .toString(),
+                                            prepayId: data['data']
+                                            ['prepayId']
+                                                .toString(),
+                                            packageValue: data['data']
+                                            ['packAge']
+                                                .toString(),
+                                            nonceStr: data['data']
+                                            ['nonceStr']
+                                                .toString(),
+                                            timeStamp: int.parse(
+                                                data['data']
+                                                ['timeStamp']),
+                                            sign: data['data']['sign']
+                                                .toString())
+                                            .then((val) {
+                                          print(val);
+                                        }).catchError((error) {
+                                          print(error);
+                                        });
+                                      }
+                                    });
+                                  }
                                 });
+                              });
 //                            print(textEditingController.text);
 
 //                            fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B');
@@ -228,12 +265,12 @@ class addDialog extends Dialog {
 //                          print();
 //                          print(textEditingController.text);
 //                          fluwx.openWeChatApp();
-                              },
-                              child: Text('确认')),
-                        ),
-                      ],
-                    ),
-                  )
+                            },
+                            child: Text('确认')),
+                      ),
+                    ],
+                  ),
+                )
 //                  new Row(
 //                      mainAxisAlignment: MainAxisAlignment.center,
 //                      mainAxisSize: MainAxisSize.max,
@@ -242,10 +279,10 @@ class addDialog extends Dialog {
 //                        TextFormField()
 ////                        TextField()
 //                      ])
-                ])),
-          ],
-        ),
-      ),
+              ])),
+        ],
+      ))
+      ,
     );
   }
 
@@ -256,3 +293,31 @@ class addDialog extends Dialog {
     return user;
   }
 }
+class _UsNumberTextInputFormatter extends TextInputFormatter {
+  static const defaultDouble = 0.001;
+  static double strToFloat(String str, [double defaultValue = defaultDouble]) {
+    try {
+      return double.parse(str);
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    String value = newValue.text;
+    int selectionIndex = newValue.selection.end;
+    if (value == ".") {
+      value = "0.";
+      selectionIndex++;
+    } else if (value != "" && value != defaultDouble.toString() && strToFloat(value, defaultDouble) == defaultDouble) {
+      value = oldValue.text;
+      selectionIndex = oldValue.selection.end;
+    }
+    return new TextEditingValue(
+      text: value,
+      selection: new TextSelection.collapsed(offset: selectionIndex),
+    );
+  }
+}
+
