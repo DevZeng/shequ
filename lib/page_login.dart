@@ -119,7 +119,7 @@ class LoginPageState extends State<LoginPage>{
           var data = response.data;
           print(data);
           if (data['code'] == 200) {
-            saveUser(data['data'].toString());
+            saveUser(data['data']['token']);
             Fluttertoast.showToast(
                 msg: "登录成功！",
                 toastLength: Toast.LENGTH_SHORT,

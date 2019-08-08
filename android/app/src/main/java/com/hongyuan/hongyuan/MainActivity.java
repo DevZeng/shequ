@@ -1,4 +1,4 @@
-package com.example.shequ;
+package com.hongyuan.hongyuan;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

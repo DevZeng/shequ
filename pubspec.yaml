@@ -35,6 +35,10 @@ dependencies:
   #  amap_location: ^0.2.0
   #  amap_base: ^0.3.5
   multi_image_picker: ^4.3.6
+  city_pickers: ^0.1.16
+  image_picker: ^0.6.1
+  fluwx: ^1.0.4
+
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +66,7 @@ flutter:
     - images/selected.png
     - images/cart.png
     - images/cart2.png
+    - images/money.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

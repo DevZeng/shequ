@@ -5,6 +5,10 @@ import 'api.dart';
 import "package:english_words/english_words.dart";
 import 'timetransfer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
+import 'dart:io' as H;
+import 'dart:convert';
+//import 'package:sy_flutter_wechat/sy_flutter_wechat.dart';
 
 
 
@@ -17,6 +21,8 @@ class NewsPage extends StatefulWidget {
 }
 
 class Page extends State<NewsPage> {
+
+
   var _imageUrls = [];
 
   var _icons = [];
@@ -123,7 +129,8 @@ class Page extends State<NewsPage> {
             children: <Widget>[
               FlatButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "outseller");
+//                  print(_result);
+//                  Navigator.pushNamed(context, "outseller");
                 },
                 disabledColor: Colors.white,
                 child: Image(
@@ -278,10 +285,48 @@ class Page extends State<NewsPage> {
         ],
 
       ),),
-      floatingActionButton: new FloatingActionButton(onPressed: () {
-        getUser().then((val){
+      floatingActionButton: new FloatingActionButton(onPressed: () async {
+//        getUser().then((val){
+//          print(val);
+//        });
+//        fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B')  .then((data) {
+//          print("---》$data");
+//        });
+
+//        String _url = "https://wxpay.wxutil.com/pub_v2/app/app_pay.php";
+//          var h = H.HttpClient();
+//          h.badCertificateCallback = (cert, String host, int port) {
+//            return true;
+//          };
+//          var request = await h.getUrl(Uri.parse(_url));
+//          var response = await request.close();
+//          var data = await Utf8Decoder().bind(response).join();
+//          Map<String, dynamic> result = json.decode(data);
+//          print(result['appid']);
+//          print(result["timestamp"]);
+//          fluwx
+//              .pay(
+//            appId: result['appid'].toString(),
+//            partnerId: result['partnerid'].toString(),
+//            prepayId: result['prepayid'].toString(),
+//            packageValue: result['package'].toString(),
+//            nonceStr: result['noncestr'].toString(),
+//            timeStamp: result['timestamp'],
+//            sign: result['sign'].toString(),
+//          )
+//              .then((data) {
+//            print("---》$data");
+//          }).catchError((error){
+//            print(error);
+//          });
+        fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B').then((val){
           print(val);
         });
+//        String payInfo =
+//            '{"appid":"wx00ce24906ff638d4","partnerid":"1544254701","prepayid":"wx072037024038545b547813bd1534702000","package":"Sign=WXPay","noncestr":"mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd","timestamp":"1565181422","sign":"F657FABDECD7E14ECC8CDF5FA7A8D66B"}';
+//        SyPayResult payResult = await SyFlutterWechat.pay(
+//            SyPayInfo.fromJson(json.decode(payInfo)));
+//        print(payResult);
       }),
     );
   }

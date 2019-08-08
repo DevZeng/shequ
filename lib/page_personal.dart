@@ -25,6 +25,10 @@ class PersonalPage extends StatelessWidget {
     {
       'icon':'images/info.png',
       'title':'投诉建议'
+    },
+    {
+      'icon':'images/info.png',
+      'title':'钱包'
     }
   ];
   @override
@@ -33,9 +37,21 @@ class PersonalPage extends StatelessWidget {
     return Scaffold(
 //      backgroundColor: Colors.yellow,
       body: Container(
-        padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
+//        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: Column(
           children: <Widget>[
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  minWidth: double.infinity, //宽度尽可能大
+                  minHeight: 50.0,
+                maxHeight: 60//最小高度为50像素
+              ),
+              child: Container(
+                  height: 777,
+                  color: Colors.white,
+                  child: null
+              ),
+            ),
             Expanded(child: ListView.separated(
               itemCount: menus.length,
               //列表项构造器
@@ -59,11 +75,17 @@ class PersonalPage extends StatelessWidget {
                     case 0:
                       Navigator.pushNamed(context, "listAddress");
                       break;
+                    case 1:
+                      Navigator.pushNamed(context, "userInfo");
+                      break;
                     case 4:
                       Navigator.pushNamed(context, "notifications");
                       break;
                     case 5:
                       Navigator.pushNamed(context, "report");
+                      break;
+                    case 6:
+                      Navigator.pushNamed(context, "money");
                       break;
                   }
                 });

@@ -11,4 +11,9 @@ class Api {
   final upload = host +'txUpload_t';
   final getOneShopMsg = host +'appHShopMsg/getOneShopMsg';
   final products = host +'appHShopStore/getQianShopHShopStore';
+  final setAddress = host +'appHUserAddress/putUserMsg';
+  final getUserInfo = host +'appHUserMsg/getUserMsg';
+  final setUserInfo = host +'appHUserMsg/putUserMsg';
+  final postHUserMemberOrder = host +'appUserMemberOrder/postHUserMemberOrder';
+  final wxpay = host +'pay/onpenPay';
 }

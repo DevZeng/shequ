@@ -81,7 +81,7 @@ class Page extends State<listAddressPage> {
         width: MediaQuery.of(context).size.width*0.7,
         height: 40.0  ,
         child: new RaisedButton(onPressed: (){
-
+          Navigator.of(context).pushNamed('addAddress');
         },color: Colors.orange,
           child: new Text("新增地址",style: TextStyle(color: Colors.white,)),
           shape: new StadiumBorder(side: new BorderSide(

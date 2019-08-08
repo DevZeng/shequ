@@ -13,6 +13,10 @@ import 'dart:io';
 import 'page_notification.dart';
 import 'page_report.dart';
 import 'page_lifeStore.dart';
+import 'page_add_info.dart';
+import 'page_money.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
+//import 'package:sy_flutter_wechat/sy_flutter_wechat.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -38,7 +42,42 @@ final ThemeData kDefaultTheme = new ThemeData(
   accentColor: Colors.orangeAccent[400],
 );
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _MyApp();
+  }
+}
+
+class _MyApp extends State<MyApp> {
+  String _result = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initFluwx();
+    fluwx.responseFromPayment.listen((data) {
+      setState(() {
+        _result = "${data}";
+      });
+    });
+  }
+
+  _initFluwx() async {
+    await fluwx.register(
+        appId: "wx00ce24906ff638d4",
+        doOnAndroid: true,
+        doOnIOS: true,
+        enableMTA: false);
+    var result = await fluwx.isWeChatInstalled();
+    print("is installed $result");
+//    bool result = await SyFlutterWechat.register('wx00ce24906ff638d4');
+//    print(result);
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {}
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -57,7 +96,9 @@ class MyApp extends StatelessWidget {
         'life': (context) => LifePage(),
         'notifications':(context)=>NotificationPage(),
         'report':(context)=>ReportPage(),
-        'lifeStore':(context)=>LifeStorePage()
+        'lifeStore':(context)=>LifeStorePage(),
+        'userInfo':(context)=>addPageInfo(),
+        'money':(context)=>MoneyPage()
       },
     );
   }
