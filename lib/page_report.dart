@@ -4,7 +4,8 @@ import 'dart:io';
 import 'api.dart';
 import 'package:dio/dio.dart' ;
 import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+import 'model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class ReportPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class ReportPage extends StatefulWidget {
 class Page extends State<ReportPage> {
   List<Asset> images = List<Asset>();
   String radioValue = 'First';
+  TextEditingController contentController = new TextEditingController();
   int type = 1 ;
   Api api = new Api();
   List<String> imgUrls = [];
@@ -92,6 +94,7 @@ class Page extends State<ReportPage> {
                     height: 1,
                   ),
                   TextField(
+                    controller: contentController,
                     decoration: InputDecoration(
                         border: InputBorder.none, hintText: "请输入反馈描述..."),
                   )
@@ -116,9 +119,7 @@ class Page extends State<ReportPage> {
             Container(
               child: RaisedButton(
                 onPressed: (){
-                  getImageFileFromAssets(images[0]).then((val){
-                    upLoadImage(val);
-                  });
+                  submit();
                 },
                 color: Color.fromRGBO(240, 190, 60, 1),
                 disabledColor: Color.fromRGBO(240, 190, 60, 1),
@@ -176,7 +177,7 @@ class Page extends State<ReportPage> {
 
   List<Widget> loadAssetWidgets() {
     List<Widget> widgets = [];
-    if (images.length == 0) {
+    if (imgUrls.length == 0) {
       widgets = [
         Container(
           width: 70,
@@ -203,7 +204,7 @@ class Page extends State<ReportPage> {
         )),
         child: IconButton(icon: Icon(Icons.ac_unit), onPressed: loadAssets),
       ));
-      for (var i = 0; i < images.length; i++) {
+      for (var i = 0; i < imgUrls.length; i++) {
         widgets.add(Container(
             width: 70,
             height: 70,
@@ -214,15 +215,17 @@ class Page extends State<ReportPage> {
               color: Colors.grey[100], //边框颜色
             )),
             child: GestureDetector(
-              child: AssetThumb(
-                asset: images[i],
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(image:NetworkImage(imgUrls[i]),fit: BoxFit.fill)
+                ),
                 width: 60,
                 height: 60,
               ),
               onTap: () {
-                images.removeAt(i);
+                imgUrls.removeAt(i);
                 setState(() {
-                  images = images;
+                  imgUrls = imgUrls;
                 });
               },
             )));
@@ -238,7 +241,7 @@ class Page extends State<ReportPage> {
     return file;
   }
   upLoadImage(File image) async {
-    print('uppload');
+
     String path = image.path;
     print(path);
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
@@ -247,7 +250,35 @@ class Page extends State<ReportPage> {
       "file": new UploadFileInfo(image, name)
     });
     Dio dio = new Dio();
-    var response = await dio.post(api.upload, data: formData);
-    print(response);
+    try{
+      print('uppload');
+      var response = await dio.post(api.upload, data: formData);
+      var data = response.data;
+      if(data['code']==200){
+        setState(() {
+          imgUrls.add(data['data']);
+        });
+      }
+    }catch (error){
+      print(error);
+    }
+  }
+  void submit() async {
+    getUser().then((val){
+      var formData = {"token": val, "complaintContent": contentController.text, "complaintPicture":imgUrls.join(','),"complaintType":type};
+      Dio().post(api.postHComplaint,data: formData).then((response){
+        var data = response.data;
+        if(data['code']==200){
+          Fluttertoast.showToast(
+              msg: "提交成功！",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.white,
+              textColor: Colors.black,
+              fontSize: 16.0);
+        }
+      });
+    });
   }
 }

@@ -108,7 +108,7 @@ class _PersonalPage extends State<PersonalPage> {
                       ],
                       borderRadius: BorderRadius.all(Radius.circular(5))),
 //                color: Colors.white,
-                  height: 110,
+                  height: 112,
                   width: MediaQuery.of(context).size.width-20 ,
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Row(
@@ -116,7 +116,7 @@ class _PersonalPage extends State<PersonalPage> {
                       Container(
                           width: MediaQuery.of(context).size.width * 1 / 3 -
                               10,
-                          height: 70,
+                          height: 72,
                           child: Column(
                             children: <Widget>[
                               FlatButton(
@@ -135,7 +135,7 @@ class _PersonalPage extends State<PersonalPage> {
                       Container(
                           width: MediaQuery.of(context).size.width * 1 / 3 -
                               10,
-                          height: 70,
+                          height: 72,
                           child: Column(
                             children: <Widget>[
                               FlatButton(
@@ -157,7 +157,7 @@ class _PersonalPage extends State<PersonalPage> {
                       Container(
                           width: MediaQuery.of(context).size.width * 1 / 3 -
                               10,
-                          height: 70,
+                          height: 72,
                           child: Column(
                             children: <Widget>[
                               FlatButton(
@@ -213,7 +213,7 @@ class _PersonalPage extends State<PersonalPage> {
                           Container(
                               width:
                               MediaQuery.of(context).size.width * 1 / 3 - 10,
-                              height: 70,
+                              height: 72,
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
@@ -232,7 +232,7 @@ class _PersonalPage extends State<PersonalPage> {
                           Container(
                               width:
                               MediaQuery.of(context).size.width * 1 / 3 - 10,
-                              height: 70,
+                              height: 72,
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
@@ -253,7 +253,7 @@ class _PersonalPage extends State<PersonalPage> {
                           Container(
                               width:
                               MediaQuery.of(context).size.width * 1 / 3 - 10,
-                              height: 70,
+                              height: 72,
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
@@ -405,6 +405,10 @@ class _PersonalPage extends State<PersonalPage> {
   }
   void getUserInfo() async {
     getUser().then((val) {
+      if(val==null){
+//        Navigator.p;
+        Navigator.of(context).pushNamed('login');
+      }
       Dio().request(api.getUserInfo + '?token=$val').then((response) {
         var data = response.data;
         if (data['code'] == 200) {

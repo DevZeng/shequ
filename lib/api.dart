@@ -31,4 +31,5 @@ class Api {
   final postHShopStoreOrder = host +'appHShopStoreOrder/postHShopStoreOrder';
   final getHShopStoreOrder = host +'appHShopStoreOrder/getHShopStoreOrder';
   final getXqHHouseInformation = host +'appHouseInformation/getXqHHouseInformation';
+  final postHComplaint = host +'appHComplaint/postHComplaint';
 }
