@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api.dart';
+//import '';
 
 class addPageInfo extends StatefulWidget {
   @override
@@ -49,19 +50,21 @@ class Page extends State<addPageInfo> {
                     color: Colors.white,
                     child: GestureDetector(
                       child: Container(
+//                        padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                         child: Center(
                           child: Column(
                             children: <Widget>[
                               Container(
+                                padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
                                 child: CircleAvatar(
                                   backgroundImage: NetworkImage(
                                       info['userMsgHead'] == null
                                           ? ''
                                           : info['userMsgHead']),
                                 ),
-                                height: 80,
+                                height: 100,
                                 width: 80,
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+
                               ),
                               Text(
                                 '点击更改头像',
@@ -321,7 +324,6 @@ class Page extends State<addPageInfo> {
       "file": new UploadFileInfo(new File(path), name,
           contentType: ContentType.parse("image/$suffix"))
     });
-//    print(formData);
     Dio().post(api.upload, data: formData).then((response) {
       var data = response.data;
       if (data['code'] == 200) {
@@ -350,12 +352,6 @@ class Page extends State<addPageInfo> {
         });
       }
     });
-//      data = data['data'];
-//      var formData =
-//          '{"token": "$token", "userMsgHead": "$data['data']", "userMsgId":"${info['userMsgId']}"}';
-//      print(formData);
-//      Fluttertoast.showToast(
-//
   }
 
   void doUpdate() {

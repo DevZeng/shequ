@@ -32,10 +32,12 @@ class Page extends State<ReadingPage>{
           child: Column(
             children: <Widget>[
               Container(
+                padding: EdgeInsets.fromLTRB(0 , 10, 0, 10),
                 width: MediaQuery.of(context).size.width,
                 child: Text(news['inforTitle'],style: TextStyle(fontSize: 18,fontWeight:FontWeight.w700 ),),
               ),
               Container(
+                padding: EdgeInsets.fromLTRB(0 , 0, 0, 10),
                 width: MediaQuery.of(context).size.width,
                 child: Text(news['createTime'],style: TextStyle(fontSize: 12 ),),
               ),

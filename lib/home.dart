@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_slider/simple_slider.dart';
+//import 'package:simple_slider/simple_slider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'api.dart';
 import 'package:dio/dio.dart';
@@ -64,11 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedItemColor: Colors.orange,
         onTap: (index) => {
               setState(() {
-                if(index==2||index==3){
-                  if(user==null){
-                    Navigator.of(context).pushNamed('login');
-    }
-    }
                 _current = index;
               })
             },

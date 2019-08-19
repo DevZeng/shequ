@@ -117,9 +117,18 @@ class LoginPageState extends State<LoginPage>{
       Dio().post(Api.login, data: formData).then((response) {
         if (response.statusCode == 200) {
           var data = response.data;
-          print(data);
+//          print(data);
           if (data['code'] == 200) {
+
             saveUser(data['data']['token']);
+            var houses = data['data']['householdAllMsg'];
+            if(houses!=null){
+              var lists = houses['listMsg'];
+              if(lists!=null&&lists.length!=0){
+                saveHold(lists[0]['holdXqId']);
+              }
+            }
+//            print(houses);
             Fluttertoast.showToast(
                 msg: "登录成功！",
                 toastLength: Toast.LENGTH_SHORT,
@@ -148,5 +157,10 @@ class LoginPageState extends State<LoginPage>{
   {
     var prefs = await SharedPreferences.getInstance();
     await prefs.setString('user', user);
+  }
+  void saveHold(id) async
+  {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('holdId', id);
   }
 }

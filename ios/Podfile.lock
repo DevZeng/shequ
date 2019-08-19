@@ -13,14 +13,12 @@ PODS:
     - Flutter
   - image_picker (0.0.1):
     - Flutter
-  - multi_image_picker (4.3.6):
+  - multi_image_picker (4.5.1):
     - BSImagePicker (~> 2.10.0)
     - Flutter
   - path_provider (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
-    - Flutter
-  - simple_slider (0.0.1):
     - Flutter
 
 DEPENDENCIES:
@@ -32,7 +30,6 @@ DEPENDENCIES:
   - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
-  - simple_slider (from `.symlinks/plugins/simple_slider/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -57,8 +54,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
-  simple_slider:
-    :path: ".symlinks/plugins/simple_slider/ios"
 
 SPEC CHECKSUMS:
   BSGridCollectionViewLayout: 568273e113fbc815f868f1898ef0465aee68f955
@@ -69,10 +64,9 @@ SPEC CHECKSUMS:
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
   fluwx: 19524c5e4c9c539a646407259139c9c1e4eaf9e5
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
-  multi_image_picker: 3a6afea72a3271d9b0bcc67d8888d38c4ff53efd
+  multi_image_picker: fc88872db7d5fe97fd6ee4529d46fd6cc57e3c86
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
-  simple_slider: 0e1dd9df8d582d232c5e82e6ce5563fdbc459f11
 
 PODFILE CHECKSUM: d231b65d6bea6d24555f84ca7901720538b5791f
 

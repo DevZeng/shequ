@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   english_words: ^3.1.0
-  simple_slider: ^0.0.1
+#  simple_slider: ^0.0.1
   carousel_slider: ^1.3.0
   dio: ^2.1.3
   fluttertoast: ^3.0.4
@@ -34,10 +34,13 @@ dependencies:
       url: https://github.com/GanZhiXiong/gzx_dropdown_menu.git
   #  amap_location: ^0.2.0
   #  amap_base: ^0.3.5
-  multi_image_picker: ^4.3.6
+  shared_preferences: ^0.5.3+4
+  multi_image_picker: ^4.5.1
   city_pickers: ^0.1.16
   image_picker: ^0.6.1
   fluwx: ^1.0.4
+  path_provider: ^1.2.0
+
 
 
 dev_dependencies:
@@ -67,6 +70,14 @@ flutter:
     - images/cart.png
     - images/cart2.png
     - images/money.png
+    - images/visitor.png
+    - images/star.png
+    - images/order_stay.png
+    - images/order_life.png
+    - images/order_outseller.png
+    - images/moneypacket.png
+    - images/visitors.png
+    - images/homemember.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

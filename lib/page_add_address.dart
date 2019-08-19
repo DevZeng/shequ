@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'api.dart';
+import 'model.dart';
 import 'dart:convert';
 
 class addAddressPage extends StatefulWidget {
@@ -19,14 +20,25 @@ class Page extends State<addAddressPage> {
   String province = '请选择';
   String city = '请选择';
   String area = '请选择';
+  int id = 0;
   TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController detailController = TextEditingController();
   String token = '';
+  bool enter = false;
   Api api = new Api();
 
   @override
   Widget build(BuildContext context) {
+    Address info =  ModalRoute.of(context).settings.arguments;
+    if(info!=null&&enter==false){
+      nameController.text = info.name;
+      phoneController.text = info.phone;
+      detailController.text = info.detail;
+      address = info.area;
+      id = info.id;
+      enter = true;
+    }
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -140,10 +152,11 @@ class Page extends State<addAddressPage> {
         height: 40.0,
         child: new RaisedButton(
           onPressed: () {
+//            print(address.detail);
             getUser().then((val) {
               saveAddress(
                   val,
-                  province + city + area + detailController.text,
+                  detailController.text,
                   nameController.text,
                   phoneController.text,
                   "$province,$city,$area");
@@ -173,7 +186,8 @@ class Page extends State<addAddressPage> {
           primaryColor: Colors.orange,
         ));
     setState(() {
-      address = result.provinceName + result.cityName + result.areaName;
+      address = result.provinceName+','+result.cityName+','+result.areaName;
+//      address = result.provinceName +  + ;
       province = result.provinceName;
       city = result.cityName;
       area = result.areaName;
@@ -196,40 +210,72 @@ class Page extends State<addAddressPage> {
           textColor: Colors.black,
           fontSize: 16.0);
     } else {
-      var formData =
-          '{"token": "$token", "addressUserName": "$addressUserName", "addressUserPhone":"$addressUserPhone","addressAreas":"$addressAreas","addressName":"$detail"}';
-//      formData = json.encode(formData);
-      //      FormData formData = new FormData.from({"token": token, "addressUserName": addressUserName, "addressUserPhone":addressUserPhone,"addressAreas":addressAreas,"addressName":detail});
-      print(formData);
-      Dio().post(api.setAddress, data: formData).then((response) {
-        if (response.statusCode == 200) {
-          var data = response.data;
-//          print(data);
-          if (data['code'] == 200) {
-            Fluttertoast.showToast(
-                msg: "添加成功！",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-                fontSize: 16.0);
-            Navigator.pushNamed(context, "home");
-          } else {
-            Fluttertoast.showToast(
-                msg: data['msg'],
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-                fontSize: 16.0);
+      if(id==0){
+        var formData =
+            '{"token": "$token", "addressUserName": "$addressUserName", "addressUserPhone":"$addressUserPhone","addressAreas":"$addressAreas","addressName":"$detail"}';
+        Dio().post(api.setAddress, data: formData).then((response) {
+          if (response.statusCode == 200) {
+            var data = response.data;
+            print(data);
+            if (data['code'] == 200) {
+              Fluttertoast.showToast(
+                  msg: "添加成功！",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+              Navigator.of(context).pop();
+            } else {
+              Fluttertoast.showToast(
+                  msg: data['msg'],
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+            }
           }
-        }
-        ;
-      }).catchError((error) {
-        print(error.toString());
-      });
+          ;
+        }).catchError((error) {
+          print(error.toString());
+        });
+      }else{
+        var formData =
+            '{"token": "$token","addressId": "$id", "addressUserName": "$addressUserName", "addressUserPhone":"$addressUserPhone","addressAreas":"$address","addressName":"$detail"}';
+        print(formData);
+        Dio().put(api.modifyAddress, data: formData).then((response) {
+          if (response.statusCode == 200) {
+            var data = response.data;
+            print(data);
+            if (data['code'] == 200) {
+              Fluttertoast.showToast(
+                  msg: "修改成功！",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+              Navigator.of(context).pop();
+            } else {
+              Fluttertoast.showToast(
+                  msg: data['msg'],
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+            }
+          }
+          ;
+        }).catchError((error) {
+          print(error.toString());
+        });
+      }
     }
   }
 

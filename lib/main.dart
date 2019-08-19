@@ -16,7 +16,15 @@ import 'page_lifeStore.dart';
 import 'page_add_info.dart';
 import 'page_money.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'page_houseInfo.dart';
 //import 'package:sy_flutter_wechat/sy_flutter_wechat.dart';
+import 'page_add_houseInfo.dart';
+import 'page_visitor.dart';
+import 'page_add_visitor.dart';
+import 'page_repair.dart';
+import 'page_count.dart';
+import 'page_stay.dart';
+import 'page_order_life.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -28,14 +36,16 @@ void main() async {
 
 final ThemeData kIOSTheme = new ThemeData(
     primarySwatch: Colors.orange,
-    primaryColor: Colors.white,
-    primaryColorBrightness: Brightness.light,
-    backgroundColor: Colors.white,
-    scaffoldBackgroundColor: Colors.white,
-    accentColor: Colors.white,
-    unselectedWidgetColor: Colors.white,
-    buttonColor: Colors.white,
-    bottomAppBarColor: Colors.white);
+//    primaryColor: Colors.white,
+//    primaryColorBrightness: Brightness.light,
+//    backgroundColor: Colors.white,
+//    unselectedWidgetColor: ,
+//    scaffoldBackgroundColor: Colors.white,
+//    accentColor: Colors.white,
+//    unselectedWidgetColor: Colors.white,
+//    buttonColor: Colors.white,
+//    bottomAppBarColor: Colors.white
+);
 
 final ThemeData kDefaultTheme = new ThemeData(
   primarySwatch: Colors.blue,
@@ -98,8 +108,17 @@ class _MyApp extends State<MyApp> {
         'report':(context)=>ReportPage(),
         'lifeStore':(context)=>LifeStorePage(),
         'userInfo':(context)=>addPageInfo(),
-        'money':(context)=>MoneyPage()
+        'money':(context)=>MoneyPage(),
+        'listHouseInfo':(context)=>HouseInfoPage(),
+        'addHouseInfo':(context)=>addHouseInfo(),
+        'visitorePage':(context)=>VisitorPage(),
+        'addVisitorPage':(context)=>addVisitorPage(),
+        'repairPage':(context)=>RepairPage(),
+        'countPage':(context)=>countPage(),
+        'stayPage':(context)=>StayPage(),
+        'lifeOrderPage':(context)=>LifeOrderPage(),
       },
     );
   }
 }
+

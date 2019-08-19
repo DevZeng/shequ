@@ -137,7 +137,7 @@ class Page extends State<ServicePage> {
                     children: <Widget>[
                       FlatButton(
                         onPressed: () {
-                          print('click');
+                          Navigator.pushNamed(context, "stayPage");
                         },
                         disabledColor: Colors.white,
                         child: Image(

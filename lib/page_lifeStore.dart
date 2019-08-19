@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'model.dart';
 
 class LifeStorePage extends StatefulWidget {
   @override
@@ -11,24 +12,13 @@ class LifeStorePage extends StatefulWidget {
   }
 }
 
-class Product {
-  int id;
-  String name;
-  double price;
-  int number;
 
-  Product(int id, String name, double price, int number) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.number = number;
-  }
-}
 
 class Page extends State<LifeStorePage> {
   Api api = new Api();
   var info = null;
-  var products = null;
+  var products = [];
+  double price = 0;
   int id = 0;
   List<String> images = [];
   List<Product> buys = [];
@@ -157,7 +147,7 @@ class Page extends State<LifeStorePage> {
             Padding(padding: EdgeInsets.fromLTRB(0, 12, 0, 0)),
             ListView.separated(
               shrinkWrap: true,
-              itemCount: products.length,
+              itemCount: products.length==0?0:products.length,
               //列表项构造器
               itemBuilder: (BuildContext context, int index) {
                 return Container(
@@ -232,9 +222,12 @@ class Page extends State<LifeStorePage> {
                                             products[index]['storeId'],
                                             products[index]['storeName'],
                                             products[index]['storeMemberPrice'],
-                                            1);
+                                            1,
+                                            products[index]['storeThumbnail'],
+                                        );
                                         addBuy(buy);
-                                        showCart(context);
+                                        price += products[index]['storeMemberPrice'];
+                                        showCart();
                                       }),
                                 ],
                               ),
@@ -257,7 +250,8 @@ class Page extends State<LifeStorePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        test();
+//        print(products);
+//        test();
       }),
     );
   }
@@ -278,7 +272,9 @@ class Page extends State<LifeStorePage> {
   }
 
   void getProducts(int page) {
-    if (products == null) {
+//    print(products);
+    if (products.length==0) {
+      print('1');
       Dio()
           .request(api.products + '?storeShopId=$id&start=$page')
           .then((response) {
@@ -306,183 +302,7 @@ class Page extends State<LifeStorePage> {
     }
   }
 
-  void showCart(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return new StatefulBuilder(builder: (context1, state) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: 40,
-//                width:130,
-                  color: Colors.white,
-                  alignment: Alignment.centerRight,
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                    width: 130,
-                    child: RaisedButton(
-                      onPressed: () {},
-                      child: Row(
-                        children: <Widget>[Icon(Icons.delete), Text('清空回收站')],
-                      ),
-                      elevation: 0,
-                    ),
-                  ),
-//                color: Colors.black,
-                ),
-                Divider(
-                  color: Colors.grey[100],
-                  height: 1,
-                ),
-                ListView.builder(
-                    itemCount: buys.length,
-                    shrinkWrap: true,
-                    itemBuilder: ((BuildContext context, index) {
-                      return Column(
-                        children: <Widget>[
-                          Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5 -
-                                          15,
-                                  child: Text(buys[index].name),
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2,
-                                  child:
-                                      Text('¥' + buys[index].price.toString()),
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        child: IconButton(
-                                            icon: Icon(Icons.add),
-                                            onPressed: () {
-                                              setState(() {
-                                                buys[index].number += 1;
-                                              });
-//                                        setCart(buys[index], index);
-                                            }),
-                                      ),
-                                      Text(buys[index].number.toString()),
-                                      IconButton(
-                                          icon: Icon(Icons.delete),
-                                          onPressed: () {
-                                            setState(() {
-                                              setState(() {
-                                                buys[index].number -= 1;
-                                              });
-                                            });
-                                          }),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(
-                            height: 1,
-                            color: Colors.grey[100],
-                          )
-                        ],
-                      );
-                    })),
-              ],
-            );
-          });
-        });
-  }
 
-  List<Widget> getCartList(BuildContext context, List<Product> buys) {
-    List<Widget> widgets = [
-      Container(
-        height: 40,
-//                width:130,
-        color: Colors.white,
-        alignment: Alignment.centerRight,
-        width: MediaQuery.of(context).size.width,
-        child: Container(
-          width: 130,
-          child: RaisedButton(
-            onPressed: () {},
-            child: Row(
-              children: <Widget>[Icon(Icons.delete), Text('清空回收站')],
-            ),
-            elevation: 0,
-          ),
-        ),
-//                color: Colors.black,
-      ),
-      Divider(
-        color: Colors.grey[100],
-        height: 1,
-      ),
-    ];
-
-    List<Widget> buysList = buys.map((product) {
-      return Column(
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.5 - 15,
-                  child: Text(product.name),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child: Text('¥' + product.price.toString()),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              product.number += 1;
-//                        setCart(product, index);
-                            }),
-                      ),
-                      Text(product.number.toString()),
-                      IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              product.number -= 1;
-                            });
-                          }),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey[100],
-          )
-        ],
-      );
-    }).toList();
-    widgets.addAll(buysList);
-//    Widget cart = ;
-//    widgets.add(cart);
-    return widgets;
-  }
 
   void setCart(Product product, int index) {
     setState(() {
@@ -490,7 +310,7 @@ class Page extends State<LifeStorePage> {
     });
   }
 
-  void test() {
+  void showCart() {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -509,12 +329,11 @@ class Page extends State<LifeStorePage> {
                     width: MediaQuery.of(context).size.width,
                     child: Container(
                       width: 130,
-                      child: RaisedButton(
+                      child: FlatButton(
                         onPressed: () {},
                         child: Row(
                           children: <Widget>[Icon(Icons.delete), Text('清空回收站')],
                         ),
-                        elevation: 0,
                       ),
                     ),
 //                color: Colors.black,
@@ -557,6 +376,7 @@ class Page extends State<LifeStorePage> {
                                               onPressed: () {
                                                 state(() {
                                                   buys[index].number += 1;
+                                                  price+=buys[index].price;
                                                 });
 //                                        setCart(buys[index], index);
                                               }),
@@ -567,7 +387,11 @@ class Page extends State<LifeStorePage> {
                                             onPressed: () {
                                               setState(() {
                                                 state(() {
-                                                  buys[index].number -= 1;
+                                                  if(buys[index].number!=1){
+                                                    buys[index].number -= 1;
+                                                    price -= buys[index].price;
+                                                  }
+//                                                  buys[index].number -= 1;
                                                 });
                                               });
                                             }),
@@ -604,7 +428,7 @@ class Page extends State<LifeStorePage> {
                                       child: FlatButton(
                                           onPressed: () {},
                                           child: Text(
-                                            '去结算',
+                                            price.toString(),
                                             style: TextStyle(color: Colors.white),
                                           )),
                                     ),
@@ -630,7 +454,9 @@ class Page extends State<LifeStorePage> {
                                 width: MediaQuery.of(context).size.width * 0.35,
                                 color: Colors.yellow,
                                 child: FlatButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,2));
+                                  },
                                   child: Text(
                                     '去结算',
                                     style: TextStyle(color: Colors.white),

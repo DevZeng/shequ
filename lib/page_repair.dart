@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'dart:io';
-import 'api.dart';
-import 'package:dio/dio.dart' ;
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
-
-class ReportPage extends StatefulWidget {
+class RepairPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Page();
+    return _repairPage();
   }
 }
 
-class Page extends State<ReportPage> {
+class _repairPage extends State<RepairPage>{
+  int type = 1;
   List<Asset> images = List<Asset>();
-  String radioValue = 'First';
-  int type = 1 ;
-  Api api = new Api();
-  List<String> imgUrls = [];
+//  List<Asset> images = List<Asset>();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -41,26 +33,58 @@ class Page extends State<ReportPage> {
               color: Colors.white,
               child: Row(
                 children: <Widget>[
-                  Text('类型：'),
                   Container(
-                    padding: EdgeInsets.fromLTRB(25, 0 , 25, 0),
+                    child: Text('类型：'),
+                    width: MediaQuery.of(context).size.width*0.2-32,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.2,
+                    padding: EdgeInsets.fromLTRB(8, 0 , 8, 0),
                     child: RaisedButton(
                       onPressed: (){setState(() {
                         type = 1;
                       });},
-                      child: Text('投诉'),
+                      child: Text('管道'),
                       color: type==1?Colors.yellow:Colors.white,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                     ),
                     height: 25,
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width*0.2,
+                    padding: EdgeInsets.fromLTRB(8, 0 , 8, 0),
                     child: RaisedButton(
                       onPressed: (){setState(() {
                         type = 2;
                       });},
-                      child: Text('建议'),
+                      child: Text('电器'),
                       color: type==2?Colors.yellow:Colors.white,
+                      materialTapTargetSize: MaterialTapTargetSize.padded,
+                    ),
+                    height: 25,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.2,
+                    padding: EdgeInsets.fromLTRB(8, 0 , 8, 0),
+                    child: RaisedButton(
+                      onPressed: (){setState(() {
+                        type = 3;
+                      });},
+                      child: Text('物业',style: TextStyle(color: type==3?Colors.white:Colors.black),),
+                      color: type==3?Colors.yellow:Colors.white,
+                      materialTapTargetSize: MaterialTapTargetSize.padded,
+                    ),
+                    height: 25,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.2,
+                    padding: EdgeInsets.fromLTRB(8, 0 , 8, 0),
+                    child: RaisedButton(
+                      onPressed: (){setState(() {
+                        type = 4;
+                      });},
+                      child: Text('其他'),
+                      color: type==4?Colors.yellow:Colors.white,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                     ),
                     height: 25,
@@ -82,9 +106,9 @@ class Page extends State<ReportPage> {
                         Text('主题:'),
                         Expanded(
                             child: TextField(
-                          decoration: InputDecoration(
-                              border: InputBorder.none, hintText: "请输入主题"),
-                        ))
+                              decoration: InputDecoration(
+                                  border: InputBorder.none, hintText: "请输入主题"),
+                            ))
                       ],
                     ),
                   ),
@@ -111,69 +135,44 @@ class Page extends State<ReportPage> {
                 children: loadAssetWidgets(),
               ),
             ),
+            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
             Container(
-                child: null, height: MediaQuery.of(context).size.height * 0.12),
+              color:Colors.white,
+                child: ListTile(
+                  leading: Text('预约时间'),
+                  trailing: Text('请选择>'),
+                ),),
+            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
             Container(
-              child: RaisedButton(
-                onPressed: (){
-                  getImageFileFromAssets(images[0]).then((val){
-                    upLoadImage(val);
-                  });
-                },
-                color: Color.fromRGBO(240, 190, 60, 1),
-                disabledColor: Color.fromRGBO(240, 190, 60, 1),
-                child: new Text("提交",
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
-                shape: new StadiumBorder(
-                    side: new BorderSide(
-                  style: BorderStyle.solid,
-                  color: Color.fromRGBO(240, 190, 60, 1),
-                )),
-              ),
-              width: MediaQuery.of(context).size.width * 0.6,
-            )
+              color:Colors.white,
+              child: ListTile(
+                leading: Text('住户地址'),
+                title:TextField(),
+              ),),
+
           ],
         ),
       ),
+      floatingActionButton: Container(
+        child: RaisedButton(
+          onPressed: null,
+          color: Color.fromRGBO(240, 190, 60, 1),
+          disabledColor: Color.fromRGBO(240, 190, 60, 1),
+          child: new Text("提交",
+              style: TextStyle(
+                color: Colors.white,
+              )),
+          shape: new StadiumBorder(
+              side: new BorderSide(
+                style: BorderStyle.solid,
+                color: Color.fromRGBO(240, 190, 60, 1),
+              )),
+        ),
+        width: MediaQuery.of(context).size.width * 0.6,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
-
-  Future<void> loadAssets() async {
-    setState(() {
-      images = List<Asset>();
-    });
-
-    List<Asset> resultList;
-    String error;
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-      print(error);
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    if(resultList!=null){
-      print('dd');
-      resultList.forEach((result){
-        getImageFileFromAssets(result).then((val){
-          upLoadImage(val);
-        });
-      });
-    }
-
-  }
-
   List<Widget> loadAssetWidgets() {
     List<Widget> widgets = [];
     if (images.length == 0) {
@@ -184,10 +183,10 @@ class Page extends State<ReportPage> {
 //                    color: Colors.yellow,
           decoration: BoxDecoration(
               border: Border.all(
-            //添加边框
-            width: 1, //边框宽度
-            color: Colors.grey[100], //边框颜色
-          )),
+                //添加边框
+                width: 1, //边框宽度
+                color: Colors.grey[100], //边框颜色
+              )),
           child: IconButton(icon: Icon(Icons.ac_unit), onPressed: loadAssets),
         ),
       ];
@@ -197,10 +196,10 @@ class Page extends State<ReportPage> {
         height: 70,
         decoration: BoxDecoration(
             border: Border.all(
-          //添加边框
-          width: 1, //边框宽度
-          color: Colors.grey[100], //边框颜色
-        )),
+              //添加边框
+              width: 1, //边框宽度
+              color: Colors.grey[100], //边框颜色
+            )),
         child: IconButton(icon: Icon(Icons.ac_unit), onPressed: loadAssets),
       ));
       for (var i = 0; i < images.length; i++) {
@@ -209,10 +208,10 @@ class Page extends State<ReportPage> {
             height: 70,
             decoration: BoxDecoration(
                 border: Border.all(
-              //添加边框
-              width: 1, //边框宽度
-              color: Colors.grey[100], //边框颜色
-            )),
+                  //添加边框
+                  width: 1, //边框宽度
+                  color: Colors.grey[100], //边框颜色
+                )),
             child: GestureDetector(
               child: AssetThumb(
                 asset: images[i],
@@ -230,24 +229,34 @@ class Page extends State<ReportPage> {
     }
     return widgets;
   }
-  Future<File> getImageFileFromAssets(Asset image) async {
-    print('makefile');
-    final byteData = await image.getByteData();
-    final file = File('${(await getTemporaryDirectory()).path}/${image.name}');
-    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-    return file;
-  }
-  upLoadImage(File image) async {
-    print('uppload');
-    String path = image.path;
-    print(path);
-    var name = path.substring(path.lastIndexOf("/") + 1, path.length);
-    var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
-    FormData formData = new FormData.from({
-      "file": new UploadFileInfo(image, name)
+  Future<void> loadAssets() async {
+    setState(() {
+      images = List<Asset>();
     });
-    Dio dio = new Dio();
-    var response = await dio.post(api.upload, data: formData);
-    print(response);
+
+    List<Asset> resultList;
+    String error;
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+          maxImages: 300,
+          enableCamera: true
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+      print(error);
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      if(resultList!=null){
+        images = resultList;
+      }
+
+    });
   }
 }

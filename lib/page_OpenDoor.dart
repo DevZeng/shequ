@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'api.dart';
+import 'model.dart';
 
 class OpenDoorPage extends StatefulWidget {
   @override
@@ -16,6 +17,11 @@ class Page extends State<OpenDoorPage> {
   Api api = new Api();
 
   Page(){
+    getUser().then((val){
+      if(val==null){
+        Navigator.of(context).pushNamed('login');
+      }
+    });
     getR();
   }
 
