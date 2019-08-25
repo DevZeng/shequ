@@ -25,7 +25,7 @@ class LoginPageState extends State<LoginPage>{
           elevation: 0,
           centerTitle: false,
         ),
-        body: Container(
+        body: SingleChildScrollView(child: Container(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +65,7 @@ class LoginPageState extends State<LoginPage>{
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
-                      hintText: '请输入密码', border: InputBorder.none,),
+                    hintText: '请输入密码', border: InputBorder.none,),
                   onChanged: (v) {
                     password = v;
                   },
@@ -98,9 +98,22 @@ class LoginPageState extends State<LoginPage>{
                 ),
                 padding: EdgeInsets.fromLTRB(15, 20, 0, 15),
               ),
+              Container(
+                  alignment: Alignment.bottomRight,
+                  padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
+                  child: FlatButton(
+                    child: Text(
+                      '注册',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
+                    onPressed: (){
+                      Navigator.pushNamed(context, "register");
+                    },
+                  ))
             ],
           ),
-        ));
+        ),));
   }
   void login() {
     if (username.length == 0 || password.length == 0) {
@@ -125,10 +138,11 @@ class LoginPageState extends State<LoginPage>{
             if(houses!=null){
               var lists = houses['listMsg'];
               if(lists!=null&&lists.length!=0){
-                saveHold(lists[0]['holdXqId']);
+                saveXq(lists[0]['holdXqId']);
+                saveHold(lists[0]['holdId']);
               }
             }
-//            print(houses);
+            print(houses);
             Fluttertoast.showToast(
                 msg: "登录成功！",
                 toastLength: Toast.LENGTH_SHORT,
@@ -162,5 +176,10 @@ class LoginPageState extends State<LoginPage>{
   {
     var prefs = await SharedPreferences.getInstance();
     await prefs.setInt('holdId', id);
+  }
+  void saveXq(id) async
+  {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('xqId', id);
   }
 }

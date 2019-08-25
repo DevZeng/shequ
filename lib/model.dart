@@ -38,6 +38,20 @@ void saveHold(id) async
   await prefs.setInt('holdId', id);
 }
 
+
+
+getXq() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  int holdId = prefs.getInt('xqId');
+  return holdId;
+}
+void saveXq(id) async
+{
+  var prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('xqId', id);
+}
+
+
 class Address{
 int id;
 String name;
@@ -52,13 +66,15 @@ class Product {
   int id;
   String name;
   double price;
+  double sprice;
   int number;
   String icon;
 
-  Product(int id, String name, double price, int number,String icon) {
+  Product(int id, String name, double price, double sprice, int number,String icon) {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.sprice = sprice;
     this.number = number;
     this.icon = icon;
   }
@@ -69,7 +85,14 @@ class Store{
   String name;
   String icon;
   double price;
-  int type;
+  int type;//1 外卖 2 便利
+  int send = 0;
   List<Product> products = [];
-  Store (this.id,this.name,this.icon,this.products,this.price,this.type);
+  Store (this.id,this.name,this.icon,this.products,this.price,this.type,this.send);
+}
+
+class Order{
+  String number;
+  Store store;
+  Order(this.number,this.store);
 }

@@ -3,21 +3,21 @@ import 'model.dart';
 import 'package:dio/dio.dart';
 import 'api.dart';
 
-class LifeOrderPage extends StatefulWidget {
+class OutSellerOrderPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return lifeOrderPage();
+    return _outSellerOrderPage();
   }
 }
 
-class lifeOrderPage extends State<LifeOrderPage>
+class _outSellerOrderPage extends State<OutSellerOrderPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController; //需要定义一个Controller
   List tabs = [
     "未支付",
     "已支付",
-    "待取货",
+    "配送中",
     "已完成",
   ];
   String token = '';
@@ -74,10 +74,10 @@ class lifeOrderPage extends State<LifeOrderPage>
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('便利店订单'),
+        title: Text('外卖订单'),
         elevation: 0,
         bottom: TabBar(
-            //生成Tab菜单
+          //生成Tab菜单
             controller: _tabController,
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
@@ -110,12 +110,12 @@ class lifeOrderPage extends State<LifeOrderPage>
                                       children: <Widget>[
                                         Container(
                                           width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8 -
+                                              .size
+                                              .width *
+                                              0.8 -
                                               110,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             unPayOrders[index].name,
                                             style: TextStyle(
@@ -129,7 +129,7 @@ class lifeOrderPage extends State<LifeOrderPage>
 //                                              .width *
 //                                              0.2,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             tabs[0],
                                           ),
@@ -148,7 +148,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Container(
                           child: Column(
                             children:
-                                unPayOrders[index].products.map((product) {
+                            unPayOrders[index].products.map((product) {
                               return Container(
 //                                color:Colors.red,
 //                                alignment: Alignment.centerRight,
@@ -158,7 +158,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                     Container(
                                       child: Text(product.name),
                                       width: MediaQuery.of(context).size.width *
-                                              0.8 -
+                                          0.8 -
                                           80,
                                     ),
                                     Container(
@@ -220,12 +220,12 @@ class lifeOrderPage extends State<LifeOrderPage>
                                       children: <Widget>[
                                         Container(
                                           width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8 -
+                                              .size
+                                              .width *
+                                              0.8 -
                                               110,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             payOrders[index].name,
                                             style: TextStyle(
@@ -235,7 +235,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                         ),
                                         Container(
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             tabs[1],
                                           ),
@@ -263,7 +263,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                     Container(
                                       child: Text(product.name),
                                       width: MediaQuery.of(context).size.width *
-                                              0.8 -
+                                          0.8 -
                                           80,
                                     ),
                                     Container(
@@ -325,12 +325,12 @@ class lifeOrderPage extends State<LifeOrderPage>
                                       children: <Widget>[
                                         Container(
                                           width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8 -
+                                              .size
+                                              .width *
+                                              0.8 -
                                               110,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             waitPayOrders[index].name,
                                             style: TextStyle(
@@ -344,7 +344,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                               .width *
                                               0.2,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             tabs[2],
                                           ),
@@ -373,7 +373,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                     Container(
                                       child: Text(product.name),
                                       width: MediaQuery.of(context).size.width *
-                                              0.8 -
+                                          0.8 -
                                           80,
                                     ),
                                     Container(
@@ -435,12 +435,12 @@ class lifeOrderPage extends State<LifeOrderPage>
                                       children: <Widget>[
                                         Container(
                                           width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8 -
+                                              .size
+                                              .width *
+                                              0.8 -
                                               110,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             finishPayOrders[index].name,
                                             style: TextStyle(
@@ -454,7 +454,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                               .width *
                                               0.2,
                                           padding:
-                                              EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
                                             tabs[3],
                                           ),
@@ -483,7 +483,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                     Container(
                                       child: Text(product.name),
                                       width: MediaQuery.of(context).size.width *
-                                              0.8 -
+                                          0.8 -
                                           80,
                                     ),
                                     Container(
@@ -522,7 +522,7 @@ class lifeOrderPage extends State<LifeOrderPage>
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        print(unPayOrders);
+        print(unPayOrders[0].products[0].number);
       }),
     );
   }
@@ -531,29 +531,30 @@ class lifeOrderPage extends State<LifeOrderPage>
     print(type);
     List<Store> stores = [];
     Dio()
-        .get(api.getHShopStoreOrder + "?token=$token&&storeOrderStatus=$type")
+        .get(api.getUserTakeoutOrder + "?token=$token&&toOrderStatus=$type")
         .then((response) {
       var data = response.data;
+      print(data);
       if (data['code'] == 200) {
         switch (type) {
           case 0:
             data['data'].forEach((item) {
               Store store = new Store(
-                  item['storeOrderShopId'],
-                  item['storeOrderShopName'],
-                  item['storeOrderShopThumbnail'],
+                  item['toOrderShopId'],
+                  item['toOrderShopName'],
+                  item['toOrderShopThumbnail'],
                   [],
-                  item['storeOrderTotalPrice'],
-                  2,0);
+                  item['toOrderTotalPrice'],
+                  1,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
-                    good['ssogId'],
-                    good['ssogStoreName'],
-                    good['ssogStorePrice'],
-                    good['ssogStorePrice'],
-                    good['ssogStoreNum'],
-                    good['ssogStoreThumbnail']));
+                    good['stogTakeoutId'],
+                    good['stogTaketoutName'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutNum'],
+                    good['stogTakeoutThumbnail']));
               });
               store.products = products;
               stores.add(store);
@@ -563,21 +564,21 @@ class lifeOrderPage extends State<LifeOrderPage>
           case 1:
             data['data'].forEach((item) {
               Store store = new Store(
-                  item['storeOrderShopId'],
-                  item['storeOrderShopName'],
-                  item['storeOrderShopThumbnail'],
+                  item['toOrderShopId'],
+                  item['toOrderShopName'],
+                  item['toOrderShopThumbnail'],
                   [],
-                  item['storeOrderTotalPrice'],
-                  2,0);
+                  item['toOrderTotalPrice'],
+                  1,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
-                    good['ssogId'],
-                    good['ssogStoreName'],
-                    good['ssogStorePrice'],
-                    good['ssogStorePrice'],
-                    good['ssogStoreNum'],
-                    good['ssogStoreThumbnail']));
+                    good['stogTakeoutId'],
+                    good['stogTaketoutName'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutNum'],
+                    good['stogTakeoutThumbnail']));
               });
               store.products = products;
               stores.add(store);
@@ -588,21 +589,21 @@ class lifeOrderPage extends State<LifeOrderPage>
           case 2:
             data['data'].forEach((item) {
               Store store = new Store(
-                  item['storeOrderShopId'],
-                  item['storeOrderShopName'],
-                  item['storeOrderShopThumbnail'],
+                  item['toOrderShopId'],
+                  item['toOrderShopName'],
+                  item['toOrderShopThumbnail'],
                   [],
-                  item['storeOrderTotalPrice'],
-                  2,0);
+                  item['toOrderTotalPrice'],
+                  1,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
-                    good['ssogId'],
-                    good['ssogStoreName'],
-                    good['ssogStorePrice'],
-                    good['ssogStorePrice'],
-                    good['ssogStoreNum'],
-                    good['ssogStoreThumbnail']));
+                    good['stogTakeoutId'],
+                    good['stogTaketoutName'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutNum'],
+                    good['stogTakeoutThumbnail']));
               });
               store.products = products;
               stores.add(store);
@@ -613,21 +614,21 @@ class lifeOrderPage extends State<LifeOrderPage>
           case 3:
             data['data'].forEach((item) {
               Store store = new Store(
-                  item['storeOrderShopId'],
-                  item['storeOrderShopName'],
-                  item['storeOrderShopThumbnail'],
+                  item['toOrderShopId'],
+                  item['toOrderShopName'],
+                  item['toOrderShopThumbnail'],
                   [],
-                  item['storeOrderTotalPrice'],
-                  2,0);
+                  item['toOrderTotalPrice'],
+                  1,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
-                    good['ssogId'],
-                    good['ssogStoreName'],
-                    good['ssogStorePrice'],
-                    good['ssogStorePrice'],
-                    good['ssogStoreNum'],
-                    good['ssogStoreThumbnail']));
+                    good['stogTakeoutId'],
+                    good['stogTaketoutName'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutPrice'],
+                    good['stogTakeoutNum'],
+                    good['stogTakeoutThumbnail']));
               });
               store.products = products;
               stores.add(store);

@@ -38,7 +38,6 @@ class Page extends State<LifePage> {
     Dio().request(api.getTypeHShopMsg + '?shopType=2').then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
-//        print(content['data']);
         setState(() {
           shops = content['data'];
         });

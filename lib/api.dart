@@ -1,5 +1,6 @@
 class Api {
-  static final host = 'http://193.112.129.128:8091/zboot/';
+//  static final host = 'http://193.112.129.128:8091/zboot/';
+  static final host = 'https://service.gzeboat.com/zboot/';
   final getHRotation = host + 'appHRotation/getHRotation'; //获取轮播
   static final sendMessage = host + 'appHUserAccount/sendMessage';
   static final register = host + 'appHUserAccount/postHUserAccount';
@@ -32,4 +33,21 @@ class Api {
   final getHShopStoreOrder = host +'appHShopStoreOrder/getHShopStoreOrder';
   final getXqHHouseInformation = host +'appHouseInformation/getXqHHouseInformation';
   final postHComplaint = host +'appHComplaint/postHComplaint';
+  final getDyHPayProperty = host +'appHPayProperty/getDyHPayProperty';
+  final postHPayOrder = host +'appHPayOrder/postHPayOrder';
+  final appRegisterController = host +'appRegisterController/register';
+  final delHVisitorRoom = host +'appHVisitor/delHVisitorRoom';
+  final getOneShopHotel = host +'appHShopHotel/getOneShopHotel';
+  final getAttribute = host +'appHShopHotel/getAttribute';
+  final postHShopHotelOrder = host +'appHShopHotelOrder/postHShopHotelOrder';
+  final getHShopHotelOrder = host +'appHShopHotelOrder/getHShopHotelOrder';
+  final getHHouseUserFamily = host +'appHHouseUserFamily/getHHouseUserFamily';
+  final getAllHRepairType = host +'appHRepair/getAllHRepairType';
+  final postHRepair = host +'appHRepair/postHRepair';
+  final getUserHRepair = host +'appHRepair/getUserHRepair';
+  final getClassHShopTakeout = host +'appHShopTakeout/getClassHShopTakeout';
+  final postHShopTakeoutOrder = host +'appHShopTakeoutOrder/postHShopTakeoutOrder';
+  final getUserTakeoutOrder = host +'appHShopTakeoutOrder/getUserTakeoutOrder';
+  final postHVisitor = host +'appHVisitor/postHVisitor';
+  final getShopComment = host +'hShopTakeoutComment/getShopComment';
 }

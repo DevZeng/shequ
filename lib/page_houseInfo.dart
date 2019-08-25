@@ -155,7 +155,8 @@ class Page extends State<HouseInfoPage> {
                 height: 40.0,
                 child: new RaisedButton(
                   onPressed: () {
-                    saveHold(houseInfos[_index].holdXqId);
+                    saveHold(houseInfos[_index].id);
+                    saveXq(houseInfos[_index].holdXqId);
                     Fluttertoast.showToast(
                         msg: "切换成功！",
                         toastLength: Toast.LENGTH_SHORT,

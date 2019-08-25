@@ -25,6 +25,18 @@ import 'page_repair.dart';
 import 'page_count.dart';
 import 'page_stay.dart';
 import 'page_order_life.dart';
+import 'page_needPay.dart';
+import 'page_outsellerDetail.dart';
+import 'page_stayDetail.dart';
+import 'page_stayOrder.dart';
+import 'page_order_stay.dart';
+import 'page_family.dart';
+import 'page_familyDetail.dart';
+import 'page_repairList.dart';
+import 'page_order_outseller.dart';
+import 'page_visitorDetail.dart';
+import 'page_add_visitorList.dart';
+import 'page_comments.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -117,6 +129,18 @@ class _MyApp extends State<MyApp> {
         'countPage':(context)=>countPage(),
         'stayPage':(context)=>StayPage(),
         'lifeOrderPage':(context)=>LifeOrderPage(),
+        'needPay':(context)=>NeedPayPage(),
+        'outsellerDetail':(context)=>OutSellerDetailPage(),
+        'stayDetail': (context) => StayDetail(),
+        'stayOrder': (context) => StayOrder(),
+        'stayOrderPage': (context) => StayOrderPage(),
+        'family':(context)=>Family(),
+        'familyDetail':(context)=>FamilyDetail(),
+        'repairList':(context)=>RepairList(),
+        'outsellerOrderPage':(context)=>OutSellerOrderPage(),
+        'visitorDetailPage':(context)=>VisitorDetailPage(),
+        'addVisitorList':(context)=>addVisitorListPage(),
+        'comments':(context)=>CommentPage(),
       },
     );
   }

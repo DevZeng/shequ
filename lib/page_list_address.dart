@@ -27,11 +27,16 @@ class Page extends State<listAddressPage> {
       Dio().get(api.getHUserAddress+'?token=$val').then((response){
         var data = response.data;
         if(data['code']==200){
+          List<Address> lists = [];
           data['data'].forEach((address){
-            addresses.add(Address(address['addressId'], address['addressUserName'], address['addressUserPhone'], address['addressAreas'],
+            if(address['addressIfDefult']==1){
+              radio = address['addressId'];
+            }
+            lists.add(Address(address['addressId'], address['addressUserName'], address['addressUserPhone'], address['addressAreas'],
                 address['addressName'], address['addressIfDefult']));
           });
           setState(() {
+            addresses = lists;
           });
         }
       });
@@ -74,11 +79,14 @@ class Page extends State<listAddressPage> {
                           children: <Widget>[
                             Container(child: Row(
                               children: <Widget>[
-                                Expanded(child: RadioListTile(value: 1, groupValue: address.is_default, onChanged: (val){
+                                Expanded(child: RadioListTile(value: address.id, groupValue: radio, onChanged: (val){
                                   print('click');
-                                  setState(() {
-                                    address.is_default = val;
+                                  setDefault(address.id).then((val){
+                                    setState(() {
+                                      radio = address.id;
+                                    });
                                   });
+
                                 },title: Text('设为默认'),))
                               ],
                             ),width: MediaQuery.of(context).size.width*0.55,
@@ -133,6 +141,41 @@ class Page extends State<listAddressPage> {
       if(data['code']==200){
         Fluttertoast.showToast(msg: '删除成功');
       }
+    });
+  }
+  setDefault(int id) async {
+    getUser().then((val){
+      var formData =
+          '{"token": "$val","addressId": "$id", "addressIfDefult": 1}';
+      print(formData);
+      Dio().put(api.modifyAddress, data: formData).then((response) {
+        if (response.statusCode == 200) {
+          var data = response.data;
+          print(data);
+          if (data['code'] == 200) {
+            Fluttertoast.showToast(
+                msg: "设置成功！",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                fontSize: 16.0);
+          } else {
+            Fluttertoast.showToast(
+                msg: data['msg'],
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                fontSize: 16.0);
+          }
+        }
+        ;
+      }).catchError((error) {
+        print(error.toString());
+      });
     });
   }
 }

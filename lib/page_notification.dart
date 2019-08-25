@@ -17,7 +17,7 @@ class Page extends State<NotificationPage>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    getHold().then((val){
+    getXq().then((val){
       Dio().get(api.getXqHHouseInformation+'?infoHouseId=$val').then((response){
         var data = response.data;
         if(data['code']==200){

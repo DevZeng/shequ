@@ -17,8 +17,9 @@ class _countPage extends State<countPage>{
   Api api = new Api();
   List products = [];
   List<Address> addresses = [];
-  Store store = new Store(0, ' ', '', [],0,2);
+  Store store = new Store(0, ' ', '', [],0,2,0);
   Address defaultAddress = new Address(0, '', '', '请选择', '', 1);
+  int addressId = 0;
   _countPage(){
     getUserAddress().then((val){
       if(val!=null&&val.length!=0){
@@ -61,7 +62,7 @@ class _countPage extends State<countPage>{
         child: Column(
           children: <Widget>[
             Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-            store.type==2?Container():GestureDetector(child: Container(
+            store.send==0?null:GestureDetector(child: Container(
               height: 80,
 //              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               color:Colors.white,
@@ -136,6 +137,7 @@ class _countPage extends State<countPage>{
                         onTap: (){
                           print('tap');
                           defaultAddress = addresses[index];
+                          addressId = addresses[index].id;
                           Navigator.of(context).pop();
                         },
                       );
@@ -203,7 +205,7 @@ class _countPage extends State<countPage>{
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                                   child: Text(
-                                    store.products[index].name,
+                                    '￥ ${store.products[index].price}',
                                     style: TextStyle(
                                       fontSize: 18,
                                     ),
@@ -215,7 +217,8 @@ class _countPage extends State<countPage>{
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   height: 40,
-                                  child:Text('X${store.products[index].number}',style: TextStyle(color: Colors.grey[500]),),
+                                  child:Text('${store.products[index].sprice}',style: TextStyle(color: Colors.grey[500],decoration:
+                                  TextDecoration.lineThrough),),
                                   width: 100,
                                 )
                               ],
@@ -269,54 +272,98 @@ class _countPage extends State<countPage>{
               width: MediaQuery.of(context).size.width*0.3,
               child: FlatButton(onPressed: (){
                 getUser().then((val){
-                  List products = [];
-                  store.products.forEach((item){
-//                    print(item);
-                    products.add({
-                      'storeId':item.id,
-                      'storeNum':item.number
-                    });
-                  });
-                  var formData =
-                      '{"token": "$val", "store": "$products", "addressId":1,"storeIdentity":2,"storeShopId":"${store.id}"}';
-//                  print(formData);
-                  Dio().post(api.postHShopStoreOrder,data: formData).then((response){
-                    var data = response.data;
-                    print(data);
-                    if(data['code']==200){
-                      var formData =
-                          '{"token": "$val", "orderid": "${data['data']['storeOrderId']}", "orderType":2}';
-                      Dio().post(api.wxpay,data: formData).then((response){
-                         data = response.data;
-//                         print(data);
-                         if(data['code']==200){
-//                           print(data);
-                           data = jsonDecode(data['data']);
-                           fluwx
-                               .pay(
-                               appId: data['appid']
-                                   .toString(),
-                               partnerId: data['partnerid']
-                                   .toString(),
-                               prepayId: data['prepayid']
-                                   .toString(),
-                               packageValue: data['package']
-                                   .toString(),
-                               nonceStr: data['noncestr']
-                                   .toString(),
-                               timeStamp: int.parse(
-                                   data['timestamp']),
-                               sign: data['sign']
-                                   .toString())
-                               .then((val) {
-                             print(val);
-                           }).catchError((error) {
-                             print(error);
-                           });
-                         }
+                  if(store.type==2){
+                    List products = [];
+                    store.products.forEach((item){
+                      products.add({
+                        'storeId':item.id,
+                        'storeNum':item.number
                       });
-                    }
-                  });
+                    });
+                    var formData =
+                        '{"token": "$val", "store": "$products", "addressId":${addressId},"storeIdentity":2,"storeShopId":"${store.id}"}';
+                    Dio().post(api.postHShopStoreOrder,data: formData).then((response){
+                      var data = response.data;
+                      print(data);
+                      if(data['code']==200){
+                        var formData =
+                            '{"token": "$val", "orderid": "${data['data']['storeOrderId']}", "orderType":2}';
+                        Dio().post(api.wxpay,data: formData).then((response){
+                          data = response.data;
+                          if(data['code']==200){
+                            data = jsonDecode(data['data']);
+                            fluwx
+                                .pay(
+                                appId: data['appid']
+                                    .toString(),
+                                partnerId: data['partnerid']
+                                    .toString(),
+                                prepayId: data['prepayid']
+                                    .toString(),
+                                packageValue: data['package']
+                                    .toString(),
+                                nonceStr: data['noncestr']
+                                    .toString(),
+                                timeStamp: int.parse(
+                                    data['timestamp']),
+                                sign: data['sign']
+                                    .toString())
+                                .then((val) {
+                              print(val);
+                            }).catchError((error) {
+                              print(error);
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }else{
+                    List products = [];
+                    store.products.forEach((item){
+                      products.add({
+                        'takeOutId':item.id,
+                        'takeOutIdNum':item.number
+                      });
+                    });
+                    var formData =
+                        '{"token": "$val", "takeout": "$products", "addressId":${addressId},"toOrderIdentity":2,"toOrderShopId":"${store.id}"}';
+                    Dio().post(api.postHShopTakeoutOrder,data: formData).then((response){
+                      var data = response.data;
+                      print(data);
+                      if(data['code']==200){
+                        var formData =
+                            '{"token": "$val", "orderid": "${data['data']}", "orderType":1}';
+                        Dio().post(api.wxpay,data: formData).then((response){
+                          data = response.data;
+                          if(data['code']==200){
+                            data = jsonDecode(data['data']);
+                            fluwx
+                                .pay(
+                                appId: data['appid']
+                                    .toString(),
+                                partnerId: data['partnerid']
+                                    .toString(),
+                                prepayId: data['prepayid']
+                                    .toString(),
+                                packageValue: data['package']
+                                    .toString(),
+                                nonceStr: data['noncestr']
+                                    .toString(),
+                                timeStamp: int.parse(
+                                    data['timestamp']),
+                                sign: data['sign']
+                                    .toString())
+                                .then((val) {
+                              print(val);
+                            }).catchError((error) {
+                              print(error);
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+
                 });
               }, child: Text('支付',style: TextStyle(color: Colors.white),)),
             ),

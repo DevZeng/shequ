@@ -17,23 +17,13 @@ class Page extends State<OutSellerPage> {
     super.initState();
   }
   var _imageUrls = [];
+  int sort = 0;
   var shops = [
-    {
-      "shopId": 5,
-      "shopName": "美团外卖",
-      "shopThumbnail": "http://hongyuan-1258763596.cos.ap-guangzhou.myqcloud.com/hy/2019/156463976334501.jpg",
-      "shopLog": 113.363233,
-      "shopLat": 22.933466,
-      "shopDeliveryFee": 2,
-      "shopStartFee": 10,
-      "shopScore": 4.3333335,
-      "shopMonthlySales": 0,
-      "shopDistance": null
-    }
   ];
 
   Page() {
     getR();
+    getShop();
   }
 
   void getR() {
@@ -86,8 +76,16 @@ class Page extends State<OutSellerPage> {
             Container(
               child:Row(
                 children: <Widget>[
-                  FlatButton(onPressed: (){}, child: Text('综合排序')),
-                  FlatButton(onPressed: (){}, child: Text('销量'))
+                  FlatButton(onPressed: (){
+                    setState(() {
+                      sort = 0;
+                    });
+                  }, child: Text('综合排序',style: TextStyle(color: sort==0?Colors.yellow:Colors.black),)),
+                  FlatButton(onPressed: (){
+                    setState(() {
+                      sort = 1;
+                    });
+                  }, child: Text('销量',style: TextStyle(color: sort==1?Colors.yellow:Colors.black),))
                 ],
               ),
             ),
@@ -95,14 +93,13 @@ class Page extends State<OutSellerPage> {
               shrinkWrap: true,
                 itemCount: shops.length,
                 itemBuilder: (context,index){
-                  return Container(
+                  return GestureDetector(child: Container(
                     padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    height: 100,
-//                    color: Colors.red,
+                    height: 105,
                     child: Row(
                       children: <Widget>[
                         Container(
-                          color: Colors.green,
+//                          color: Colors.green,
                           width: 80,
                           child: Image.network(shops[index]['shopThumbnail']),
                         ),
@@ -110,41 +107,44 @@ class Page extends State<OutSellerPage> {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                color: Colors.yellow,
-
                                 width: MediaQuery.of(context).size.width-110,
                                 padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                                 child: Text(shops[index]['shopName'],style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
                               ),
                               Container(
+                                padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                height: 30,
 //                                color: Colors.red,
-                                padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-                                height: 35,
                                 width: MediaQuery.of(context).size.width-110,
                                 child: Row(
                                   children: <Widget>[
                                     Container(
                                       width: 15,
                                       height: 15,
-                                      child: ImageIcon(AssetImage('images/star.png')),
+                                      child: Icon(Icons.star,size: 15,),
                                     ),
-                                    Text(double.parse(shops[index]['shopScore'].toString()).toStringAsFixed(1)),
+                                    Text(double.parse(shops[index]['shopScore'].toString()).toStringAsFixed(1),style: TextStyle(fontSize: 14)),
+                                    Text('  月售${shops[index]['shopMonthlySales']}',style: TextStyle(fontSize: 14),),
                                   ],
                                 ),
                               ),
                               Container(
-                                color: Colors.red,
-//                                padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-//                                height: 35,
+                                padding: EdgeInsets.fromLTRB(10, 7, 0, 0),
+                                height: 25,
                                 width: MediaQuery.of(context).size.width-110,
                                 child: Row(
                                   children: <Widget>[
                                     Container(
-                                      width: 15,
-                                      height: 15,
-                                      child: ImageIcon(AssetImage('images/star.png')),
+                                      alignment: Alignment.centerLeft,
+                                      width: MediaQuery.of(context).size.width-200,
+//                                      height: 10,
+                                      child: Text('起送￥${shops[index]['shopStartFee']} 配送￥${shops[index]['shopDeliveryFee']}'),
                                     ),
-                                    Text(double.parse(shops[index]['shopScore'].toString()).toStringAsFixed(1)),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      width: 80,
+                                      child: Text('2km'),
+                                    )
                                   ],
                                 ),
                               ),
@@ -153,11 +153,24 @@ class Page extends State<OutSellerPage> {
                         )
                       ],
                     ),
-                  );
+                  ),onTap: (){
+                    Navigator.of(context).pushNamed('outsellerDetail',arguments: shops[index]['shopId']);
+                  },);
                 })
           ],
         ),
       )
     );
+  }
+  void getShop() {
+    Dio().request(api.getTypeHShopMsg + '?shopType=1').then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+//        print(content['data']);
+        setState(() {
+          shops = content['data'];
+        });
+      }
+    });
   }
 }

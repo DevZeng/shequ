@@ -53,13 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('兴宁头条')),
-          BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('生活服务')),
+          BottomNavigationBarItem(icon: ImageIcon(AssetImage('images/tab1icon.png'),size: 16,), title: Text('兴宁头条')),
+          BottomNavigationBarItem(icon: ImageIcon(AssetImage('images/tab2icon.png'),size: 16,), title: Text('生活服务')),
           BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage('images/open.png')),
-              activeIcon: ImageIcon(AssetImage('images/open_click.png')),
+              icon: ImageIcon(AssetImage('images/open.png'),size: 16,),
               title: Text('一键开门')),
-          BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('个人中心')),
+          BottomNavigationBarItem(icon: ImageIcon(AssetImage('images/tab4icon.png'),size: 16,), title: Text('个人中心')),
         ],
         selectedItemColor: Colors.orange,
         onTap: (index) => {

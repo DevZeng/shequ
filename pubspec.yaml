@@ -40,6 +40,11 @@ dependencies:
   image_picker: ^0.6.1
   fluwx: ^1.0.4
   path_provider: ^1.2.0
+  flutter_webview_plugin: ^0.3.7
+  amap_location: ^0.2.0
+  permission_handler: ^3.2.2
+  smooth_star_rating: ^1.0.3
+
 
 
 
@@ -78,6 +83,14 @@ flutter:
     - images/moneypacket.png
     - images/visitors.png
     - images/homemember.png
+    - images/camera.png
+    - images/share.png
+    - images/outsellerbg.png
+    - images/tab1icon.png
+    - images/tab2icon.png
+    - images/tab4icon.png
+    - images/yes.png
+    - images/add.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

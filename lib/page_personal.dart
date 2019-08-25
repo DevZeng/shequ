@@ -120,7 +120,9 @@ class _PersonalPage extends State<PersonalPage> {
                           child: Column(
                             children: <Widget>[
                               FlatButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('family');
+                                },
                                 disabledColor: Colors.white,
                                 child: Image(
                                   image: AssetImage(
@@ -217,7 +219,9 @@ class _PersonalPage extends State<PersonalPage> {
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed('outsellerOrderPage');
+                                    },
                                     disabledColor: Colors.white,
                                     child: Image(
                                       image: AssetImage(
@@ -257,7 +261,9 @@ class _PersonalPage extends State<PersonalPage> {
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed('stayOrderPage');
+                                    },
                                     disabledColor: Colors.white,
                                     child: Image(
                                       image: AssetImage('images/order_stay.png'),
@@ -335,7 +341,7 @@ class _PersonalPage extends State<PersonalPage> {
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, "listAddress");
+                        Navigator.pushNamed(context, "needPay");
                       },
                     ),
                     Divider(
@@ -411,11 +417,14 @@ class _PersonalPage extends State<PersonalPage> {
       }
       Dio().request(api.getUserInfo + '?token=$val').then((response) {
         var data = response.data;
+        print(data);
         if (data['code'] == 200) {
           setState(() {
             imgUrl = data['data']['userMsgHead'];
             userName = data['data']['userMsgNike'];
           });
+        }else if(data['code'] == 0){
+          Navigator.of(context).pushNamed('login');
         }
       });
     });

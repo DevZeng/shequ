@@ -4,13 +4,24 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _RegisterPage();
+  }
+}
+
+class _RegisterPage extends State<RegisterPage> {
   String username = '';
   String password = '';
   String code = '';
+  TextEditingController usernameController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController codeController = new TextEditingController();
 
   void sendCode() {
-    if (username.length != 11) {
+    if (usernameController.text.length != 11) {
       Fluttertoast.showToast(
           msg: "不是有效的手机号码！",
           toastLength: Toast.LENGTH_SHORT,
@@ -20,7 +31,8 @@ class RegisterPage extends StatelessWidget {
           textColor: Colors.black,
           fontSize: 16.0);
     }
-    var formData = {"userPhone": username, "sUserAccount": username};
+    var formData = {"userPhone": usernameController.text, "sUserAccount": usernameController.text};
+    print(formData);
     Dio().post(Api.sendMessage, data: formData).then((response) {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
@@ -31,13 +43,12 @@ class RegisterPage extends StatelessWidget {
             backgroundColor: Colors.white,
             textColor: Colors.black,
             fontSize: 16.0);
-      }
-      ;
+      };
     });
   }
 
   void register() {
-    if (username.length == 0 || code.length == 0 || password.length == 0) {
+    if (usernameController.text.length == 0 || codeController.text.length == 0 || passwordController.text.length == 0) {
       Fluttertoast.showToast(
           msg: "请检查输入内容！",
           toastLength: Toast.LENGTH_SHORT,
@@ -47,7 +58,7 @@ class RegisterPage extends StatelessWidget {
           textColor: Colors.black,
           fontSize: 16.0);
     }else{
-      var formData = {"userPhone": username, "userPwd": password, "code": code};
+      var formData = {"userPhone": usernameController.text, "userPwd": passwordController.text, "code": codeController.text};
       Dio().post(Api.register, data: formData).then((response) {
         if (response.statusCode == 200) {
           var data = response.data;
@@ -88,7 +99,7 @@ class RegisterPage extends StatelessWidget {
           elevation: 0,
           centerTitle: false,
         ),
-        body: Container(
+        body: SingleChildScrollView(child: Container(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,36 +113,32 @@ class RegisterPage extends StatelessWidget {
               ),
               Container(
                 child: TextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: '请输入手机号',
-                      suffix: FlatButton(
-                          child: Text('获取验证码'), onPressed: sendCode)),
-                  onChanged: (v) {
-                    username = v;
-                  },
+                    controller: usernameController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '请输入手机号',
+                        suffix: FlatButton(
+                            child: Text('获取验证码'), onPressed: sendCode))
                 ),
                 decoration: BoxDecoration(
-                    // 下滑线浅灰色，宽度1像素
+                  // 下滑线浅灰色，宽度1像素
                     border: Border(
                         bottom:
-                            BorderSide(color: Colors.grey[200], width: 1.0))),
+                        BorderSide(color: Colors.grey[200], width: 1.0))),
               ),
               Container(
                 child: TextField(
+                  controller: codeController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: InputBorder.none, hintText: '请输入短信验证码'),
-                  onChanged: (v) {
-                    code = v;
-                  },
                 ),
                 decoration: BoxDecoration(
-                    // 下滑线浅灰色，宽度1像素
+                  // 下滑线浅灰色，宽度1像素
                     border: Border(
                         bottom:
-                            BorderSide(color: Colors.grey[200], width: 1.0))),
+                        BorderSide(color: Colors.grey[200], width: 1.0))),
               ),
               Container(
                 child: Text(
@@ -143,17 +150,15 @@ class RegisterPage extends StatelessWidget {
               ),
               Container(
                 child: TextField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                       hintText: '请输入密码', border: InputBorder.none),
-                  onChanged: (v) {
-                    password = v;
-                  },
                 ),
                 decoration: BoxDecoration(
-                    // 下滑线浅灰色，宽度1像素
+                  // 下滑线浅灰色，宽度1像素
                     border: Border(
                         bottom:
-                            BorderSide(color: Colors.grey[200], width: 1.0))),
+                        BorderSide(color: Colors.grey[200], width: 1.0))),
               ),
 //          Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 15),child: new Divider(),),
               Container(
@@ -170,9 +175,9 @@ class RegisterPage extends StatelessWidget {
                         )),
                     shape: new StadiumBorder(
                         side: new BorderSide(
-                      style: BorderStyle.solid,
-                      color: Color.fromRGBO(240, 190, 60, 1),
-                    )),
+                          style: BorderStyle.solid,
+                          color: Color.fromRGBO(240, 190, 60, 1),
+                        )),
                   ),
                 ),
                 padding: EdgeInsets.fromLTRB(15, 20, 0, 15),
@@ -192,6 +197,6 @@ class RegisterPage extends StatelessWidget {
                   ))
             ],
           ),
-        ));
+        ),));
   }
 }

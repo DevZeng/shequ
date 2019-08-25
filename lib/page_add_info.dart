@@ -46,7 +46,7 @@ class Page extends State<addPageInfo> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.20,
+                    height: 160,
                     color: Colors.white,
                     child: GestureDetector(
                       child: Container(
@@ -54,21 +54,25 @@ class Page extends State<addPageInfo> {
                         child: Center(
                           child: Column(
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+                              Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+                              child: Container(
+
                                 child: CircleAvatar(
                                   backgroundImage: NetworkImage(
                                       info['userMsgHead'] == null
                                           ? ''
                                           : info['userMsgHead']),
                                 ),
-                                height: 100,
+                                height: 80,
                                 width: 80,
 
-                              ),
-                              Text(
-                                '点击更改头像',
-                                style: TextStyle(color: Colors.grey[500]),
+                              ),),
+                              Container(
+                                child: Text(
+                                  '点击更改头像',
+                                  style: TextStyle(color: Colors.grey[500]),
+                                ),
+                                height: 20,
                               )
                             ],
                           ),

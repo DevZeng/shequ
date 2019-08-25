@@ -222,6 +222,7 @@ class Page extends State<LifeStorePage> {
                                             products[index]['storeId'],
                                             products[index]['storeName'],
                                             products[index]['storeMemberPrice'],
+                                            products[index]['storePrice'],
                                             1,
                                             products[index]['storeThumbnail'],
                                         );
@@ -250,7 +251,7 @@ class Page extends State<LifeStorePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-//        print(products);
+        print(info);
 //        test();
       }),
     );
@@ -428,7 +429,7 @@ class Page extends State<LifeStorePage> {
                                       child: FlatButton(
                                           onPressed: () {},
                                           child: Text(
-                                            price.toString(),
+                                            price.toStringAsFixed(2),
                                             style: TextStyle(color: Colors.white),
                                           )),
                                     ),
@@ -455,7 +456,7 @@ class Page extends State<LifeStorePage> {
                                 color: Colors.yellow,
                                 child: FlatButton(
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,2));
+                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,2,info['shopIfDelivery']));
                                   },
                                   child: Text(
                                     '去结算',

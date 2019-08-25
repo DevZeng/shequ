@@ -315,6 +315,17 @@ class Page extends State<addHouseInfo> {
                 fontSize: 16.0).then((val){
                   Navigator.of(context).pop();
             });
+          }else{
+            Fluttertoast.showToast(
+                msg: data['msg'],
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                fontSize: 16.0).then((val){
+//              Navigator.of(context).pop();
+            });
           }
         });
       });

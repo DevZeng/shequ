@@ -7,4 +7,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion"/>
     <uses-permission android:name="android.permission.CAMERA" tools:remove="android:maxSdkVersion"/>
+    <application>
+
+        <meta-data tools:replace="android:value"
+            android:name="com.amap.api.v2.apikey"
+            android:value="95db36a1424f20c2bbd752193a984969"/>
+    </application>
 </manifest>

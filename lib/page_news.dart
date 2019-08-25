@@ -116,7 +116,7 @@ class Page extends State<NewsPage> {
     for (var i = 0; i < list.length; i++) {
       icons.add(Container(
           width: MediaQuery.of(context).size.width * 0.25,
-          height: 70,
+          height: 75,
           child: Column(
             children: <Widget>[
               FlatButton(
