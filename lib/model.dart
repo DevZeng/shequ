@@ -51,6 +51,20 @@ void saveXq(id) async
   await prefs.setInt('xqId', id);
 }
 
+getDay(int hours){
+  int day ;
+  if(hours<24){
+    day = 1;
+  }
+  int a = hours%24;
+  if(a==0){
+    day = (hours/24).toInt();
+  }else{
+    day = (hours/24).toInt()+1;
+  }
+  return day;
+}
+
 
 class Address{
 int id;

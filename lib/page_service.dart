@@ -18,6 +18,8 @@ class ServicePage extends StatefulWidget {
 
 class Page extends State<ServicePage> {
   AMapLocation _loc;
+  Api api = new Api();
+  var lists = [];
 
   Page() {
     getR();
@@ -26,13 +28,19 @@ class Page extends State<ServicePage> {
         .catchError((error) {
       print(error);
     });
-    _checkPersmission();
+    _checkPersmission().then((val){
+      Dio().get(api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}").then((response){
+        setState(() {
+          lists = response.data['data'];
+        });
+      });
+    });
   }
 
 
   var _imageUrls = [];
 
-  Api api = new Api();
+
 
   @override
   Widget build(BuildContext context) {
@@ -217,53 +225,82 @@ class Page extends State<ServicePage> {
                     ),
                   ),
                   Container(child: Text('附近推荐',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),width: MediaQuery.of(context).size.width,padding: EdgeInsets.fromLTRB(15, 15, 15, 0),),
+                  Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                   Container(
-                    width: 120,
-                    height: 160,
+                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                    height: 180,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: lists.length,
+                        itemBuilder: (context,index){
+                      return GestureDetector(child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: Container(
+                          width: 120,
+                          height: 160,
 //          color: Colors.red,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 1,color: Colors.grey[200]),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey[100],
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(width: 1,color: Colors.grey[200]),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey[100],
 //                    blurRadius: 2.0,
 //                    spreadRadius: 1.0,
-                          offset: Offset(-1.0, 1.0),
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(padding: EdgeInsets.fromLTRB(20, 10, 20, 10),child: Container(
-                          width: 80,
-                          height: 80,
-                          color: Colors.blueGrey,
-                        ),),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          alignment: Alignment.center,
-                          child: Text('dddd',style: TextStyle(fontSize: 18),),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-//                alignment: Alignment.center,
-                          child: Row(
-                            children: <Widget>[
-                              Container(child: Icon(Icons.location_on,size: 12,),width: 50,alignment: Alignment.centerRight,),
-                              Container(child: Text('dddd'),width: 60,)
-
+                                offset: Offset(-1.0, 1.0),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    ),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(padding: EdgeInsets.fromLTRB(20, 10, 20, 10),child: Container(
+                                width: 80,
+                                height: 80,
+//                              color: Colors.blueGrey,
+                                decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(lists[index]['shopThumbnail']),fit: BoxFit.cover)),
+                              ),),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                alignment: Alignment.center,
+                                child: Text(lists[index]['shopName'],style: TextStyle(fontSize: 18),),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(30, 0, 0, 10),
+//                alignment: Alignment.center,
+//                              color: Colors.red,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(child: Icon(Icons.location_on,size: 12,)),
+                                    Container(child: Text('${lists[index]['shopDistance']}m'))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),),onTap: (){
+                        switch(lists[index]['shopType']){
+                          case 1:
+                            Navigator.of(context).pushNamed('outsellerDetail',arguments: lists[index]['shopId']);
+                            break;
+                          case 2:
+                            Navigator.of(context).pushNamed("lifeStore", arguments: lists[index]['shopId']);
+                            break;
+                          case 3:
+                            Navigator.of(context).pushNamed('stayDetail',arguments: {
+                              'id':lists[index]['shopId'],
+                              'indate':DateTime.now(),
+                              'outdate':DateTime.now().add(new Duration(days: 1)),
+                            });
+                            break;
+                        }
+//                        print('dafa');
+                      },);
+                    }),
                   )
                 ],
               ),
             )),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        print(_loc.altitude);
+        print(lists);
       }),
     );
   }
@@ -319,7 +356,7 @@ class Page extends State<ServicePage> {
     });
   }
 
-  void _checkPersmission() async {
+  _checkPersmission() async {
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);
     if (permission == PermissionStatus.denied) {
@@ -330,14 +367,6 @@ class Page extends State<ServicePage> {
 
       }
     }
-//    AMapLocationClient.onLocationUpate.listen((AMapLocation loc){
-//      if(!mounted)return;
-//      setState(() {
-//        _loc = loc;
-//      });
-//    }).onError((error){
-//      print(error.toString());
-//    });
     AMapLocation loc = await AMapLocationClient.getLocation(true);
     setState(() {
         _loc = loc;

@@ -49,8 +49,8 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
         width: MediaQuery.of(context).size.width*0.7,
         height: 40.0  ,
         child: new RaisedButton(onPressed: (){
-          print(lists);
-//                    Navigator.of(context).pushNamed('addVisitorList',arguments: id);
+//          print(lists);
+                    Navigator.of(context).pushNamed('addVisitorList',arguments: id);
 //          print(detailController.text);
         },color: Colors.orange,
           child: new Text("添加",style: TextStyle(color: Colors.white,)),

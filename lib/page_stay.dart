@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'api.dart';
+import 'model.dart';
 
 class StayPage extends StatefulWidget {
   @override
@@ -141,7 +142,7 @@ class Page extends State<StayPage> {
                                         MediaQuery.of(context).size.width * 0.2,
 //                                padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                     child: Text(
-                                        "共${outtime.difference(intime).inHours}晚"),
+                                        "共${getDay(outtime.difference(intime).inHours)}晚"),
                                   ),
                                 ],
                               ),
@@ -232,21 +233,26 @@ class Page extends State<StayPage> {
                                   padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                                 ),
                                 Container(
-                                  child: Text(
-                                    store['shopName'],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.location_on,color: Colors.yellow,size: 14,),
+                                      Text(
+                                        "${store['shopDistance']}m",style: TextStyle(color: Colors.grey)
+                                      ),
+                                      Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      child: Text('${store['shopScore']}分',style: TextStyle(color: Colors.grey)),)
+                                    ],
                                   ),
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                                 ),
                                 Container(
-                                  child: Text(
-                                    store['shopName'],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text('¥${store['shopLowPrice']}',style: TextStyle(color: Colors.red,fontSize: 18),),
+                                      Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),child:
+                                        Text('${store['shopMonthlySales']}销量',style: TextStyle(color: Colors.grey),))
+                                    ],
                                   ),
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.fromLTRB(15, 5, 0, 0),

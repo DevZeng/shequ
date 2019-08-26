@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'model.dart';
 import 'package:dio/dio.dart';
 import 'api.dart';
+import 'dart:convert';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class LifeOrderPage extends StatefulWidget {
   @override
@@ -21,10 +23,10 @@ class lifeOrderPage extends State<LifeOrderPage>
     "已完成",
   ];
   String token = '';
-  List<Store> unPayOrders = [];
-  List<Store> payOrders = [];
-  List<Store> waitPayOrders = [];
-  List<Store> finishPayOrders = [];
+  List<Order> unPayOrders = [];
+  List<Order> payOrders = [];
+  List<Order> waitPayOrders = [];
+  List<Order> finishPayOrders = [];
   Api api = new Api();
 
   @override
@@ -97,7 +99,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(unPayOrders[index].icon),
+                              child: Image.network(unPayOrders[index].store.icon),
                               width: 60,
                               height: 60,
                             ),
@@ -117,7 +119,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                           padding:
                                               EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
-                                            unPayOrders[index].name,
+                                            unPayOrders[index].store.name,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w700),
@@ -148,7 +150,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Container(
                           child: Column(
                             children:
-                                unPayOrders[index].products.map((product) {
+                                unPayOrders[index].store.products.map((product) {
                               return Container(
 //                                color:Colors.red,
 //                                alignment: Alignment.centerRight,
@@ -176,7 +178,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                           width: MediaQuery.of(context).size.width,
                           alignment: Alignment.centerRight,
                           child: Text(
-                              '共${unPayOrders[index].products.length}件商品，实付¥${unPayOrders[index].price}'),
+                              '共${unPayOrders[index].store.products.length}件商品，实付¥${unPayOrders[index].store.price}'),
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -185,8 +187,10 @@ class lifeOrderPage extends State<LifeOrderPage>
                           alignment: Alignment.centerRight,
                           width: MediaQuery.of(context).size.width,
                           child: OutlineButton(
-                            onPressed: () {},
-                            child: Text('再来一单'),
+                            onPressed: () {
+                              payOrder(unPayOrders[index]);
+                            },
+                            child: Text('去支付'),
                           ),
                         )
                       ],
@@ -207,7 +211,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(payOrders[index].icon),
+                              child: Image.network(payOrders[index].store.icon),
                               width: 60,
                               height: 60,
                             ),
@@ -227,7 +231,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                           padding:
                                               EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
-                                            payOrders[index].name,
+                                            payOrders[index].store.name,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w700),
@@ -253,7 +257,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         ),
                         Container(
                           child: Column(
-                            children: payOrders[index].products.map((product) {
+                            children: payOrders[index].store.products.map((product) {
                               return Container(
 //                                color:Colors.red,
 //                                alignment: Alignment.centerRight,
@@ -281,7 +285,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                           width: MediaQuery.of(context).size.width,
                           alignment: Alignment.centerRight,
                           child: Text(
-                              '共${payOrders[index].products.length}件商品，实付¥${payOrders[index].price}'),
+                              '共${payOrders[index].store.products.length}件商品，实付¥${payOrders[index].store.price}'),
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -312,7 +316,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(waitPayOrders[index].icon),
+                              child: Image.network(waitPayOrders[index].store.icon),
                               width: 60,
                               height: 60,
                             ),
@@ -332,7 +336,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                           padding:
                                               EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
-                                            waitPayOrders[index].name,
+                                            waitPayOrders[index].store.name,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w700),
@@ -363,7 +367,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Container(
                           child: Column(
                             children:
-                            waitPayOrders[index].products.map((product) {
+                            waitPayOrders[index].store.products.map((product) {
                               return Container(
 //                                color:Colors.red,
 //                                alignment: Alignment.centerRight,
@@ -391,7 +395,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                           width: MediaQuery.of(context).size.width,
                           alignment: Alignment.centerRight,
                           child: Text(
-                              '共${waitPayOrders[index].products.length}件商品，实付¥${waitPayOrders[index].price}'),
+                              '共${waitPayOrders[index].store.products.length}件商品，实付¥${waitPayOrders[index].store.price}'),
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -422,7 +426,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(finishPayOrders[index].icon),
+                              child: Image.network(finishPayOrders[index].store.icon),
                               width: 60,
                               height: 60,
                             ),
@@ -442,7 +446,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                                           padding:
                                               EdgeInsets.fromLTRB(15, 0, 0, 0),
                                           child: Text(
-                                            finishPayOrders[index].name,
+                                            finishPayOrders[index].store.name,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w700),
@@ -473,7 +477,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                         Container(
                           child: Column(
                             children:
-                            finishPayOrders[index].products.map((product) {
+                            finishPayOrders[index].store.products.map((product) {
                               return Container(
 //                                color:Colors.red,
 //                                alignment: Alignment.centerRight,
@@ -501,7 +505,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                           width: MediaQuery.of(context).size.width,
                           alignment: Alignment.centerRight,
                           child: Text(
-                              '共${finishPayOrders[index].products.length}件商品，实付¥${finishPayOrders[index].price}'),
+                              '共${finishPayOrders[index].store.products.length}件商品，实付¥${finishPayOrders[index].store.price}'),
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -529,11 +533,14 @@ class lifeOrderPage extends State<LifeOrderPage>
 
   getOrder(int type) async {
     print(type);
-    List<Store> stores = [];
+//    List<Store> stores = [];
+    List<Order> orders = [];
     Dio()
         .get(api.getHShopStoreOrder + "?token=$token&&storeOrderStatus=$type")
         .then((response) {
+
       var data = response.data;
+      print(data);
       if (data['code'] == 200) {
         switch (type) {
           case 0:
@@ -556,9 +563,10 @@ class lifeOrderPage extends State<LifeOrderPage>
                     good['ssogStoreThumbnail']));
               });
               store.products = products;
-              stores.add(store);
+              Order order = new Order(item['storeOrderId'], store);
+              orders.add(order);
             });
-            unPayOrders = stores;
+            unPayOrders = orders;
             break;
           case 1:
             data['data'].forEach((item) {
@@ -580,9 +588,10 @@ class lifeOrderPage extends State<LifeOrderPage>
                     good['ssogStoreThumbnail']));
               });
               store.products = products;
-              stores.add(store);
+              Order order = new Order(item['storeOrderId'], store);
+              orders.add(order);
             });
-            payOrders = stores;
+            payOrders = orders;
 
             break;
           case 2:
@@ -605,9 +614,10 @@ class lifeOrderPage extends State<LifeOrderPage>
                     good['ssogStoreThumbnail']));
               });
               store.products = products;
-              stores.add(store);
+              Order order = new Order(item['storeOrderId'], store);
+              orders.add(order);
             });
-            waitPayOrders = stores;
+            waitPayOrders = orders;
 
             break;
           case 3:
@@ -630,15 +640,50 @@ class lifeOrderPage extends State<LifeOrderPage>
                     good['ssogStoreThumbnail']));
               });
               store.products = products;
-              stores.add(store);
+              Order order = new Order(item['storeOrderId'], store);
+              orders.add(order);
             });
-            finishPayOrders = stores;
+            finishPayOrders = orders;
             break;
         }
         setState(() {
 
         });
       }
+    });
+  }
+  payOrder(Order order) {
+    print('pay');
+    getUser().then((val){
+      var formData =
+          '{"token": "$val", "orderid": "${order.number}", "orderType":2}';
+      Dio().post(api.wxpay,data: formData).then((response){
+        var data = response.data;
+        if(data['code']==200){
+          data = jsonDecode(data['data']);
+          fluwx
+              .pay(
+              appId: data['appid']
+                  .toString(),
+              partnerId: data['partnerid']
+                  .toString(),
+              prepayId: data['prepayid']
+                  .toString(),
+              packageValue: data['package']
+                  .toString(),
+              nonceStr: data['noncestr']
+                  .toString(),
+              timeStamp: int.parse(
+                  data['timestamp']),
+              sign: data['sign']
+                  .toString())
+              .then((val) {
+            print(val);
+          }).catchError((error) {
+            print(error);
+          });
+        }
+      });
     });
   }
 }
