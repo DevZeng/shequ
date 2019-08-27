@@ -37,6 +37,7 @@ import 'page_order_outseller.dart';
 import 'page_visitorDetail.dart';
 import 'page_add_visitorList.dart';
 import 'page_comments.dart';
+import 'page_product.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -141,6 +142,7 @@ class _MyApp extends State<MyApp> {
         'visitorDetailPage':(context)=>VisitorDetailPage(),
         'addVisitorList':(context)=>addVisitorListPage(),
         'comments':(context)=>CommentPage(),
+        'product':(context)=>ProductPage()
       },
     );
   }

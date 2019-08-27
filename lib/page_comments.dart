@@ -86,7 +86,7 @@ class _commentPage extends State<CommentPage> {
                                 ],
                               ),),
                             Container(
-                              child: Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(info==null?"0":'${info['tcommentWd']}',style: TextStyle(color: Colors.grey),),),
+                              child: Padding(padding: EdgeInsets.fromLTRB(8, 0, 0, 0),child: Text(info==null?"0":'${info['tcommentWd']}',style: TextStyle(color: Colors.grey),),),
                             ),
                           ],
                         ),
@@ -112,7 +112,7 @@ class _commentPage extends State<CommentPage> {
                                 ],
                               ),),
                             Container(
-                              child: Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(info==null?"0":info['tcommentBz'].toString(),style: TextStyle(color: Colors.grey),),),
+                              child: Padding(padding: EdgeInsets.fromLTRB(8, 0, 0, 0),child: Text(info==null?"0":info['tcommentBz'].toString(),style: TextStyle(color: Colors.grey),),),
                             ),
                           ],
                         ),
@@ -138,7 +138,7 @@ class _commentPage extends State<CommentPage> {
                                 ],
                               ),),
                             Container(
-                              child: Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(info==null?"0":"${info['tcommentPs']}",style: TextStyle(color: Colors.grey),),),
+                              child: Padding(padding: EdgeInsets.fromLTRB(8, 0, 0, 0),child: Text(info==null?"0":"${info['tcommentPs']}",style: TextStyle(color: Colors.grey),),),
                             ),
                           ],
                         ),

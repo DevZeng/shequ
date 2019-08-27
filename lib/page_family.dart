@@ -65,7 +65,7 @@ class _family extends State<Family>{
                     height: 100,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
-                        image: DecorationImage(image: NetworkImage(person['familyImage']),fit: BoxFit.fill)
+                        image: DecorationImage(image: NetworkImage(person['familyImage']),fit: BoxFit.cover)
                     ),
                   ),),
                   Padding(padding: EdgeInsets.fromLTRB(10,10, 10, 0),

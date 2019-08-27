@@ -39,6 +39,7 @@ class Page extends State<NewsPage> {
         var content = response.data;
         setState(() {
           _imageUrls = content['data'];
+          print(_imageUrls);
         });
       }
     });
@@ -147,7 +148,10 @@ class Page extends State<NewsPage> {
   Widget layout(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('兴宁头条'), elevation: 0),
+      appBar: AppBar(title: Text('兴宁头条'), elevation: 0,actions: <Widget>[
+        Icon(Icons.wb_cloudy),
+        Center(child: Text('dsfasf'),),
+      ],),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

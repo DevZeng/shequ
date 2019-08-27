@@ -3,6 +3,8 @@ import 'api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget{
   @override
@@ -16,11 +18,33 @@ class _RegisterPage extends State<RegisterPage> {
   String username = '';
   String password = '';
   String code = '';
+  var countdownTime = 0;
+  Timer _timer;
   TextEditingController usernameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController codeController = new TextEditingController();
 
+  @override
+  void dispose() {
+    super.dispose();
+    if (_timer != null) {
+      _timer.cancel();
+    }
+  }
   void sendCode() {
+    if(countdownTime==0){
+      startCountdown();
+    }else{
+      Fluttertoast.showToast(
+          msg: "验证码已发送！",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0);
+      return ;
+    }
     if (usernameController.text.length != 11) {
       Fluttertoast.showToast(
           msg: "不是有效的手机号码！",
@@ -62,15 +86,51 @@ class _RegisterPage extends State<RegisterPage> {
       Dio().post(Api.register, data: formData).then((response) {
         if (response.statusCode == 200) {
           var data = response.data;
+          print('1');
+          print(data);
           if (data['code'] == 200) {
-            Fluttertoast.showToast(
-                msg: "注册成功！",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-                fontSize: 16.0);
+            var formData = {"userPhone": usernameController.text, "userPwd": passwordController.text, "loginType":1,"code":""};
+            Dio().post(Api.login, data: formData).then((response) {
+              print('2');
+              print(response);
+              if (response.statusCode == 200) {
+                var data = response.data;
+                if (data['code'] == 200) {
+
+                  saveUser(data['data']['token']);
+                  var houses = data['data']['householdAllMsg'];
+                  if(houses!=null){
+                    var lists = houses['listMsg'];
+                    if(lists!=null&&lists.length!=0){
+                      saveXq(lists[0]['holdXqId']);
+                      saveHold(lists[0]['holdId']);
+                    }
+                  }
+                  print(houses);
+                  Fluttertoast.showToast(
+                      msg: "注册成功！",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
+                      fontSize: 16.0);
+                  Navigator.pushNamed(context, "home");
+                } else {
+                  Fluttertoast.showToast(
+                      msg: data['msg'],
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
+                      fontSize: 16.0);
+                }
+              }
+              ;
+            });
+
+
           } else {
             Fluttertoast.showToast(
                 msg: data['msg'],
@@ -119,7 +179,15 @@ class _RegisterPage extends State<RegisterPage> {
                         border: InputBorder.none,
                         hintText: '请输入手机号',
                         suffix: FlatButton(
-                            child: Text('获取验证码'), onPressed: sendCode))
+                            child: Text(
+                              countdownTime > 0 ? '$countdownTime后重新获取' : '获取验证码',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: countdownTime > 0
+                                    ? Color.fromARGB(255, 183, 184, 195)
+                                    : Color.fromARGB(255, 17, 132, 255),
+                              ),
+                            ), onPressed: sendCode))
                 ),
                 decoration: BoxDecoration(
                   // 下滑线浅灰色，宽度1像素
@@ -198,5 +266,33 @@ class _RegisterPage extends State<RegisterPage> {
             ],
           ),
         ),));
+  }
+  startCountdown() {
+    countdownTime = 60;
+    final call = (timer) {
+      setState(() {
+        if (countdownTime < 1) {
+          _timer.cancel();
+        } else {
+          countdownTime -= 1;
+        }
+      });
+    };
+    _timer = Timer.periodic(Duration(seconds: 1), call);
+  }
+  void saveUser(user) async
+  {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user', user);
+  }
+  void saveHold(id) async
+  {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('holdId', id);
+  }
+  void saveXq(id) async
+  {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('xqId', id);
   }
 }

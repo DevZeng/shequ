@@ -84,7 +84,21 @@ class Page extends State<HouseInfoPage> {
                   height: MediaQuery.of(context).size.height * 0.2,
                   color: Colors.white,
                   alignment: Alignment.center,
-                  child: Container(
+                  child: houseInfos.length==0?Container(
+                    width: 120,
+                    height: 120,
+//                    color: Colors.red,
+                    child:IconButton(icon: Icon(Icons.add,size: 50,), onPressed: (){
+                      Navigator.of(context)
+                          .pushNamed('addHouseInfo', arguments: new HouseInfo()).then((val){
+                            getInfos();
+                      });
+                    }),
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          )
+                  ):Container(
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
@@ -150,7 +164,7 @@ class Page extends State<HouseInfoPage> {
                   }),
                 ),
               ),
-              Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
+              houseInfos.length<=1?Container():Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40.0,
                 child: new RaisedButton(
@@ -178,7 +192,7 @@ class Page extends State<HouseInfoPage> {
                       )),
                 ),
               ),),
-              Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
+              houseInfos.length==0?Container():Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40.0,
                 child: new RaisedButton(
@@ -190,7 +204,7 @@ class Page extends State<HouseInfoPage> {
 //          print(index);
                   },
                   color: Colors.orange,
-                  child: new Text("保存地址",
+                  child: new Text("修改",
                       style: TextStyle(
                         color: Colors.white,
                       )),

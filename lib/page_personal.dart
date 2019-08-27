@@ -54,7 +54,9 @@ class _PersonalPage extends State<PersonalPage> {
                                 child: CircleAvatar(backgroundImage: NetworkImage(imgUrl),),
                                 onTap: () {
                                   Navigator.of(context)
-                                      .pushNamed('userInfo');
+                                      .pushNamed('userInfo').then((val){
+                                    getUserInfo();
+                                  });
                                 },
                               ),
                             ),
@@ -316,7 +318,7 @@ class _PersonalPage extends State<PersonalPage> {
                     ListTile(
                       title: Text('我的地址'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/info.png')),
+                        child: ImageIcon(AssetImage('images/address.png')),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -333,7 +335,7 @@ class _PersonalPage extends State<PersonalPage> {
                     ListTile(
                       title: Text('缴费服务'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/info.png')),
+                        child: ImageIcon(AssetImage('images/needpay.png')),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -350,7 +352,7 @@ class _PersonalPage extends State<PersonalPage> {
                     ListTile(
                       title: Text('报修预约'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/info.png')),
+                        child: ImageIcon(AssetImage('images/repair.png')),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -367,7 +369,7 @@ class _PersonalPage extends State<PersonalPage> {
                     ListTile(
                       title: Text('社区通知'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/info.png')),
+                        child: ImageIcon(AssetImage('images/notify.png')),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -384,7 +386,7 @@ class _PersonalPage extends State<PersonalPage> {
                     ListTile(
                       title: Text('投诉建议'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/info.png')),
+                        child: ImageIcon(AssetImage('images/report.png')),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(

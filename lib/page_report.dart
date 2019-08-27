@@ -189,7 +189,7 @@ class Page extends State<ReportPage> {
             width: 1, //边框宽度
             color: Colors.grey[100], //边框颜色
           )),
-          child: IconButton(icon: Icon(Icons.ac_unit), onPressed: loadAssets),
+          child: IconButton(icon: Icon(Icons.camera_alt,color: Colors.grey,), onPressed: loadAssets),
         ),
       ];
     } else {
@@ -202,7 +202,7 @@ class Page extends State<ReportPage> {
           width: 1, //边框宽度
           color: Colors.grey[100], //边框颜色
         )),
-        child: IconButton(icon: Icon(Icons.ac_unit), onPressed: loadAssets),
+        child: IconButton(icon: Icon(Icons.camera_alt,color: Colors.grey,), onPressed: loadAssets),
       ));
       for (var i = 0; i < imgUrls.length; i++) {
         widgets.add(Container(

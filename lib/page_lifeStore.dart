@@ -150,7 +150,7 @@ class Page extends State<LifeStorePage> {
               itemCount: products.length==0?0:products.length,
               //列表项构造器
               itemBuilder: (BuildContext context, int index) {
-                return Container(
+                return GestureDetector(child: Container(
                   padding: EdgeInsets.fromLTRB(15, 15, 5, 15),
                   color: Colors.white,
                   child: Row(
@@ -186,13 +186,13 @@ class Page extends State<LifeStorePage> {
                                 children: <Widget>[
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width - 190,
+                                    MediaQuery.of(context).size.width - 190,
                                     child: Row(
                                       children: <Widget>[
                                         Text(
                                           '¥' +
                                               products[index]
-                                                      ['storeMemberPrice']
+                                              ['storeMemberPrice']
                                                   .toString(),
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
@@ -206,10 +206,10 @@ class Page extends State<LifeStorePage> {
                                             style: TextStyle(
                                                 color: Colors.grey[500],
                                                 decoration:
-                                                    TextDecoration.lineThrough),
+                                                TextDecoration.lineThrough),
                                           ),
                                           padding:
-                                              EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                          EdgeInsets.fromLTRB(10, 0, 0, 0),
                                         )
                                       ],
                                     ),
@@ -219,12 +219,12 @@ class Page extends State<LifeStorePage> {
                                           AssetImage('images/cart.png')),
                                       onPressed: () {
                                         Product buy = new Product(
-                                            products[index]['storeId'],
-                                            products[index]['storeName'],
-                                            products[index]['storeMemberPrice'],
-                                            products[index]['storePrice'],
-                                            1,
-                                            products[index]['storeThumbnail'],
+                                          products[index]['storeId'],
+                                          products[index]['storeName'],
+                                          products[index]['storeMemberPrice'],
+                                          products[index]['storePrice'],
+                                          1,
+                                          products[index]['storeThumbnail'],
                                         );
                                         addBuy(buy);
                                         price += products[index]['storeMemberPrice'];
@@ -238,7 +238,9 @@ class Page extends State<LifeStorePage> {
                       ),
                     ],
                   ),
-                );
+                ),onTap: (){
+                  print('tap');
+                },);
               },
               //分割器构造器
               separatorBuilder: (BuildContext context, int index) {

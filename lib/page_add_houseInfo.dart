@@ -129,23 +129,23 @@ class Page extends State<addHouseInfo> {
                                 context: (context),
                                 builder: (context) {
                                   List lists = val;
-                                  return Column(
-                                      children: lists.map((info) {
-//                                  print(info);
-                                        return ListTile(
-                                            title: Text(info['houseName']),
-                                            onTap: () {
-                                              houseInfo.holdXqId =
-                                              info['houseId'];
-                                              houseInfo.holdXq =
-                                              info['houseName'];
-                                              houseInfo.holdLdId = 0;
-                                              houseInfo.holdLd = '请选择';
-                                              houseInfo.holdDy = '请选择';
-                                              houseInfo.holdDyId = 0;
-                                              Navigator.of(context).pop();
-                                            });
-                                      }).toList());
+                                  return ListView.builder(
+                                    itemCount: lists.length,
+                                      itemBuilder: (context,index){
+                                    return ListTile(
+                                        title: Text(lists[index]['houseName']),
+                                        onTap: () {
+                                          houseInfo.holdXqId =
+                                          lists[index]['houseId'];
+                                          houseInfo.holdXq =
+                                          lists[index]['houseName'];
+                                          houseInfo.holdLdId = 0;
+                                          houseInfo.holdLd = '请选择';
+                                          houseInfo.holdDy = '请选择';
+                                          houseInfo.holdDyId = 0;
+                                          Navigator.of(context).pop();
+                                        });
+                                  });
                                 }).then((val) {
                               setState(() {});
                             });
@@ -166,21 +166,21 @@ class Page extends State<addHouseInfo> {
                                 context: (context),
                                 builder: (context) {
                                   List lists = val;
-                                  return Column(
-                                      children: lists.map((info) {
-//                                  print(info);
-                                        return ListTile(
-                                            title: Text(info['houseName']),
-                                            onTap: () {
-                                              houseInfo.holdLdId =
-                                              info['houseId'];
-                                              houseInfo.holdLd =
-                                              info['houseName'];
-                                              houseInfo.holdDy = '请选择';
-                                              houseInfo.holdDyId = 0;
-                                              Navigator.of(context).pop();
-                                            });
-                                      }).toList());
+                                  return ListView.builder(
+                                    itemCount: lists.length,
+                                      itemBuilder: (context,index){
+                                    return ListTile(
+                                        title: Text(lists[index]['houseName']),
+                                        onTap: () {
+                                          houseInfo.holdLdId =
+                                          lists[index]['houseId'];
+                                          houseInfo.holdLd =
+                                          lists[index]['houseName'];
+                                          houseInfo.holdDy = '请选择';
+                                          houseInfo.holdDyId = 0;
+                                          Navigator.of(context).pop();
+                                        });
+                                  });
                                 }).then((val) {
                               setState(() {});
                             });
@@ -201,19 +201,19 @@ class Page extends State<addHouseInfo> {
                                 context: (context),
                                 builder: (context) {
                                   List lists = val;
-                                  return Column(
-                                      children: lists.map((info) {
-//                                  print(info);
-                                        return ListTile(
-                                            title: Text(info['houseName']),
-                                            onTap: () {
-                                              houseInfo.holdDyId =
-                                              info['houseId'];
-                                              houseInfo.holdDy =
-                                              info['houseName'];
-                                              Navigator.of(context).pop();
-                                            });
-                                      }).toList());
+                                  return ListView.builder(
+                                    itemCount: lists.length,
+                                      itemBuilder: (context,index){
+                                    return ListTile(
+                                        title: Text(lists[index]['houseName']),
+                                        onTap: () {
+                                          houseInfo.holdDyId =
+                                          lists[index]['houseId'];
+                                          houseInfo.holdDy =
+                                          lists[index]['houseName'];
+                                          Navigator.of(context).pop();
+                                        });
+                                  });
                                 }).then((val) {
                               setState(() {});
                             });
@@ -279,14 +279,35 @@ class Page extends State<addHouseInfo> {
     new FormData.from({"file": new UploadFileInfo(new File(path), name)});
     Dio().post(api.uploadT, data: formData).then((response) {
       var data = response.data;
+      print(data);
       if (data['code'] == 200) {
         String url = data['data'];
         setState(() {
           houseInfo.imageAddress = url;
         });
+      }else{
+        Fluttertoast.showToast(
+            msg: data['msg'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0).then((val){
+//              Navigator.of(context).pop();
+        });
       }
     }).catchError((error) {
-      print(error);
+      Fluttertoast.showToast(
+          msg: '人脸照片错误',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0).then((val){
+//              Navigator.of(context).pop();
+      });
     });
   }
 

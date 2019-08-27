@@ -91,6 +91,11 @@ flutter:
     - images/tab4icon.png
     - images/yes.png
     - images/add.png
+    - images/needpay.png
+    - images/repair.png
+    - images/notify.png
+    - images/report.png
+    - images/address.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

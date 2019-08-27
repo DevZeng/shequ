@@ -18,6 +18,7 @@ class _repairPage extends State<RepairPage>{
   int type = 0;
   List<Asset> images = List<Asset>();
   DateTime time ;
+  TimeOfDay day;
   var types = [];
   Api api = new Api();
   String typeName = '';
@@ -139,7 +140,7 @@ class _repairPage extends State<RepairPage>{
                 child: ListTile(
                   leading: Text('预约时间'),
                   trailing: GestureDetector(
-                    child: Text(time==null?'请选择 >':"${time.year}-${time.month}-${time.day}",style: TextStyle(color: Colors.grey),),
+                    child: Text(time==null?'请选择 >':"${time.year}-${time.month}-${time.day} ${day==null?'':day.hour.toString()+':'+day.minute.toString()}",style: TextStyle(color: Colors.grey),),
                     onTap: () {
                       showDatePicker(
                         context: context,
@@ -151,6 +152,12 @@ class _repairPage extends State<RepairPage>{
                       ).then((val) {
                         if (val != null) {
                           time = val;
+                          showTimePicker(context: context, initialTime: TimeOfDay.now()).then((val){
+                            if(val!=null){
+                              day = val;
+                            }
+                            setState(() {});
+                          });
                         }
                         setState(() {});
                       });
@@ -364,7 +371,7 @@ class _repairPage extends State<RepairPage>{
         "repairTitle":titleController.text,
         "repairPicture":imgUrls.length==0?'':imgUrls.join(','),
         "repairAddress":addressController.text,
-        "repairMakeTime":"${time.year}-${time.month}-${time.day}",
+        "repairMakeTime":"${time.year}-${time.month}-${time.day} ${day.hour}:${day.minute}",
         "repairUserPhone":phoneController.text,
         "repairTypeName":typeName,
       };

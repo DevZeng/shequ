@@ -29,11 +29,14 @@ class Page extends State<ServicePage> {
       print(error);
     });
     _checkPersmission().then((val){
-      Dio().get(api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}").then((response){
-        setState(() {
-          lists = response.data['data'];
+
+      if(_loc!=null){
+        Dio().get(api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}").then((response){
+          setState(() {
+            lists = response.data['data'];
+          });
         });
-      });
+      }
     });
   }
 
