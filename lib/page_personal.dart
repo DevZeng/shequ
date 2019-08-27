@@ -20,6 +20,7 @@ class _PersonalPage extends State<PersonalPage> {
     // TODO: implement initState
     super.initState();
     getUserInfo();
+    getInfos();
   }
   @override
   Widget build(BuildContext context) {
@@ -429,6 +430,32 @@ class _PersonalPage extends State<PersonalPage> {
           Navigator.of(context).pushNamed('login');
         }
       });
+    });
+  }
+  getInfos() async {
+    getHold().then((val){
+      if(val==null){
+        getUser().then((val){
+          Dio().get(api.getHHouseUserHold+'?token=$val').then((response){
+            var data = response.data;
+            if(data['code']==200){
+              print(data['data']);
+              var listMsg = data['data']['listMsg'];
+              if(listMsg!=null){
+                for (var element in listMsg) {
+                  print(element['holdId']);
+                  if (element['holdStatus']==1){
+                    saveXq(element['holdXqId']);
+                    saveHold(element['holdId']);
+                    saveAddress("${element['holdXqName']}${element['holdLdName']}${element['holdDyName']}");
+                    break;
+                  }
+                }
+              }
+            }
+          });
+        });
+      }
     });
   }
 }

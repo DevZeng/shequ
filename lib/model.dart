@@ -9,7 +9,8 @@ class HouseInfo {
   int holdDyId =0;
   String holdDy = '请选择';
   String imageAddress = '';
-  setHouseInfo(int identity,int XqId,String Xq,int LdId,String Ld,int DyId,String Dy,String image,int id){
+  int state = 0;
+  setHouseInfo(int identity,int XqId,String Xq,int LdId,String Ld,int DyId,String Dy,String image,int id,int state){
     this.holdIdentity = identity;
     this.holdXqId = XqId;
     this.holdXq = Xq;
@@ -19,6 +20,7 @@ class HouseInfo {
     this.holdDy = Dy;
     this.imageAddress = image;
     this.id = id;
+    this.state = state;
   }
 }
 getUser() async {
@@ -32,14 +34,26 @@ getHold() async {
   int holdId = prefs.getInt('holdId');
   return holdId;
 }
+saveAddress(address)async{
+  var prefs = await SharedPreferences.getInstance();
+  await prefs.setString('address', address);
+}
+getAddress()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String address = prefs.getString('address');
+  return address;
+}
 void saveHold(id) async
 {
   var prefs = await SharedPreferences.getInstance();
   await prefs.setInt('holdId', id);
 }
-
-
-
+logout()async{
+  var prefs = await SharedPreferences.getInstance();
+  await prefs.remove('user');
+  await prefs.remove('xqId');
+  await prefs.remove('holdId');
+}
 getXq() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   int holdId = prefs.getInt('xqId');

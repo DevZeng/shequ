@@ -40,6 +40,7 @@ class _countPage extends State<countPage>{
     var args = ModalRoute.of(context).settings.arguments;
     if(args!=null){
       store = args;
+      print(store);
     }
 //    Address info =  ModalRoute.of(context).settings.arguments;
 //    if(info!=null&&enter==false){

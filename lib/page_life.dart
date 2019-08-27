@@ -68,18 +68,25 @@ class Page extends State<LifePage> {
                         height: MediaQuery.of(context).size.height * 0.25,
                         items: _imageUrls.map(
                           (url) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 15.0),
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                child: Image.network(
-                                  url['rotationPicture'],
-                                  fit: BoxFit.cover,
-                                  width: 1000.0,
+                            return GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 15.0),
+                                child: ClipRRect(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                                  child: Image.network(
+                                    url['rotationPicture'],
+                                    fit: BoxFit.cover,
+                                    width: 1000.0,
+                                  ),
                                 ),
                               ),
+                              onTap: (){
+                                if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                  Navigator.of(context).pushNamed("lifeStore", arguments: int.parse(url['rotationLink']));
+                                }
+                              },
                             );
                           },
                         ).toList(),

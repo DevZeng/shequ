@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api.dart';
+import 'model.dart';
+import 'page_login.dart';
 //import '';
 
 class addPageInfo extends StatefulWidget {
@@ -38,277 +40,287 @@ class Page extends State<addPageInfo> {
       appBar: AppBar(
         title: Text('基本信息'),
         elevation: 0,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.exit_to_app), onPressed: (){
+            logout().then((val){
+              Navigator.of(context).pushAndRemoveUntil(
+                  new MaterialPageRoute(builder: (context) => new LoginPage()
+                  ), (route) => route == null);
+            });
+          })
+        ],
       ),
       body: info == null
           ? null
-          : Container(
-              color: Colors.grey[100],
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 160,
-                    color: Colors.white,
-                    child: GestureDetector(
-                      child: Container(
+          : SingleChildScrollView(
+        child: Container(
+          color: Colors.grey[100],
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 160,
+                color: Colors.white,
+                child: GestureDetector(
+                  child: Container(
 //                        padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                              child: Container(
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+                            child: Container(
 
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      info['userMsgHead'] == null
-                                          ? ''
-                                          : info['userMsgHead']),
-                                ),
-                                height: 80,
-                                width: 80,
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    info['userMsgHead'] == null
+                                        ? ''
+                                        : info['userMsgHead']),
+                              ),
+                              height: 80,
+                              width: 80,
 
-                              ),),
-                              Container(
-                                child: Text(
-                                  '点击更改头像',
-                                  style: TextStyle(color: Colors.grey[500]),
-                                ),
-                                height: 20,
-                              )
-                            ],
-                          ),
-                        ),
+                            ),),
+                          Container(
+                            child: Text(
+                              '点击更改头像',
+                              style: TextStyle(color: Colors.grey[500]),
+                            ),
+                            height: 20,
+                          )
+                        ],
                       ),
-                      onTap: () {
-                        getImage();
-                      },
                     ),
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
-                  modify == false
-                      ? Container(
-                          color: Colors.white,
-                          child: Column(
-                            children: <Widget>[
-                              ListTile(
-                                leading: Text('昵称'),
-                                trailing: Text(info['userMsgNike'] == null
-                                    ? ''
-                                    : info['userMsgNike']),
-                              ),
-                              ListTile(
-                                leading: Text('姓名'),
-                                trailing: Text(info['userMsgName'] == null
-                                    ? ''
-                                    : info['userMsgName']),
-                              ),
-                              ListTile(
-                                leading: Text('性别'),
-                                trailing: Text(info['userMsgSex'] == null
-                                    ? ''
-                                    : info['userMsgSex']),
-                              ),
-                              ListTile(
-                                leading: Text('手机号'),
-                                trailing: Text(info['userMsgPhone'] == null
-                                    ? ''
-                                    : info['userMsgPhone']),
-                              ),
-                              ListTile(
-                                  leading: Text('身份证号码'),
-                                  trailing: Text(info['userMsgIdcard'] == null
-                                      ? ''
-                                      : info['userMsgIdcard'])),
-                            ],
-                          ),
-                        )
-                      : Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                        child: Text(
-                                          '昵称',
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3),
-                                    Expanded(
-                                        child: TextField(
-                                      autofocus: false,
-                                      controller: nickController,
-                                      decoration: InputDecoration(
-                                          hintText: "请输入昵称",
-                                          border: InputBorder.none),
-                                    ))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                        child: Text(
-                                          '姓名',
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3),
-                                    Expanded(
-                                        child: TextField(
-                                      autofocus: false,
-                          controller: nameController,
-                                      decoration: InputDecoration(
-                                          hintText: "请输入姓名",
-                                          border: InputBorder.none),
-                                    ))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                        child: Text(
-                                          '性别',
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3),
-                                    Expanded(
-                                        child: GestureDetector(
-                                          child: Text(
-                                            info['userMsgSex']==null?'请选择':info['userMsgSex'],
-                                            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                                          ),
-                                          onTap: () {
-                                            showModalBottomSheet(context: context, builder: (BuildContext context){
-                                              return Container(
-                                                height: 150,
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    ListTile(leading: null,title: Text('男'),onTap: (){
-                                                      setState(() {
-                                                        info['userMsgSex']='男';
-                                                        Navigator.of(context).pop();
-                                                      });
-                                                    },),
-                                                    ListTile(title: Text('女'),onTap: (){setState(() {
-                                                      info['userMsgSex']='女';
-                                                      Navigator.of(context).pop();
-                                                    });},)
-                                                  ],
-                                                ),
-                                              );
-                                            });
-                                          },
-                                        ))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                        child: Text(
-                                          '手机号',
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3),
-                                    Expanded(
-                                        child: TextField(
-                                      autofocus: false,
-                          keyboardType: TextInputType.phone,
-                          controller: phoneController,
-                                      decoration: InputDecoration(
-                                          hintText: "请输入手机号",
-                                          border: InputBorder.none),
-                                    ))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Colors.white,
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                        child: Text(
-                                          '身份证号码',
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3),
-                                    Expanded(
-                                        child: TextField(
-                                      autofocus: false,
-                          controller: idController,
-                                      decoration: InputDecoration(
-                                          hintText: "请输入身份证号",
-                                          border: InputBorder.none),
-                                    ))
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                ],
+                  onTap: () {
+                    getImage();
+                  },
+                ),
               ),
-            ),
-      floatingActionButton: new Container(
-        width: MediaQuery.of(context).size.width * 0.7,
-        height: 40.0,
-        child: new RaisedButton(
-          onPressed: () {
+              Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
+              modify == false
+                  ? Container(
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: Text('昵称'),
+                      trailing: Text(info['userMsgNike'] == null
+                          ? ''
+                          : info['userMsgNike']),
+                    ),
+                    ListTile(
+                      leading: Text('姓名'),
+                      trailing: Text(info['userMsgName'] == null
+                          ? ''
+                          : info['userMsgName']),
+                    ),
+                    ListTile(
+                      leading: Text('性别'),
+                      trailing: Text(info['userMsgSex'] == null
+                          ? ''
+                          : info['userMsgSex']),
+                    ),
+                    ListTile(
+                      leading: Text('手机号'),
+                      trailing: Text(info['userMsgPhone'] == null
+                          ? ''
+                          : info['userMsgPhone']),
+                    ),
+                    ListTile(
+                        leading: Text('身份证号码'),
+                        trailing: Text(info['userMsgIdcard'] == null
+                            ? ''
+                            : info['userMsgIdcard'])),
+                  ],
+                ),
+              )
+                  : Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                              child: Text(
+                                '昵称',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              padding:
+                              EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              width:
+                              MediaQuery.of(context).size.width *
+                                  0.3),
+                          Expanded(
+                              child: TextField(
+                                autofocus: false,
+                                controller: nickController,
+                                decoration: InputDecoration(
+                                    hintText: "请输入昵称",
+                                    border: InputBorder.none),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                              child: Text(
+                                '姓名',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              padding:
+                              EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              width:
+                              MediaQuery.of(context).size.width *
+                                  0.3),
+                          Expanded(
+                              child: TextField(
+                                autofocus: false,
+                                controller: nameController,
+                                decoration: InputDecoration(
+                                    hintText: "请输入姓名",
+                                    border: InputBorder.none),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                              child: Text(
+                                '性别',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              padding:
+                              EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              width:
+                              MediaQuery.of(context).size.width *
+                                  0.3),
+                          Expanded(
+                              child: GestureDetector(
+                                child: Text(
+                                  info['userMsgSex']==null?'请选择':info['userMsgSex'],
+                                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                                ),
+                                onTap: () {
+                                  showModalBottomSheet(context: context, builder: (BuildContext context){
+                                    return Container(
+                                      height: 150,
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListTile(leading: null,title: Text('男'),onTap: (){
+                                            setState(() {
+                                              info['userMsgSex']='男';
+                                              Navigator.of(context).pop();
+                                            });
+                                          },),
+                                          ListTile(title: Text('女'),onTap: (){setState(() {
+                                            info['userMsgSex']='女';
+                                            Navigator.of(context).pop();
+                                          });},)
+                                        ],
+                                      ),
+                                    );
+                                  });
+                                },
+                              ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                              child: Text(
+                                '手机号',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              padding:
+                              EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              width:
+                              MediaQuery.of(context).size.width *
+                                  0.3),
+                          Expanded(
+                              child: TextField(
+                                autofocus: false,
+                                keyboardType: TextInputType.phone,
+                                controller: phoneController,
+                                decoration: InputDecoration(
+                                    hintText: "请输入手机号",
+                                    border: InputBorder.none),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                              child: Text(
+                                '身份证号码',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              padding:
+                              EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              width:
+                              MediaQuery.of(context).size.width *
+                                  0.3),
+                          Expanded(
+                              child: TextField(
+                                autofocus: false,
+                                controller: idController,
+                                decoration: InputDecoration(
+                                    hintText: "请输入身份证号",
+                                    border: InputBorder.none),
+                              ))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0),child: Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 40.0,
+                child: new RaisedButton(
+                  onPressed: () {
 //          print(detailController.text);
 //        print(modify);
 //            print(info);
-            doUpdate();
-          },
-          color: Colors.orange,
-          child: modify == true
-              ? new Text("保存",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ))
-              : new Text("修改",
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-          shape: new StadiumBorder(
-              side: new BorderSide(
-            style: BorderStyle.solid,
-            color: Color(0xffFF7F24),
-          )),
+                    doUpdate();
+                  },
+                  color: Colors.orange,
+                  child: modify == true
+                      ? new Text("保存",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ))
+                      : new Text("修改",
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                  shape: new StadiumBorder(
+                      side: new BorderSide(
+                        style: BorderStyle.solid,
+                        color: Color(0xffFF7F24),
+                      )),
+                ),
+              ),)
+            ],
+          ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 

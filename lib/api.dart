@@ -51,4 +51,5 @@ class Api {
   final postHVisitor = host +'appHVisitor/postHVisitor';
   final getShopComment = host +'hShopTakeoutComment/getShopComment';
   final getSearchHShopMsg = host +'appHShopMsg/getSearchHShopMsg';
+  final getOneStore = host +'appHShopStore/getOneStore';
 }

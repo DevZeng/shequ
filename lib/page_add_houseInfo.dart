@@ -244,7 +244,7 @@ class Page extends State<addHouseInfo> {
 //          print(houseInfo.id);
           },
           color: Colors.orange,
-          child: new Text("保存地址",
+          child: new Text("保存住宅",
               style: TextStyle(
                 color: Colors.white,
               )),

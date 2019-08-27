@@ -6,6 +6,7 @@ import 'model.dart';
 import 'page_web.dart';
 import 'package:amap_location/amap_location.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class ServicePage extends StatefulWidget {
@@ -94,17 +95,44 @@ class Page extends State<ServicePage> {
                           .height * 0.25,
                       items: _imageUrls.map(
                             (url) {
-                          return Container(
-                            padding: EdgeInsets.fromLTRB(15, 15, 15, 5),
-                            child: ClipRRect(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(10.0)),
-                              child: Image.network(
-                                url['rotationPicture'],
-                                fit: BoxFit.cover,
-                                width: 1000.0,
+                          return GestureDetector(
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(15, 15, 15, 5),
+                              child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                                child: Image.network(
+                                  url['rotationPicture'],
+                                  fit: BoxFit.cover,
+                                  width: 1000.0,
+                                ),
                               ),
                             ),
+                            onTap: (){
+                              switch(url['rotationType']){
+                                case 2:
+                                  if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                    Navigator.of(context).pushNamed('outsellerDetail',arguments: int.parse(url['rotationLink']));
+                                  }
+                                  break;
+                                case 3:
+                                  if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                    Navigator.of(context).pushNamed("lifeStore", arguments: int.parse(url['rotationLink']));
+                                  }
+
+                                  break;
+                                case 4:
+                                  if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                    Navigator.of(context).pushNamed('stayDetail',arguments: {
+                                      'id':int.parse(url['rotationLink']),
+                                      'indate':DateTime.now(),
+                                      'outdate':DateTime.now().add(new Duration(days: 1)),
+                                    });
+                                  }
+
+                                  break;
+                              }
+                            },
                           );
                         },
                       ).toList(),
@@ -319,7 +347,7 @@ class Page extends State<ServicePage> {
   }
 
   void getR() {
-    Dio().request(api.getHRotation + '?rotationType=1').then((response) {
+    Dio().request(api.getHRotation + '?type=1').then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
         print(content['data']);
@@ -333,28 +361,33 @@ class Page extends State<ServicePage> {
   void getLink() async {
     String url = '';
     getUser().then((val) {
-      Dio().get(api.getUserInfo + "?token=$val").then((response) {
+      print(val);
+      Dio()
+          .get(api.appRegisterController +
+          "?token=${val}")
+          .then((response) {
         var data = response.data;
         print(data);
         if (data['code'] == 200) {
-          Dio()
-              .get(api.appRegisterController +
-              "?idcard=${data['data']['userMsgIdcard']}&&mobile=${data['data']['userMsgPhone']}&&patientName=${data['data']['userMsgName']}&&uid=${data['data']['userMsgId']}")
-              .then((response) {
-            data = response.data;
-            print(data);
-            if (data['code'] == 200) {
-              print(data['data']);
-              Navigator.of(context).push(
-                  new MaterialPageRoute(builder: (context) {
-                    return new NewsWebPage(
-                        data['data'].toString(), '医院挂号'); //link,title为需要传递的参数
-                  },
-                  ));
-            }
-          });
+          print(data['data']);
+          Navigator.of(context).push(
+              new MaterialPageRoute(builder: (context) {
+                return new NewsWebPage(
+                    data['data'].toString(), '医院挂号'); //link,title为需要传递的参数
+              },
+              ));
+        }else{
+          Fluttertoast.showToast(
+              msg: data['msg'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.white,
+              textColor: Colors.black,
+              fontSize: 16.0);
+          Navigator.of(context)
+              .pushNamed('userInfo');
         }
-        print(response);
       });
     });
   }

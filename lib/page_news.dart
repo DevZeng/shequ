@@ -34,7 +34,7 @@ class Page extends State<NewsPage> {
   int _current = 0;
 
   void getR() {
-    Dio().request(api.getHRotation + '?rotationType=1').then((response) {
+    Dio().request(api.getHRotation + '?rotationType=5').then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
         setState(() {
@@ -164,18 +164,26 @@ class Page extends State<NewsPage> {
                       height: MediaQuery.of(context).size.height * 0.25,
                       items: _imageUrls.map(
                         (url) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5.0, horizontal: 15.0),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              child: Image.network(
-                                url['rotationPicture'],
-                                fit: BoxFit.cover,
-                                width: 1000.0,
+                          return GestureDetector(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 15.0),
+                              child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                                child: Image.network(
+                                  url['rotationPicture'],
+                                  fit: BoxFit.cover,
+                                  width: 1000.0,
+                                ),
                               ),
                             ),
+                            onTap: (){
+                              if(url['rotationLink']!=null){
+                                Navigator.of(context).pushNamed("reading",
+                                    arguments: int.parse(url['rotationLink']));
+                              }
+                            },
                           );
                         },
                       ).toList(),

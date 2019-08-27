@@ -30,7 +30,7 @@ class Page extends State<OutSellerPage> {
     Dio().request(api.getHRotation + '?rotationType=2').then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
-//        print(content['data']);
+        print(content['data']);
         setState(() {
           _imageUrls = content['data'];
         });
@@ -55,18 +55,25 @@ class Page extends State<OutSellerPage> {
                 height: MediaQuery.of(context).size.height * 0.25,
                 items: _imageUrls.map(
                       (url) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 5.0, horizontal: 15.0),
-                      child: ClipRRect(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0)),
-                        child: Image.network(
-                          url['rotationPicture'],
-                          fit: BoxFit.cover,
-                          width: 1000.0,
+                    return GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 15.0),
+                        child: ClipRRect(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(10.0)),
+                          child: Image.network(
+                            url['rotationPicture'],
+                            fit: BoxFit.cover,
+                            width: 1000.0,
+                          ),
                         ),
                       ),
+                      onTap: (){
+                        if(url['rotationType']==2&&url['rotationLink']!=null){
+                          Navigator.of(context).pushNamed('outsellerDetail',arguments: int.parse(url['rotationLink']));
+                        }
+                      },
                     );
                   },
                 ).toList(),

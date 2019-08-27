@@ -32,6 +32,11 @@ class _repairPage extends State<RepairPage>{
     // TODO: implement initState
     super.initState();
     getTypes();
+    getAddress().then((val){
+      setState(() {
+        addressController.text = val;
+      });
+    });
   }
 //  List<Asset> images = List<Asset>();
   @override

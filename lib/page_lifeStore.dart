@@ -239,7 +239,13 @@ class Page extends State<LifeStorePage> {
                     ],
                   ),
                 ),onTap: (){
-                  print('tap');
+                  Navigator.of(context).pushNamed('product',arguments: {
+                    'storeId':id,
+                    'storeName':info['shopName'],
+                    'storeIcon':info['shopThumbnail'],
+                    'send':info['shopIfDelivery'],
+                    'productId':products[index]['storeId'],
+                  });
                 },);
               },
               //分割器构造器

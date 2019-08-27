@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert' as convert;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'main.dart';
+import 'model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -137,8 +139,15 @@ class LoginPageState extends State<LoginPage>{
             if(houses!=null){
               var lists = houses['listMsg'];
               if(lists!=null&&lists.length!=0){
-                saveXq(lists[0]['holdXqId']);
-                saveHold(lists[0]['holdId']);
+                for (var element in lists) {
+                  print(element['holdId']);
+                  if (element['holdStatus']==1){
+                    saveXq(element['holdXqId']);
+                    saveHold(element['holdId']);
+                    saveAddress("${element['holdXqName']}${element['holdLdName']}${element['holdDyName']}");
+                    break;
+                  }
+                }
               }
             }
             print(houses);
@@ -150,7 +159,9 @@ class LoginPageState extends State<LoginPage>{
                 backgroundColor: Colors.white,
                 textColor: Colors.black,
                 fontSize: 16.0);
-            Navigator.pushNamed(context, "home");
+            Navigator.of(context).pushAndRemoveUntil(
+                new MaterialPageRoute(builder: (context) => new MyApp()
+                ), (route) => route == null);
           } else {
             Fluttertoast.showToast(
                 msg: data['msg'],

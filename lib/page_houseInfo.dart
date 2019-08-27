@@ -16,6 +16,7 @@ class HouseInfoPage extends StatefulWidget {
 class Page extends State<HouseInfoPage> {
   List<HouseInfo> houseInfos = [];
   List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  List<String> status = ['未审核', '已通过', '不通过', '租客'];
   String image = '';
   Api api = new Api();
   int _index = 0;
@@ -37,7 +38,7 @@ class Page extends State<HouseInfoPage> {
           var listMsg = data['data']['listMsg'];
           if(listMsg!=null){
             listMsg.forEach((list){
-//              print(list);
+              print(list);
               HouseInfo houseInfo = new HouseInfo();
               houseInfo.imageAddress = image;
               houseInfo.holdIdentity = list['holdIdentity'];
@@ -48,6 +49,7 @@ class Page extends State<HouseInfoPage> {
               houseInfo.holdDy = list['holdDyName'];
               houseInfo.holdDyId = list['holdDyId'];
               houseInfo.id = list['holdId'];
+              houseInfo.state = list['holdStatus'];
               houseInfos.add(houseInfo);
             });
           }
@@ -112,7 +114,7 @@ class Page extends State<HouseInfoPage> {
               Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
               Container(
                 child: CarouselSlider(
-                  height: 230,
+                  height: 290,
                   viewportFraction: 1.0,
                   aspectRatio: 2.0,
                   autoPlay: false,
@@ -153,6 +155,13 @@ class Page extends State<HouseInfoPage> {
                           ListTile(
                             leading: Text('单元号'),
                             trailing: Text(houseInfo.holdDy),
+                          ),
+                          Divider(
+                            height: 1,
+                          ),
+                          ListTile(
+                            leading: Text('状态'),
+                            trailing: Text(status[houseInfo.state]),
                           )
                         ],
                       ),
@@ -169,16 +178,28 @@ class Page extends State<HouseInfoPage> {
                 height: 40.0,
                 child: new RaisedButton(
                   onPressed: () {
-                    saveHold(houseInfos[_index].id);
-                    saveXq(houseInfos[_index].holdXqId);
-                    Fluttertoast.showToast(
-                        msg: "切换成功！",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIos: 1,
-                        backgroundColor: Colors.white,
-                        textColor: Colors.black,
-                        fontSize: 16.0);
+                    if(houseInfos[_index].state==1){
+                      saveHold(houseInfos[_index].id);
+                      saveXq(houseInfos[_index].holdXqId);
+                      saveAddress("${houseInfos[_index].holdXq}${houseInfos[_index].holdLd}${houseInfos[_index].holdDy}");
+                      Fluttertoast.showToast(
+                          msg: "切换成功！",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.white,
+                          textColor: Colors.black,
+                          fontSize: 16.0);
+                    }else{
+                      Fluttertoast.showToast(
+                          msg: "该状态不允许切换！",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.white,
+                          textColor: Colors.black,
+                          fontSize: 16.0);
+                    }
                   },
                   color: Colors.orange,
                   child: new Text("切换",
@@ -199,7 +220,9 @@ class Page extends State<HouseInfoPage> {
                   onPressed: () {
 //                    print(_index);
 //                    print(houseInfos[_index].id);
-                    Navigator.of(context).pushNamed('addHouseInfo',arguments: houseInfos[_index]);
+                    Navigator.of(context).pushNamed('addHouseInfo',arguments: houseInfos[_index]).then((val){
+                      getInfos();
+                    });
 //          print(detailController.text);
 //          print(index);
                   },
