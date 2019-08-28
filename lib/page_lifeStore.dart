@@ -22,6 +22,7 @@ class Page extends State<LifeStorePage> {
   int id = 0;
   List<String> images = [];
   List<Product> buys = [];
+//  var
 
   Page() {
     Future.delayed(Duration(seconds: 2)).then((e) {
@@ -32,6 +33,7 @@ class Page extends State<LifeStorePage> {
   @override
   Widget build(BuildContext context) {
     id = ModalRoute.of(context).settings.arguments;
+    print(id);
     getProducts(1);
     getR();
     // TODO: implement build
@@ -107,11 +109,7 @@ class Page extends State<LifeStorePage> {
                         Container(
                           child: Row(
                             children: <Widget>[
-                              Text(
-                                '电话',
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w700),
-                              ),
+                              Icon(Icons.location_on,size: 12,color: Colors.yellow,),
                               Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
                               Text(
                                 info == null ? '' : info['shopPhone'],
@@ -339,9 +337,13 @@ class Page extends State<LifeStorePage> {
                     child: Container(
                       width: 130,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          state(() {
+                            buys = [];
+                          });
+                        },
                         child: Row(
-                          children: <Widget>[Icon(Icons.delete), Text('清空回收站')],
+                          children: <Widget>[Icon(Icons.delete_outline), Text('清空购物车')],
                         ),
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:convert';
+import 'model.dart';
 
 class OutSellerPage extends StatefulWidget {
   @override
@@ -20,10 +21,11 @@ class Page extends State<OutSellerPage> {
   int sort = 0;
   var shops = [
   ];
+  var loc ;
 
   Page() {
     getR();
-    getShop();
+
   }
 
   void getR() {
@@ -40,6 +42,13 @@ class Page extends State<OutSellerPage> {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context).settings.arguments;
+    if(args!=null){
+      loc = args;
+    }
+    if(shops.length==0){
+      getShop(loc['lat'],loc['lon']);
+    }
     return Scaffold(
       appBar: AppBar(title: Text('美食外卖'),elevation: 0,),
       backgroundColor: Colors.white,
@@ -150,7 +159,7 @@ class Page extends State<OutSellerPage> {
                                     Container(
                                       alignment: Alignment.centerRight,
                                       width: 80,
-                                      child: Text('2km'),
+                                      child: Text(shops[index]['shopDistance']==null?'未知':getDistance(shops[index]['shopDistance'])),
                                     )
                                   ],
                                 ),
@@ -169,8 +178,12 @@ class Page extends State<OutSellerPage> {
       )
     );
   }
-  void getShop() {
-    Dio().request(api.getTypeHShopMsg + '?shopType=1').then((response) {
+  void getShop(lat , lon) {
+    String url = api.getTypeHShopMsg+ '?shopType=1&start=1&lenght=10';
+    if(lat!=0){
+      url+="&lat=${lat}&log=${lon}";
+    }
+    Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
 //        print(content['data']);

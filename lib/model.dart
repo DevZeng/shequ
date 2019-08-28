@@ -124,3 +124,11 @@ class Order{
   Store store;
   Order(this.number,this.store);
 }
+
+getDistance(int distance) {
+  if(distance<1000){
+    return '${distance}m';
+  }else{
+    return '${(distance/1000).toStringAsFixed(2)}km';
+  }
+}

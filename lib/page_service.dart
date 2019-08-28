@@ -32,6 +32,7 @@ class Page extends State<ServicePage> {
     _checkPersmission().then((val){
 
       if(_loc!=null){
+        print('1');
         Dio().get(api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}").then((response){
           setState(() {
             lists = response.data['data'];
@@ -59,29 +60,40 @@ class Page extends State<ServicePage> {
               child: Column(
                 children: <Widget>[
                   Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Container(
-                    //修饰黑色背景与圆角
-                    decoration: new BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: new BorderRadius.all(
-                          new Radius.circular(50.0)),
+                  child: GestureDetector(
+                    child: Container(
+                      //修饰黑色背景与圆角
+                      decoration: new BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: new BorderRadius.all(
+                            new Radius.circular(50.0)),
+                      ),
+                      alignment: Alignment.center,
+                      height: 30,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width - 30,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.search),
+                          Text('搜索周边服务')
+                        ],
+                      ),
+//                    child: TextField(
+//                      decoration: InputDecoration(
+//                          contentPadding: new EdgeInsets.only(left: 0.0),
+//                          border: InputBorder.none,
+//                          icon: Icon(Icons.search),
+//                          hintText: "搜索周边服务",
+//                          hintStyle: new TextStyle(
+//                              fontSize: 14, color: Colors.grey)),
+//                      style: new TextStyle(fontSize: 14, color: Colors.grey),
+//                    ),
                     ),
-                    alignment: Alignment.center,
-                    height: 30,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width - 30,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          contentPadding: new EdgeInsets.only(left: 0.0),
-                          border: InputBorder.none,
-                          icon: Icon(Icons.search),
-                          hintText: "搜索周边服务",
-                          hintStyle: new TextStyle(
-                              fontSize: 14, color: Colors.grey)),
-                      style: new TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
+                    onTap: (){
+                      Navigator.of(context).pushNamed('search');
+                    },
                   ),),
                   Container(
                     child: _imageUrls.length == 0
@@ -154,7 +166,10 @@ class Page extends State<ServicePage> {
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, "outseller");
+                                  Navigator.pushNamed(context, "outseller",arguments: {
+                                    'lat':_loc==null?0:_loc.latitude,
+                                    'lon':_loc==null?0:_loc.longitude
+                                  });
                                 },
                                 disabledColor: Colors.white,
                                 child: Image(
@@ -181,7 +196,10 @@ class Page extends State<ServicePage> {
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, "life");
+                                  Navigator.pushNamed(context, "life",arguments: {
+                                    'lat':_loc==null?0:_loc.latitude,
+                                    'lon':_loc==null?0:_loc.longitude
+                                  });
                                 },
                                 disabledColor: Colors.white,
                                 child: Image(
@@ -208,7 +226,10 @@ class Page extends State<ServicePage> {
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, "stayPage");
+                                  Navigator.pushNamed(context, "stayPage",arguments: {
+                                    'lat':_loc==null?0:_loc.latitude,
+                                    'lon':_loc==null?0:_loc.longitude
+                                  });
                                 },
                                 disabledColor: Colors.white,
                                 child: Image(
@@ -260,7 +281,7 @@ class Page extends State<ServicePage> {
                   Container(
                     padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                     height: 180,
-                    child: ListView.builder(
+                    child: lists==null?null:ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: lists.length,
                         itemBuilder: (context,index){
@@ -301,7 +322,7 @@ class Page extends State<ServicePage> {
                                 child: Row(
                                   children: <Widget>[
                                     Container(child: Icon(Icons.location_on,size: 12,)),
-                                    Container(child: Text('${lists[index]['shopDistance']}m'))
+                                    Container(child: Text(getDistance(lists[index]['shopDistance'])))
                                   ],
                                 ),
                               )

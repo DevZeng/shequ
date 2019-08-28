@@ -27,6 +27,7 @@ class _countPage extends State<countPage>{
           Address address = new Address(item['addressId'], item['addressUserName'], item['addressUserPhone'], item['addressAreas'], item['addressName'], item['addressIfDefult']);
           if(address.is_default==1){
             defaultAddress = address;
+            addressId = address.id;
           }
           addresses.add(address);
           setState(() {
@@ -109,6 +110,22 @@ class _countPage extends State<countPage>{
                 ],
               ),
             ),onTap: (){
+              addresses.length==0?Navigator.pushNamed(context, 'addAddress').then((val){
+                getUserAddress().then((val){
+                  if(val!=null&&val.length!=0){
+                    val.forEach((item){
+                      Address address = new Address(item['addressId'], item['addressUserName'], item['addressUserPhone'], item['addressAreas'], item['addressName'], item['addressIfDefult']);
+                      if(address.is_default==1){
+                        defaultAddress = address;
+                        addressId = address.id;
+                      }
+                      addresses.add(address);
+                      setState(() {
+                      });
+                    });
+                  }
+                });
+              }):
               showModalBottomSheet(context: context, builder: (context){
                 return ListView.separated(
                     itemCount: addresses.length,

@@ -24,10 +24,6 @@ class _PersonalPage extends State<PersonalPage> {
   }
   @override
   Widget build(BuildContext context) {
-//    getUserInfo();
-//    getHold().then((val){
-//      print(val);
-//    });
     // TODO: implement build
     return Scaffold(
 //      backgroundColor: Colors.yellow,
@@ -415,8 +411,8 @@ class _PersonalPage extends State<PersonalPage> {
   void getUserInfo() async {
     getUser().then((val) {
       if(val==null){
-//        Navigator.p;
         Navigator.of(context).pushNamed('login');
+        return;
       }
       Dio().request(api.getUserInfo + '?token=$val').then((response) {
         var data = response.data;

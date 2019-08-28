@@ -17,13 +17,14 @@ class Page extends State<StayPage> {
   Api api = new Api();
   var stores = [
   ];
+  var loc;
   ScrollController scrollController = new ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getShop();
+
     scrollController.addListener(() {
 //      print(scrollController.offset);
 //      print('heigth:${MediaQuery.of(context).size.height},offset:${scrollController.offset}');
@@ -36,6 +37,13 @@ class Page extends State<StayPage> {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context).settings.arguments;
+    if(args!=null){
+      loc = args;
+    }
+    if(stores.length==0){
+      getShop(loc['lat'],loc['lon']);
+    }
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -139,7 +147,7 @@ class Page extends State<StayPage> {
                                   ),
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 0.2,
+                                        MediaQuery.of(context).size.width * 0.2-2,
 //                                padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                     child: Text(
                                         "共${getDay(outtime.difference(intime).inHours)}晚"),
@@ -236,8 +244,7 @@ class Page extends State<StayPage> {
                                   child: Row(
                                     children: <Widget>[
                                       Icon(Icons.location_on,color: Colors.yellow,size: 14,),
-                                      Text(
-                                        "${store['shopDistance']}m",style: TextStyle(color: Colors.grey)
+                                      Text(store['shopDistance']==null?'未知':getDistance(store['shopDistance'])
                                       ),
                                       Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                       child: Text('${store['shopScore']}分',style: TextStyle(color: Colors.grey)),)
@@ -282,8 +289,12 @@ class Page extends State<StayPage> {
       }),
     );
   }
-  void getShop() {
-    Dio().request(api.getTypeHShopMsg + '?shopType=3').then((response) {
+  void getShop(lat ,lon) {
+    String url = api.getTypeHShopMsg+ '?shopType=3&start=1&lenght=10';
+    if(lat!=0){
+      url+="&lat=${lat}&log=${lon}";
+    }
+    Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
         print(content);

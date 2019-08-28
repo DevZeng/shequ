@@ -29,11 +29,20 @@ class Page extends State<MoneyPage> {
   void initState() {
     super.initState();
     fluwx.responseFromPayment.listen((data) {
-      setState(() {
-        _result =
-            "opid:${data.androidOpenId},'PrepayId':${data.androidPrepayId},'androidTransaction':${data.androidTransaction}"
-            ",'errCode':${data.errCode},'errStr':${data.errStr},'extData':${data.extData}";
-      });
+      if(data.errCode==0){
+        getUser().then((val){
+          Dio().request(api.getUserMember+'?token=$val').then((response){
+            var data = response.data;
+            if(data['code']==200){
+              print(data['data']);
+              amount = data['data']['memberBalance']==null?0:data['data']['memberBalance'];
+              setState(() {
+
+              });
+            }
+          });
+        });
+      }
     });
     getUser().then((val){
       Dio().request(api.getUserMember+'?token=$val').then((response){
@@ -150,6 +159,9 @@ class Page extends State<MoneyPage> {
                             ],
                           );
                         }).then((val){
+                          if(val==null){
+                            return ;
+                          }
                           var price  = double.parse(val);
                           print(price);
                       getUser().then((val) {

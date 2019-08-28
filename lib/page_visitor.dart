@@ -24,7 +24,7 @@ class _visitorPage extends State<VisitorPage>
   void initState() {
     super.initState();
     getRooms(1).then((val) {
-//            print(val);
+            print(val);
       lists = val;
       setState(() {});
     });
@@ -35,7 +35,7 @@ class _visitorPage extends State<VisitorPage>
       switch (_tabController.index) {
         case 0:
           getRooms(1).then((val) {
-//            print(val);
+            print(val);
             lists = val;
             setState(() {});
           });
@@ -77,11 +77,14 @@ class _visitorPage extends State<VisitorPage>
                   itemExtent: 50.0, //强制高度为50.0
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
+                      onTap: (){
+                        Navigator.of(context).pushNamed('visitorDetailPage',arguments:lists[index]['roomId']);
+                      },
                         leading: ImageIcon(AssetImage('images/visitor.png')),
                         title: Text(lists[index]['roomName']),
                         trailing:
                             OutlineButton(onPressed: () {
-                              print(lists[index]['roomId']);
+//                              print(lists[index]['roomId']);
                               showModalBottomSheet(context: context, builder: (context){
                                 return Column(
                                   children: <Widget>[
@@ -95,7 +98,8 @@ class _visitorPage extends State<VisitorPage>
                                       ));
                                     },),
                                     ListTile(title: Text('自己添加访客'),onTap: (){
-                                      Navigator.of(context).pushNamed('visitorDetailPage',arguments:lists[index]['roomId']);
+//                                      Navigator.of(context).pushNamed('visitorDetailPage',arguments:lists[index]['roomId']);
+                                      Navigator.of(context).pushNamed('addVisitorList',arguments: lists[index]['roomId']);
                                     },),
                                   ],
                                 );

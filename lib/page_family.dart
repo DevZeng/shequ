@@ -95,11 +95,68 @@ class _family extends State<Family>{
                 'sex':person['familySex'],
                 'idcard':person['familyIdcard'],
                 'identity':person['familyIdentity'],
+              }).then((val){
+                getUser().then((val){
+                  getHold().then((hold){
+                    Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${hold}").then((response){
+                      if(response.statusCode==200){
+                        print(response);
+                        var data = response.data;
+                        if(data['code']==200){
+                          setState(() {
+                            print(data['data']);
+                            parsons = data['data'];
+                          });
+                        }
+                      }
+                    });
+                  });
+                });
               });
             },
           );
         }).toList(),
       ),),
+      floatingActionButton: Container(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.7,
+        height: 40.0,
+        child: new RaisedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'addFamily').then((val){
+              getUser().then((val){
+                getHold().then((hold){
+                  Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${hold}").then((response){
+                    if(response.statusCode==200){
+                      print(response);
+                      var data = response.data;
+                      if(data['code']==200){
+                        setState(() {
+                          print(data['data']);
+                          parsons = data['data'];
+                        });
+                      }
+                    }
+                  });
+                });
+              });
+            });
+          },
+          color: Colors.orange,
+          child: new Text('新增成员',
+              style: TextStyle(
+                color: Colors.white,
+              )),
+          shape: new StadiumBorder(
+              side: new BorderSide(
+                style: BorderStyle.solid,
+                color: Color(0xffFF7F24),
+              )),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

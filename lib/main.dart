@@ -38,6 +38,8 @@ import 'page_visitorDetail.dart';
 import 'page_add_visitorList.dart';
 import 'page_comments.dart';
 import 'page_product.dart';
+import 'page_search.dart';
+import 'page_addFamily.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -142,7 +144,9 @@ class _MyApp extends State<MyApp> {
         'visitorDetailPage':(context)=>VisitorDetailPage(),
         'addVisitorList':(context)=>addVisitorListPage(),
         'comments':(context)=>CommentPage(),
-        'product':(context)=>ProductPage()
+        'product':(context)=>ProductPage(),
+        'search':(context)=>SearchPage(),
+        'addFamily':(context)=>addFamily()
       },
     );
   }

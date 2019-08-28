@@ -93,7 +93,7 @@ class Page extends State<StayDetail> {
                     width: MediaQuery.of(context).size.width * 0.8,
                   ),
                   GestureDetector(child: Container(
-                    child: Text(info == null ? '' : '${info['commentSum']}条点评'),
+                    child: Text(info == null ? '' : '${info['commentSum']}条点评',style: TextStyle(color: Colors.red),),
                   ),
                   onTap: (){
                     Navigator.of(context).pushNamed('comments',arguments: info['shopId']);
@@ -209,7 +209,7 @@ class Page extends State<StayDetail> {
                     return Column(children: <Widget>[GestureDetector(
                       child: Container(
                         padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        height: 100,
+                        height: 102,
                         color: Colors.white,
                         child: Row(
                           children: <Widget>[

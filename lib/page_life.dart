@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'model.dart';
 
 class LifePage extends StatefulWidget {
   @override
@@ -16,10 +17,11 @@ class Page extends State<LifePage> {
   Api api = new Api();
   var _imageUrls = [];
   var shops = [];
+  var loc ;
 
   Page() {
     getR();
-    getShop();
+
   }
 
   void getR() {
@@ -34,10 +36,15 @@ class Page extends State<LifePage> {
     });
   }
 
-  void getShop() {
-    Dio().request(api.getTypeHShopMsg + '?shopType=2').then((response) {
+  void getShop(lat ,lon) {
+    String url = api.getTypeHShopMsg+ '?shopType=2&start=1&lenght=10';
+    if(lat!=0){
+      url+="&lat=${lat}&log=${lon}";
+    }
+    Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
+//        print(content['data']);
         setState(() {
           shops = content['data'];
         });
@@ -49,6 +56,14 @@ class Page extends State<LifePage> {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context).settings.arguments;
+    if(args!=null){
+      loc = args;
+    }
+    if(shops.length==0){
+      getShop(loc['lat'],loc['lon']);
+    }
+//    getShop();
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -146,7 +161,7 @@ class Page extends State<LifePage> {
                                             Text(
                                               shop['shopDistance'] == null
                                                   ? ' 未知'
-                                                  : ' ' + shop['shopDistance'],
+                                                  : getDistance(shop['shopDistance']),
                                               style: TextStyle(fontSize: 10),
                                             ),
                                           ],

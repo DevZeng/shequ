@@ -19,8 +19,6 @@ class FamilyDetail extends StatefulWidget {
 
 class Page extends State<FamilyDetail> {
   List<String> types = ['家庭成员', '户主', '工人', '租客'];
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController idController = new TextEditingController();
 //  HouseInfo houseInfo = new HouseInfo();
   Api api = new Api();
   var info = null;
@@ -32,8 +30,7 @@ class Page extends State<FamilyDetail> {
           .of(context)
           .settings
           .arguments;
-      nameController.text = info['name'];
-      idController.text = info['idcard'];
+      print(info);
     }
     // TODO: implement build
     return Scaffold(
@@ -73,151 +70,34 @@ class Page extends State<FamilyDetail> {
               Container(
                 color: Colors.white,
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                        child: Text(
-                          '姓名',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        padding:
-                        EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        width:
-                        MediaQuery.of(context).size.width *
-                            0.3),
-                    Expanded(
-                        child: TextField(
-                          autofocus: false,
-                          controller: nameController,
-                          decoration: InputDecoration(
-                              hintText: "请输入姓名",
-                              border: InputBorder.none),
-                        ))
-                  ],
+                child: ListTile(
+                  title: Text(info==null?'':info['name']),
+                  leading: Text('姓名'),
                 ),
               ),
               Container(
                 color: Colors.white,
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                        child: Text(
-                          '性别',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        padding:
-                        EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        width:
-                        MediaQuery.of(context).size.width *
-                            0.3),
-                    Expanded(
-                        child: GestureDetector(
-                          child: Text(
-                            info==null?'请选择':info['sex'],
-                            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                          ),
-                          onTap: () {
-                            showModalBottomSheet(context: context, builder: (BuildContext context){
-                              return Container(
-                                height: 150,
-                                child: Column(
-                                  children: <Widget>[
-                                    ListTile(leading: null,title: Text('男'),onTap: (){
-                                      setState(() {
-//                                        info['userMsgSex']='男';
-                                        Navigator.of(context).pop();
-                                      });
-                                    },),
-                                    ListTile(title: Text('女'),onTap: (){setState(() {
-//                                      info['userMsgSex']='女';
-                                      Navigator.of(context).pop();
-                                    });},)
-                                  ],
-                                ),
-                              );
-                            });
-                          },
-                        ))
-                  ],
+                child: ListTile(
+                  title: Text(info==null?'':info['sex']),
+                  leading: Text('性别'),
                 ),
               ),
               Container(
                 color: Colors.white,
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                        child: Text(
-                          '身份证号码',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        padding:
-                        EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        width:
-                        MediaQuery.of(context).size.width *
-                            0.3),
-                    Expanded(
-                        child: TextField(
-                          autofocus: false,
-                          controller: idController,
-                          decoration: InputDecoration(
-                              hintText: "请输入身份证号",
-                              border: InputBorder.none),
-                        ))
-                  ],
+                child: ListTile(
+                  title: Text(info==null?'':info['idcard']),
+                  leading: Text('身份证号码'),
                 ),
               ),
               Container(
                 color: Colors.white,
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                        child: Text(
-                          '与户主关系',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        padding:
-                        EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        width:
-                        MediaQuery.of(context).size.width *
-                            0.3),
-                    Expanded(
-                        child: GestureDetector(
-                          child: Text(info==null?'请选择':types[info['identity']]),
-                          onTap: () {
-                            if(info['identity']==2||info['identity']==1){
-                              return ;
-                            }
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return Column(
-                                    children: [
-                                      ListTile(
-                                        title: Text(types[0]),
-                                        onTap: () {
-                                          info['identity'] = 0;
-                                          Navigator.of(context).pop(0);
-                                        },
-                                      ),
-                                      ListTile(
-                                        title: Text(types[3]),
-                                        onTap: () {
-                                        info['identity'] = 3;
-                                          Navigator.of(context).pop(3);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                }).then((val) {
-                              setState(() {});
-                            });
-                          },
-                        ))
-                  ],
-                ),
+                  child: ListTile(
+                    title: Text(info==null?'':types[info['identity']]),
+                    leading: Text('与户主关系'),
+                  )
               ),
             ],
           ),
@@ -231,11 +111,11 @@ class Page extends State<FamilyDetail> {
         height: 40.0,
         child: new RaisedButton(
           onPressed: () {
-//            saveInfo();
-          print(info);
+            saveInfo();
+//          print(info);
           },
           color: Colors.orange,
-          child: new Text("保存地址",
+          child: new Text(info['status']==0?'审核':'删除',
               style: TextStyle(
                 color: Colors.white,
               )),
@@ -287,60 +167,77 @@ class Page extends State<FamilyDetail> {
   }
 
   saveInfo() {
+    print(info);
 //    print(houseInfo.id);
-    if (0 == 0) {
-      getUser().then((val) {
-//        var formData =
-//            '{"token": "$val", "holdIdentity": "${houseInfo.holdIdentity}", "holdXqId":"${houseInfo.holdXqId}", "holdLdId":"${houseInfo.holdLdId}", "holdDyId":"${houseInfo.holdDyId}", "imageAddress":"${houseInfo.imageAddress}"}';
-//        Dio().post(api.postHHouseUserHold,data: formData).then((response){
-//          var data = response.data;
-//          print(data);
-//          if(data['code']==200){
-//            Fluttertoast.showToast(
-//                msg: "保存成功",
-//                toastLength: Toast.LENGTH_SHORT,
-//                gravity: ToastGravity.BOTTOM,
-//                timeInSecForIos: 1,
-//                backgroundColor: Colors.white,
-//                textColor: Colors.black,
-//                fontSize: 16.0).then((val){
-//              Navigator.of(context).pop();
-//            });
-//          }else{
-//            Fluttertoast.showToast(
-//                msg: data['msg'],
-//                toastLength: Toast.LENGTH_SHORT,
-//                gravity: ToastGravity.BOTTOM,
-//                timeInSecForIos: 1,
-//                backgroundColor: Colors.white,
-//                textColor: Colors.black,
-//                fontSize: 16.0).then((val){
-////              Navigator.of(context).pop();
-//            });
-//          }
-//        });
+    if (info['status']==0) {
+      showModalBottomSheet(context: context, builder: (BuildContext context){
+        return Column(
+          children: <Widget>[
+            ListTile(
+              title: Text('通过'),
+              onTap: (){
+                Navigator.of(context).pop(1);
+              },
+            ),
+            ListTile(
+              title: Text('不通过'),
+              onTap: (){
+                Navigator.of(context).pop(2);
+              },
+            )
+          ],
+        );
+      }).then((val){
+        if(val!=null){
+          getUser().then((token) {
+            getHold().then((hold){
+              var formData = {
+                "token":token,
+                "familyHoldId":hold,
+                "familyId":info['id'],
+                "familyType":info['type'],
+                "familyId":val,
+              };
+              Dio().put(api.passUserFamily,data: formData).then((response){
+                if(response.statusCode==200){
+                  var data = response.data;
+                  if(data['data']==200){
+                    Fluttertoast.showToast(
+                        msg: "审核成功！",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIos: 1,
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16.0);
+                    Navigator.of(context).pop();
+                  }
+                }
+              });
+            });
+          });
+        }
       });
+
     } else {
       getUser().then((val) {
-//        var formData =
-//            '{"token": "$val", "holdId": "${houseInfo.id}","holdIdentity": "${houseInfo.holdIdentity}", "holdXqId":"${houseInfo.holdXqId}", "holdLdId":"${houseInfo.holdLdId}", "holdDyId":"${houseInfo.holdDyId}", "imageAddress":"${houseInfo.imageAddress}"}';
-//        Dio().put(api.putHHouseUserHold,data: formData).then((response){
-//          var data = response.data;
-////          print(data);
-//          if(data['code']==200){
-////            print('suss');
-//            Fluttertoast.showToast(
-//                msg: "保存成功",
-//                toastLength: Toast.LENGTH_SHORT,
-//                gravity: ToastGravity.BOTTOM,
-//                timeInSecForIos: 1,
-//                backgroundColor: Colors.white,
-//                textColor: Colors.black,
-//                fontSize: 16.0).then((val){
-//              Navigator.of(context).pop();
-//            });
-//          }
-//        });
+        getHold().then((hold){
+          Dio().delete(api.delHHouseUserFamily+"/${val}/${hold}/${info['id']}/${info['type']}").then((response){
+            if(response.statusCode==200){
+              Fluttertoast.showToast(
+                  msg: "删除成功！",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+              print('delete');
+              Navigator.of(context).pop();
+            }
+          });
+        });
+        
       });
     }
   }

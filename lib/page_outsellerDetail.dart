@@ -502,8 +502,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                                             NetworkImage(images[index]),
                                             fit: BoxFit.fill)),
                                   ),
-                                );
-                              }),
+                                );}),
                           height: 80,
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -605,9 +604,13 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                     child: Container(
                       width: 130,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          state(() {
+                            buys = [];
+                          });
+                        },
                         child: Row(
-                          children: <Widget>[Icon(Icons.delete), Text('清空回收站')],
+                          children: <Widget>[Icon(Icons.delete_outline), Text('清空购物车')],
                         ),
                       ),
                     ),

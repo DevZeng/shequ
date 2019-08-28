@@ -28,7 +28,7 @@ class Api {
   final getHHouseUserHold = host +'appHHouseUserHold/getHHouseUserHold';
   final postHVisitorRoom = host +'appHVisitor/postHVisitorRoom';
   final getUserHVisitorRoom = host +'appHVisitor/getUserHVisitorRoom';
-  final share = 'http://193.112.129.128:8099/';
+  final share = 'https://hyvisitor.gzeboat.com/';
   final postHShopStoreOrder = host +'appHShopStoreOrder/postHShopStoreOrder';
   final getHShopStoreOrder = host +'appHShopStoreOrder/getHShopStoreOrder';
   final getXqHHouseInformation = host +'appHouseInformation/getXqHHouseInformation';
@@ -52,4 +52,8 @@ class Api {
   final getShopComment = host +'hShopTakeoutComment/getShopComment';
   final getSearchHShopMsg = host +'appHShopMsg/getSearchHShopMsg';
   final getOneStore = host +'appHShopStore/getOneStore';
+  final delHHouseUserFamily = host +'appHHouseUserFamily/delHHouseUserFamily';
+  final searchShop = host +'appHShopMsg/searchShop';
+  final passUserFamily = host +'appHHouseUserFamily/passUserFamily';
+  final postHHouseUserFamily = host +'appHHouseUserFamily/postHHouseUserFamily';
 }

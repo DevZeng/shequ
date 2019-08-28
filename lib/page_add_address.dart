@@ -91,6 +91,7 @@ class Page extends State<addAddressPage> {
                     child: TextField(
                   autofocus: false,
                   controller: phoneController,
+                  keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
                       hintText: "请输入收货手机号", border: InputBorder.none),
                 ))

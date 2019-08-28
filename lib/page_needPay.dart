@@ -23,9 +23,41 @@ class Page extends State<NeedPayPage>
   var cars = [];
   Api api = new Api();
   String token = '';
+  int code = 1;
+  int type = 0;
+  int payid = 0;
   @override
   void initState() {
     super.initState();
+    fluwx.responseFromPayment.listen((data) {
+      if(data.errCode==0){
+        switch(type){
+          case 1:
+            wuyes[payid]['propertyStatus']=1;
+            break;
+          case 2:
+            shuis[payid]['waterStatus']=1;
+            break;
+          case 3:
+            cars[payid]['parkingStatus']=1;
+            break;
+
+        }
+        setState(() {
+//        code = data.errCode;
+        });
+      }else{
+        Fluttertoast.showToast(
+            msg: "取消支付！",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0);
+      }
+
+    });
     getUser().then((val) {
       token = val;
       getLists(1);
@@ -92,7 +124,6 @@ class Page extends State<NeedPayPage>
             itemCount: wuyes.length,
               itemBuilder: (context,index){
             return Padding(padding: EdgeInsets.fromLTRB(15, 15, 15, 0),child: Container(
-
               decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -179,7 +210,8 @@ class Page extends State<NeedPayPage>
                           width:80,
                           child: FlatButton(onPressed: (){
                             setState(() {
-                              wuyes[index]['propertyStatus']=1;
+                              type=1;
+                              payid = index;
                             });
                             payOrder(1, wuyes[index]['propertyId']);
                           },child: Text(wuyes[index]['propertyStatus']==0?'缴费':'已缴费'
@@ -283,7 +315,8 @@ class Page extends State<NeedPayPage>
                               width:80,
                               child: FlatButton(onPressed: (){
                                 setState(() {
-                                  shuis[index]['waterStatus']=1;
+                                  type=2;
+                                  payid = index;
                                 });
                                 payOrder(2, shuis[index]['waterId']);
                               },child: Text(shuis[index]['waterStatus']==0?'缴费':'已缴费'
@@ -387,7 +420,8 @@ class Page extends State<NeedPayPage>
                               width:80,
                               child: FlatButton(onPressed: (){
                                 setState(() {
-                                  cars[index]['parkingStatus']=1;
+                                  type=3;
+                                  payid = index;
                                 });
                                 payOrder(3, cars[index]['parkingId']);
                               },child: Text(cars[index]['parkingStatus']==0?'缴费':'已缴费'
