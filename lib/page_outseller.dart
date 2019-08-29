@@ -19,13 +19,11 @@ class Page extends State<OutSellerPage> {
   }
   var _imageUrls = [];
   int sort = 0;
-  var shops = [
-  ];
+  var shops = [];
   var loc ;
 
   Page() {
     getR();
-
   }
 
   void getR() {
@@ -44,10 +42,12 @@ class Page extends State<OutSellerPage> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context).settings.arguments;
     if(args!=null){
+      print(loc);
       loc = args;
     }
+//    print(shops);
     if(shops.length==0){
-      getShop(loc['lat'],loc['lon']);
+      getShop(loc==null?0:loc['lat'],loc==null?0:loc['lon']);
     }
     return Scaffold(
       appBar: AppBar(title: Text('美食外卖'),elevation: 0,),
@@ -180,13 +180,13 @@ class Page extends State<OutSellerPage> {
   }
   void getShop(lat , lon) {
     String url = api.getTypeHShopMsg+ '?shopType=1&start=1&lenght=10';
-    if(lat!=0){
+    if(lat!=0&&lat!=null){
       url+="&lat=${lat}&log=${lon}";
     }
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
-//        print(content['data']);
+        print(content['data']);
         setState(() {
           shops = content['data'];
         });

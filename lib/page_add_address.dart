@@ -163,7 +163,7 @@ class Page extends State<addAddressPage> {
                   "$province,$city,$area");
             });
           },
-          color: Colors.orange,
+          color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text("保存地址",
               style: TextStyle(
                 color: Colors.white,
@@ -171,7 +171,7 @@ class Page extends State<addAddressPage> {
           shape: new StadiumBorder(
               side: new BorderSide(
             style: BorderStyle.solid,
-            color: Color(0xffFF7F24),
+            color: Color.fromRGBO(243, 200, 70, 1),
           )),
         ),
       ),
@@ -184,7 +184,7 @@ class Page extends State<addAddressPage> {
         context: context,
         height: 250,
         theme: ThemeData(
-          primaryColor: Colors.orange,
+          primaryColor: Color.fromRGBO(243, 200, 70, 1),
         ));
     setState(() {
       address = result.provinceName+','+result.cityName+','+result.areaName;

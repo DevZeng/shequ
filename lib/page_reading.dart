@@ -21,6 +21,7 @@ class Page extends State<ReadingPage>{
     getNews(infoId);
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('新闻详情'),
         centerTitle: true,

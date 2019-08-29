@@ -50,8 +50,10 @@ void main() async {
 }
 
 final ThemeData kIOSTheme = new ThemeData(
-    primarySwatch: Colors.orange,
-//    primaryColor: Colors.white,
+//    primarySwatch: MaterialColor(primary, {
+//      50:
+//    }),
+    primaryColor: Colors.white,
 //    primaryColorBrightness: Brightness.light,
 //    backgroundColor: Colors.white,
 //    unselectedWidgetColor: ,

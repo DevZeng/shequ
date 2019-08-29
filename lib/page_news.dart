@@ -89,19 +89,7 @@ class Page extends State<NewsPage> {
     });
   }
 
-  var types = [
-    [
-      {'icon': 'images/weather.png', 'title': '1'},
-      {'icon': 'images/weather.png', 'title': '2'},
-      {'icon': 'images/weather.png', 'title': '3'},
-      {'icon': 'images/weather.png', 'title': '4'}
-    ],
-    [
-      {'icon': 'images/weather.png', 'title': '5'},
-      {'icon': 'images/weather.png', 'title': '6'},
-      {'icon': 'images/weather.png', 'title': '7'},
-    ],
-  ];
+
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -151,7 +139,7 @@ class Page extends State<NewsPage> {
       appBar: AppBar(title: Text('兴宁头条'), elevation: 0,actions: <Widget>[
         Icon(Icons.wb_cloudy),
         Center(child: Text('dsfasf'),),
-      ],),
+      ],backgroundColor: Colors.white,),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -209,7 +197,7 @@ class Page extends State<NewsPage> {
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: map<Widget>(types, (index, type) {
+                children: map<Widget>(_icons, (index, type) {
                   return Container(
                     width: _current == index ? 12.0 : 6.0,
                     height: 6.0,
@@ -219,10 +207,10 @@ class Page extends State<NewsPage> {
                           ? BoxShape.rectangle
                           : BoxShape.circle,
                       color: _current == index
-                          ? Color.fromRGBO(0, 0, 0, 0.9)
-                          : Color.fromRGBO(0, 0, 0, 0.4),
+                          ? Color.fromRGBO(240, 200, 70, 1)
+                          : Color.fromRGBO(0, 0, 0, 0.2),
                       borderRadius:
-                          _current == index ? BorderRadius.circular(3.0) : null,
+                      _current == index ? BorderRadius.circular(3.0) : null,
                     ),
                   );
                 })),
@@ -239,79 +227,61 @@ class Page extends State<NewsPage> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: _news.length,
-                    itemExtent: MediaQuery.of(context).size.height * 0.2,
+//                    itemExtent: MediaQuery.of(context).size.height * 0.2,
                     //强制高度为50.0
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          child: Column(
+                          height: 120,
+//              color:Colors.red,
+                          child: Row(
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 15, 5),
-                                child: Text(
-                                  _news[index]['inforTitle'],
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(fontSize: 18),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                                width: MediaQuery.of(context).size.width,
-                              ),
-                              Container(
-                                  child: Row(
-                                      children:
-                                          buildList(_news[index]['image']))),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                child: Row(
+                              Padding(padding: EdgeInsets.fromLTRB(15, 10, 0, 10),child: Container(
+                                width: MediaQuery.of(context).size.width-180,
+//                    color: Colors.amber,
+                                child: Column(
                                   children: <Widget>[
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),child: Container(
+                                        height: 70,
+                                        width: MediaQuery.of(context).size.width,
+                                        child: Text(_news[index]['inforTitle']
+                                          ,style: TextStyle(fontSize: 18,),maxLines: 2,overflow: TextOverflow.ellipsis,)
+                                    ),),
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
+                                      height: 30,
+                                      width: MediaQuery.of(context).size.width,
+//                          color: Colors.blue,
                                       child: Row(
                                         children: <Widget>[
-                                          ImageIcon(
-                                            AssetImage('images/see.png'),
-                                            color: Colors.grey[400],
+                                          Container(child: ImageIcon(AssetImage('images/see.png'),size: 10,color: Colors.grey,),width: 30,),
+                                          Container(child: Text(_news[index]['count'].toString(),overflow: TextOverflow.clip,style: TextStyle(fontSize: 12,color: Colors.grey),),width: 60,),
+                                          Container(
+                                            width: MediaQuery.of(context).size.width*0.5-150,
+                                            alignment: Alignment.center,
+                                            child: Text(_news[index]['inforKey'],style: TextStyle(fontSize: 12,color: Colors.grey),),
                                           ),
-                                          Text(
-                                            ' ' +
-                                                _news[index]['count']
-                                                    .toString(),
-                                            style: TextStyle(
-                                                color: Colors.grey[400]),
+                                          Container(
+                                            width: MediaQuery.of(context).size.width*0.5-120,
+                                            alignment: Alignment.centerRight,
+                                            child: Text(RelativeDateFormat.format(
+                                                DateTime.parse(
+                                                    _news[index]['createTime'])),style: TextStyle(fontSize: 12,color: Colors.grey),),
                                           )
                                         ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                              0.6 -
-                                          15,
-                                      child: Text(
-                                        _news[index]['inforKey'] != null
-                                            ? _news[index]['inforKey']
-                                            : '',
-                                        style:
-                                            TextStyle(color: Colors.grey[400]),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                      child: Text(
-                                        RelativeDateFormat.format(
-                                            DateTime.parse(
-                                                _news[index]['createTime'])),
-                                        style:
-                                            TextStyle(color: Colors.grey[400]),
                                       ),
                                     )
                                   ],
                                 ),
-                              )
+                              ),),
+                              Padding(padding: EdgeInsets.fromLTRB(10, 10, 15, 10),child: Container(
+                                width: 140,
+//                    color: Colors.blueGrey,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(_news[index]['image'][0]==null?'':_news[index]['image'][0]),fit: BoxFit.cover)
+                                ),
+                              ),)
                             ],
                           ),
                         ),

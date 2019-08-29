@@ -112,8 +112,9 @@ class Page extends State<NeedPayPage>
         elevation: 0,
         bottom: TabBar(
             controller: _tabController,
-            labelColor: Colors.yellow,
+            labelColor: Color.fromRGBO(243, 200, 70, 1),
             unselectedLabelColor: Colors.black,
+            indicatorColor: Color.fromRGBO(243, 200, 70, 1),
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
       body: TabBarView(
@@ -170,7 +171,7 @@ class Page extends State<NeedPayPage>
                               Text(wuyes[index]['propertyHouse'],style: TextStyle(fontSize: 20),),
                             ],
                           ),
-                          width: MediaQuery.of(context).size.width-150,
+                          width: MediaQuery.of(context).size.width-160,
                         ),
                         Container(
 //                          color: Colors.green,
@@ -184,7 +185,7 @@ class Page extends State<NeedPayPage>
                               ),)
                             ],
                           ),
-                          width: 100,
+                          width: 110,
                         ),
                       ],
                     ),
@@ -204,7 +205,7 @@ class Page extends State<NeedPayPage>
                         ),
                         Container(
                           decoration: BoxDecoration(
-                              color: wuyes[index]['propertyStatus']==0?Colors.yellow:Colors.grey[100],
+                              color: wuyes[index]['propertyStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
                               borderRadius: BorderRadius.all(Radius.circular(5))),
                           height: 30,
                           width:80,
@@ -275,7 +276,7 @@ class Page extends State<NeedPayPage>
                                   Text(shuis[index]['waterHouse'],style: TextStyle(fontSize: 20),),
                                 ],
                               ),
-                              width: MediaQuery.of(context).size.width-150,
+                              width: MediaQuery.of(context).size.width-160,
                             ),
                             Container(
 //                          color: Colors.green,
@@ -289,7 +290,7 @@ class Page extends State<NeedPayPage>
                                   ),)
                                 ],
                               ),
-                              width: 100,
+                              width: 110,
                             ),
                           ],
                         ),
@@ -309,7 +310,7 @@ class Page extends State<NeedPayPage>
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                  color: shuis[index]['waterStatus']==0?Colors.yellow:Colors.grey[100],
+                                  color: shuis[index]['waterStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
                               height: 30,
                               width:80,
@@ -380,7 +381,7 @@ class Page extends State<NeedPayPage>
                                   Text(cars[index]['parkingLot'],style: TextStyle(fontSize: 20),),
                                 ],
                               ),
-                              width: MediaQuery.of(context).size.width-150,
+                              width: MediaQuery.of(context).size.width-160,
                             ),
                             Container(
 //                          color: Colors.green,
@@ -394,7 +395,7 @@ class Page extends State<NeedPayPage>
                                   ),)
                                 ],
                               ),
-                              width: 100,
+                              width: 110,
                             ),
                           ],
                         ),
@@ -414,7 +415,7 @@ class Page extends State<NeedPayPage>
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                  color: cars[index]['parkingStatus']==0?Colors.yellow:Colors.grey[100],
+                                  color: cars[index]['parkingStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
                               height: 30,
                               width:80,

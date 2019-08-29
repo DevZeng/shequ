@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('一键开门')),
           BottomNavigationBarItem(icon: ImageIcon(AssetImage('images/tab4icon.png'),size: 16,), title: Text('个人中心')),
         ],
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Color.fromARGB(255, 243, 200, 70),
         onTap: (index) => {
               setState(() {
                 _current = index;

@@ -81,8 +81,11 @@ class _repairPage extends State<RepairPage>{
                                 type = types[index]['repairTypeId'];
                                 typeName = types[index]['repairTypeName'];
                               });},
-                              child: Text(types[index]['repairTypeName']),
-                              color: type==types[index]['repairTypeId']?Colors.yellow:Colors.white,
+                              child: Text(types[index]['repairTypeName'],
+                              style: TextStyle(
+                                color: type==types[index]['repairTypeId']?Colors.white:Colors.black
+                              ),),
+                              color: type==types[index]['repairTypeId']?Color.fromRGBO(243, 200, 70, 1):Colors.white,
                               materialTapTargetSize: MaterialTapTargetSize.padded,
                             ),
                             height: 25,
@@ -222,7 +225,7 @@ class _repairPage extends State<RepairPage>{
                   shape: new StadiumBorder(
                       side: new BorderSide(
                         style: BorderStyle.solid,
-                        color: Color.fromRGBO(240, 190, 60, 1),
+                        color: Color.fromRGBO(243, 200, 70, 1),
                       )),
                 ),
                 width: MediaQuery.of(context).size.width * 0.6,

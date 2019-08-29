@@ -50,8 +50,10 @@ class Page extends State<ReportPage> {
                       onPressed: (){setState(() {
                         type = 1;
                       });},
-                      child: Text('投诉'),
-                      color: type==1?Colors.yellow:Colors.white,
+                      child: Text('投诉',style: TextStyle(
+                        color: type==1?Colors.white:Colors.black
+                      ),),
+                      color: type==1?Color.fromRGBO(243, 200, 70, 1):Colors.white,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                     ),
                     height: 25,
@@ -61,8 +63,10 @@ class Page extends State<ReportPage> {
                       onPressed: (){setState(() {
                         type = 2;
                       });},
-                      child: Text('建议'),
-                      color: type==2?Colors.yellow:Colors.white,
+                      child: Text('建议',style: TextStyle(
+                          color: type==2?Colors.white:Colors.black
+                      )),
+                      color: type==2?Color.fromRGBO(243, 200, 70, 1):Colors.white,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                     ),
                     height: 25,
@@ -130,7 +134,7 @@ class Page extends State<ReportPage> {
                 shape: new StadiumBorder(
                     side: new BorderSide(
                   style: BorderStyle.solid,
-                  color: Color.fromRGBO(240, 190, 60, 1),
+                  color: Color.fromRGBO(243, 200, 70, 1),
                 )),
               ),
               width: MediaQuery.of(context).size.width * 0.6,

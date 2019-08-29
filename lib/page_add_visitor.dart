@@ -132,7 +132,7 @@ class Page extends State<addVisitorPage>{
               fluwx.share(fluwx.WeChatShareWebPageModel(
                   webPage: api.share+'?visitorRoomId=${data['data']['roomId']}',
                   title: '鸿源智慧社区来访登记',
-                  thumbnail: "assets://images/share.png",
+                  thumbnail: "assets://images/share.jpg",
                   scene: fluwx.WeChatScene.SESSION,
                   transaction: "访客申请"
               ));

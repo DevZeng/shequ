@@ -87,7 +87,7 @@ class Page extends State<listAddressPage> {
                                     });
                                   });
 
-                                },title: Text('设为默认'),))
+                                },title: Text('设为默认'),activeColor: Color.fromRGBO(243, 200, 70, 1),))
                               ],
                             ),width: MediaQuery.of(context).size.width*0.55,
                               padding: EdgeInsets.fromLTRB(15, 0, 0, 0),),
@@ -124,11 +124,11 @@ class Page extends State<listAddressPage> {
           Navigator.of(context).pushNamed('addAddress').then((val){
             getAddress();
           });
-        },color: Colors.orange,
+        },color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text("新增地址",style: TextStyle(color: Colors.white,)),
           shape: new StadiumBorder(side: new BorderSide(
             style: BorderStyle.solid,
-            color: Color(0xffFF7F24),
+            color: Color.fromRGBO(243, 200, 70, 1),
           )),
         ),
       ),

@@ -291,7 +291,7 @@ class Page extends State<StayPage> {
   }
   void getShop(lat ,lon) {
     String url = api.getTypeHShopMsg+ '?shopType=3&start=1&lenght=10';
-    if(lat!=0){
+    if(lat!=0&&lat!=null){
       url+="&lat=${lat}&log=${lon}";
     }
     Dio().request(url).then((response) {
