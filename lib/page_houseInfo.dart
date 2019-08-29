@@ -201,7 +201,7 @@ class Page extends State<HouseInfoPage> {
                           fontSize: 16.0);
                     }
                   },
-                  color: Colors.orange,
+                  color: Color.fromRGBO(243, 200, 70, 1),
                   child: new Text("切换",
                       style: TextStyle(
                         color: Colors.white,
@@ -209,7 +209,7 @@ class Page extends State<HouseInfoPage> {
                   shape: new StadiumBorder(
                       side: new BorderSide(
                         style: BorderStyle.solid,
-                        color: Color(0xffFF7F24),
+                        color: Color.fromRGBO(243, 200, 70, 1),
                       )),
                 ),
               ),),
@@ -226,7 +226,7 @@ class Page extends State<HouseInfoPage> {
 //          print(detailController.text);
 //          print(index);
                   },
-                  color: Colors.orange,
+                  color: Color.fromRGBO(243, 200, 70, 1),
                   child: new Text("修改",
                       style: TextStyle(
                         color: Colors.white,
@@ -234,7 +234,7 @@ class Page extends State<HouseInfoPage> {
                   shape: new StadiumBorder(
                       side: new BorderSide(
                         style: BorderStyle.solid,
-                        color: Color(0xffFF7F24),
+                        color: Color.fromRGBO(243, 200, 70, 1),
                       )),
                 ),
               ),),

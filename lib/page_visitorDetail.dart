@@ -52,11 +52,11 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
 //          print(lists);
                     Navigator.of(context).pushNamed('addVisitorList',arguments: id);
 //          print(detailController.text);
-        },color: Colors.orange,
+        },color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text("添加",style: TextStyle(color: Colors.white,)),
           shape: new StadiumBorder(side: new BorderSide(
             style: BorderStyle.solid,
-            color: Color(0xffFF7F24),
+            color: Color.fromRGBO(243, 200, 70, 1),
           )),
         ),
       ),

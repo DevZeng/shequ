@@ -83,15 +83,15 @@ class Page extends State<addVisitorPage>{
             addGroup();
 //          print(detailController.text);
           },
-          color: Colors.orange,
-          child: new Text("保存地址",
+          color: Color.fromRGBO(243, 200, 70, 1),
+          child: new Text("保存访客组",
               style: TextStyle(
                 color: Colors.white,
               )),
           shape: new StadiumBorder(
               side: new BorderSide(
                 style: BorderStyle.solid,
-                color: Color(0xffFF7F24),
+                color: Color.fromRGBO(243, 200, 70, 1),
               )),
         ),
       ),

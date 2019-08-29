@@ -65,7 +65,8 @@ class _visitorPage extends State<VisitorPage>
           elevation: 0,
           bottom: TabBar(
               controller: _tabController,
-              labelColor: Colors.yellow,
+              labelColor: Color.fromRGBO(243, 200, 70, 1),
+              indicatorColor: Color.fromRGBO(243, 200, 70, 1),
               unselectedLabelColor: Colors.black,
               tabs: tabs.map((e) => Tab(text: e)).toList())),
       body: TabBarView(
@@ -142,7 +143,7 @@ class _visitorPage extends State<VisitorPage>
           onPressed: () {
             Navigator.of(context).pushNamed('addVisitorPage');
           },
-          color: Color.fromRGBO(240, 190, 60, 1),
+          color: Color.fromRGBO(243, 200, 70, 1),
           disabledColor: Color.fromRGBO(240, 190, 60, 1),
           child: new Text("新增访客",
               style: TextStyle(
@@ -151,7 +152,7 @@ class _visitorPage extends State<VisitorPage>
           shape: new StadiumBorder(
               side: new BorderSide(
             style: BorderStyle.solid,
-            color: Color.fromRGBO(240, 190, 60, 1),
+            color: Color.fromRGBO(243, 200, 70, 1),
           )),
         ),
         width: MediaQuery.of(context).size.width * 0.6,

@@ -37,6 +37,7 @@ class Page extends State<addPageInfo> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('基本信息'),
         elevation: 0,
@@ -300,7 +301,7 @@ class Page extends State<addPageInfo> {
 //            print(info);
                     doUpdate();
                   },
-                  color: Colors.orange,
+                  color: Color.fromRGBO(243, 200, 70, 1),
                   child: modify == true
                       ? new Text("保存",
                       style: TextStyle(
@@ -313,7 +314,7 @@ class Page extends State<addPageInfo> {
                   shape: new StadiumBorder(
                       side: new BorderSide(
                         style: BorderStyle.solid,
-                        color: Color(0xffFF7F24),
+                        color: Color.fromRGBO(243, 200, 70, 1),
                       )),
                 ),
               ),)

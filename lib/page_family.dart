@@ -144,7 +144,7 @@ class _family extends State<Family>{
               });
             });
           },
-          color: Colors.orange,
+          color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text('新增成员',
               style: TextStyle(
                 color: Colors.white,
@@ -152,7 +152,7 @@ class _family extends State<Family>{
           shape: new StadiumBorder(
               side: new BorderSide(
                 style: BorderStyle.solid,
-                color: Color(0xffFF7F24),
+                color: Color.fromRGBO(243, 200, 70, 1),
               )),
         ),
       ),

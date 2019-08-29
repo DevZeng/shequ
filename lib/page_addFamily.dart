@@ -52,7 +52,7 @@ class Page extends State<addFamily> {
                       width: 120,
                       height: 120,
                       decoration: BoxDecoration(
-                          color: Colors.orange,
+                          color: Color.fromRGBO(243, 200, 70, 1),
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           image: DecorationImage(
                               image: NetworkImage(imageUrl),
@@ -225,7 +225,7 @@ class Page extends State<addFamily> {
             saveInfo();
 //            print(info);
           },
-          color: Colors.orange,
+          color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text('提交',
               style: TextStyle(
                 color: Colors.white,
@@ -233,7 +233,7 @@ class Page extends State<addFamily> {
           shape: new StadiumBorder(
               side: new BorderSide(
                 style: BorderStyle.solid,
-                color: Color(0xffFF7F24),
+                color: Color.fromRGBO(243, 200, 70, 1),
               )),
         ),
       ),
@@ -254,6 +254,7 @@ class Page extends State<addFamily> {
   }
 
   _upLoadImage(File image) async {
+    print('upload');
     String path = image.path;
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
     var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);

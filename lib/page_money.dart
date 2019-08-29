@@ -218,7 +218,7 @@ class Page extends State<MoneyPage> {
 //                fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B');
 //                    showGeneralDialog(context: null, pageBuilder: null)
                   },
-                  color: Colors.orange,
+                  color: Color.fromRGBO(243, 200, 70, 1),
                   child: new Text("充值",
                       style: TextStyle(
                         color: Colors.white,
@@ -226,7 +226,7 @@ class Page extends State<MoneyPage> {
                   shape: new StadiumBorder(
                       side: new BorderSide(
                         style: BorderStyle.solid,
-                        color: Color(0xffFF7F24),
+                        color: Color.fromRGBO(243, 200, 70, 1),
                       )),
                 ),
               )

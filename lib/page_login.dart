@@ -132,6 +132,7 @@ class LoginPageState extends State<LoginPage>{
       Dio().post(Api.login, data: formData).then((response) {
         if (response.statusCode == 200) {
           var data = response.data;
+          print(data);
           if (data['code'] == 200) {
 
             saveUser(data['data']['token']);

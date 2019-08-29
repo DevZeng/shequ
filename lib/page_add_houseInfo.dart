@@ -51,7 +51,7 @@ class Page extends State<addHouseInfo> {
                       width: 120,
                       height: 120,
                       decoration: BoxDecoration(
-                          color: Colors.orange,
+                          color: Color.fromRGBO(243, 200, 70, 1),
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           image: DecorationImage(
                               image: NetworkImage(houseInfo.imageAddress),
@@ -243,7 +243,7 @@ class Page extends State<addHouseInfo> {
             saveInfo();
 //          print(houseInfo.id);
           },
-          color: Colors.orange,
+          color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text("保存住宅",
               style: TextStyle(
                 color: Colors.white,
@@ -251,7 +251,7 @@ class Page extends State<addHouseInfo> {
           shape: new StadiumBorder(
               side: new BorderSide(
                 style: BorderStyle.solid,
-                color: Color(0xffFF7F24),
+                color: Color.fromRGBO(243, 200, 70, 1),
               )),
         ),
       ),

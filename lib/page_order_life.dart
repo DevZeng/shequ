@@ -81,6 +81,8 @@ class lifeOrderPage extends State<LifeOrderPage>
         bottom: TabBar(
             //生成Tab菜单
             controller: _tabController,
+            labelColor: Color.fromRGBO(243, 200, 70, 1),
+            indicatorColor: Color.fromRGBO(243, 200, 70, 1),
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
       body: TabBarView(

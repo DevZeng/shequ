@@ -114,7 +114,7 @@ class Page extends State<FamilyDetail> {
             saveInfo();
 //          print(info);
           },
-          color: Colors.orange,
+          color: Color.fromRGBO(243, 200, 70, 1),
           child: new Text(info['status']==0?'审核':'删除',
               style: TextStyle(
                 color: Colors.white,
@@ -122,7 +122,7 @@ class Page extends State<FamilyDetail> {
           shape: new StadiumBorder(
               side: new BorderSide(
                 style: BorderStyle.solid,
-                color: Color(0xffFF7F24),
+                color: Color.fromRGBO(243, 200, 70, 1),
               )),
         ),
       ),
