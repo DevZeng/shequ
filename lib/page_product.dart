@@ -113,7 +113,7 @@ class _productPage extends State<ProductPage>{
         height: 60,
         color: Colors.orange,
         child: FlatButton(onPressed: (){
-          Navigator.of(context).pushNamed('countPage',arguments: new Store(info['storeId'], info['storeName'], info['storeIcon'], [Product(product['storeId'], product['storeName'], product['storePrice'], product['storeMemberPrice'], 1, product['storeThumbnail'])],product['storePrice'],2,info['send']));
+          Navigator.of(context).pushNamed('countPage',arguments: new Store(info['storeId'], info['storeName'], info['storeIcon'], [Product(product['storeId'], product['storeName'], product['storePrice'], product['storeMemberPrice'], 1, product['storeThumbnail'])],product['storePrice'],2,info['send'],info['start'],info['sendPrice']));
         },child: Text('立即购买',style: TextStyle(fontSize: 20,color: Colors.white),),),
       ),
     );

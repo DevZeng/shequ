@@ -17,9 +17,10 @@ class _countPage extends State<countPage>{
   Api api = new Api();
   List products = [];
   List<Address> addresses = [];
-  Store store = new Store(0, ' ', '', [],0,2,0);
+  Store store = new Store(0, ' ', '', [],0,2,0,0,0);
   Address defaultAddress = new Address(0, '', '', '请选择', '', 1);
   int addressId = 0;
+  bool take = true;
   _countPage(){
     getUserAddress().then((val){
       if(val!=null&&val.length!=0){
@@ -63,8 +64,16 @@ class _countPage extends State<countPage>{
         padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: Column(
           children: <Widget>[
+            store.send==0?Container():Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0),child: Container(
+              child: SwitchListTile(value: take, onChanged: (val){
+                setState(() {
+                  take = val;
+                });
+              },title: Text('自提'),activeColor: Color.fromRGBO(243, 200, 70, 1),),
+              color: Colors.white,
+            ),),
             Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-            store.send==0?null:GestureDetector(child: Container(
+            take==true?Container():GestureDetector(child: Container(
               height: 80,
 //              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               color:Colors.white,

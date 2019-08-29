@@ -553,7 +553,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                   item['storeOrderShopThumbnail'],
                   [],
                   item['storeOrderTotalPrice'],
-                  2,0);
+                  2,0,0,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
@@ -578,7 +578,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                   item['storeOrderShopThumbnail'],
                   [],
                   item['storeOrderTotalPrice'],
-                  2,0);
+                  2,0,0,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
@@ -604,7 +604,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                   item['storeOrderShopThumbnail'],
                   [],
                   item['storeOrderTotalPrice'],
-                  2,0);
+                  2,0,0,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(
@@ -630,7 +630,7 @@ class lifeOrderPage extends State<LifeOrderPage>
                   item['storeOrderShopThumbnail'],
                   [],
                   item['storeOrderTotalPrice'],
-                  2,0);
+                  2,0,0,0);
               List<Product> products = [];
               item['listGoods'].forEach((good) {
                 products.add(new Product(

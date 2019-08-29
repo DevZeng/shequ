@@ -243,6 +243,8 @@ class Page extends State<LifeStorePage> {
                     'storeIcon':info['shopThumbnail'],
                     'send':info['shopIfDelivery'],
                     'productId':products[index]['storeId'],
+                    'start':info['shopStartFee'],
+                    'sendPrice':info['shopDeliveryFee']
                   });
                 },);
               },
@@ -466,7 +468,7 @@ class Page extends State<LifeStorePage> {
                                 color: Colors.yellow,
                                 child: FlatButton(
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,2,info['shopIfDelivery']));
+                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,2,info['shopIfDelivery'],info['shopStartFee'],info['shopDeliveryFee']));
                                   },
                                   child: Text(
                                     '去结算',

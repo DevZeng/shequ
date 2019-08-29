@@ -114,10 +114,8 @@ class Page extends State<NewsPage> {
                   getNewsData(1, list[i]['inforClassId']);
                 },
                 disabledColor: Colors.white,
-                child: Image(
-                  image: NetworkImage(list[i]['inforClassPicture']),
-                  width: 50,
-                  height: 50,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(list[i]['inforClassPicture']),
                 ),
               ),
               Text(list[i]['inforClassName'])

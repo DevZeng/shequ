@@ -96,12 +96,12 @@ class Page extends State<OutSellerPage> {
                     setState(() {
                       sort = 0;
                     });
-                  }, child: Text('综合排序',style: TextStyle(color: sort==0?Colors.yellow:Colors.black),)),
+                  }, child: Text('综合排序',style: TextStyle(color: sort==0?Color.fromRGBO(243, 200, 70, 1):Colors.black),)),
                   FlatButton(onPressed: (){
                     setState(() {
                       sort = 1;
                     });
-                  }, child: Text('销量',style: TextStyle(color: sort==1?Colors.yellow:Colors.black),))
+                  }, child: Text('销量',style: TextStyle(color: sort==1?Color.fromRGBO(243, 200, 70, 1):Colors.black),))
                 ],
               ),
             ),

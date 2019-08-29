@@ -113,10 +113,12 @@ class Store{
   String name;
   String icon;
   double price;
+  double sendPrice;
+  double startPrice;
   int type;//1 外卖 2 便利
   int send = 0;
   List<Product> products = [];
-  Store (this.id,this.name,this.icon,this.products,this.price,this.type,this.send);
+  Store (this.id,this.name,this.icon,this.products,this.price,this.type,this.send,this.startPrice,this.sendPrice);
 }
 
 class Order{

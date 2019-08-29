@@ -14,6 +14,7 @@ class PersonalPage extends StatefulWidget{
 class _PersonalPage extends State<PersonalPage> {
   String imgUrl = '';
   String userName = '';
+  int state = 0;
   Api api = new Api();
   @override
   void initState() {
@@ -33,7 +34,7 @@ class _PersonalPage extends State<PersonalPage> {
           child: Column(
             children: <Widget>[
               Container(
-                  height: 160,
+                  height: 165,
                   color: Color.fromRGBO(243, 200, 70, 1),
                   child: Column(
                     children: <Widget>[
@@ -42,13 +43,19 @@ class _PersonalPage extends State<PersonalPage> {
                         child: Row(
                           children: <Widget>[
                             Container(
-                              padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
+//                              padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
                               width:
                               MediaQuery.of(context).size.width * 0.3,
 //                              color: Colors.green,
                               height: 100,
+                              alignment: Alignment.bottomRight,
                               child: GestureDetector(
-                                child: CircleAvatar(backgroundImage: NetworkImage(imgUrl),),
+                                child: Container(
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(imgUrl),child: Text('请登录'),backgroundColor: Colors.white,foregroundColor: Colors.grey,),
+                                  width: 80,
+                                  height: 80,
+                                ),
                                 onTap: () {
                                   Navigator.of(context)
                                       .pushNamed('userInfo').then((val){
@@ -71,22 +78,40 @@ class _PersonalPage extends State<PersonalPage> {
                                     child: Text(userName,style: TextStyle(color: Colors.white,fontSize: 18),),
                                     width:
                                     MediaQuery.of(context).size.width * 0.4,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        ImageIcon(AssetImage('images/card.png'),color: Colors.white,size: 16,),
+                                        Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                        child: Text(state==0?'未完善信息':'已完善信息',style: TextStyle(color: Colors.white),),),
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
                             ),
-//                            Container(
-//                              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-//                              width:
-//                              MediaQuery.of(context).size.width * 0.3,
-////                              color: Colors.green,
-//                              height: 100,
-//                              alignment: Alignment.centerRight,
-//                              child: FlatButton.icon(
-//                                  onPressed: null,
-//                                  icon: Icon(Icons.add),
-//                                  label: Text('dd')),
-//                            )
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                              width:
+                              MediaQuery.of(context).size.width * 0.3,
+//                              color: Colors.green,
+                              height: 100,
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                height: 35,
+
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: Colors.orange,
+                                  shape: BoxShape.rectangle,
+borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.circular(50) )
+//                                  border: B
+                                ),
+                                child: FlatButton.icon(onPressed: null, icon: ImageIcon(AssetImage('images/member.png'),color: Colors.white,), label: Text('会员',style: TextStyle(color: Colors.white),)),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -421,6 +446,7 @@ class _PersonalPage extends State<PersonalPage> {
           setState(() {
             imgUrl = data['data']['userMsgHead'];
             userName = data['data']['userMsgNike'];
+            state = data['data']['userMsgStatus'];
           });
         }else if(data['code'] == 0){
           Navigator.of(context).pushNamed('login');

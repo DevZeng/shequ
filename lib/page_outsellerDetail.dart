@@ -70,7 +70,10 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.grey[100],
-//      appBar: AppBar(),
+      appBar: AppBar(
+          backgroundColor: Color.fromRGBO(251, 239, 199, 1),
+        elevation: 0,
+      ),
       body: ListView(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         children: <Widget>[
@@ -733,7 +736,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                                 color: Colors.yellow,
                                 child: FlatButton(
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,1,info['shopIfDelivery']));
+                                    Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,1,info['shopIfDelivery'],info['shopStartFee'],info['shopDeliveryFee']));
                                   },
                                   child: Text(
                                     '去结算',
