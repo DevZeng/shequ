@@ -56,4 +56,6 @@ class Api {
   final searchShop = host +'appHShopMsg/searchShop';
   final passUserFamily = host +'appHHouseUserFamily/passUserFamily';
   final postHHouseUserFamily = host +'appHHouseUserFamily/postHHouseUserFamily';
+  final testingToken = host +'appHUserAccount/testingToken';
+  final putUserMember = host +'appHUserMember/putUserMember';
 }

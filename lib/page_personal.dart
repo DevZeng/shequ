@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'model.dart';
 import 'package:dio/dio.dart';
+import 'page_login.dart';
 
 class PersonalPage extends StatefulWidget{
   @override
@@ -14,6 +15,7 @@ class PersonalPage extends StatefulWidget{
 class _PersonalPage extends State<PersonalPage> {
   String imgUrl = '';
   String userName = '';
+  String login = '请登录';
   int state = 0;
   Api api = new Api();
   @override
@@ -52,11 +54,13 @@ class _PersonalPage extends State<PersonalPage> {
                               child: GestureDetector(
                                 child: Container(
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage(imgUrl),child: Text('请登录'),backgroundColor: Colors.white,foregroundColor: Colors.grey,),
+                                    backgroundImage: NetworkImage(imgUrl),child: Text(login),backgroundColor: Colors.white,foregroundColor: Colors.grey,),
                                   width: 80,
                                   height: 80,
                                 ),
                                 onTap: () {
+                                  checkLogin();
+//                                  print()
                                   Navigator.of(context)
                                       .pushNamed('userInfo').then((val){
                                     getUserInfo();
@@ -145,6 +149,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
+                                  checkLogin();
                                   Navigator.of(context).pushNamed('family');
                                 },
                                 disabledColor: Colors.white,
@@ -166,6 +171,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
+                                  checkLogin();
                                   Navigator.pushNamed(
                                       context, "visitorePage");
                                 },
@@ -188,6 +194,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
+                                  checkLogin();
                                   Navigator.of(context).pushNamed('money');
                                 },
                                 disabledColor: Colors.white,
@@ -244,6 +251,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                 children: <Widget>[
                                   FlatButton(
                                     onPressed: () {
+                                      checkLogin();
                                       Navigator.of(context).pushNamed('outsellerOrderPage');
                                     },
                                     disabledColor: Colors.white,
@@ -265,6 +273,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                 children: <Widget>[
                                   FlatButton(
                                     onPressed: () {
+                                      checkLogin();
                                       Navigator.pushNamed(
                                           context, "lifeOrderPage");
                                     },
@@ -286,6 +295,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                 children: <Widget>[
                                   FlatButton(
                                     onPressed: () {
+                                      checkLogin();
                                       Navigator.of(context).pushNamed('stayOrderPage');
                                     },
                                     disabledColor: Colors.white,
@@ -331,6 +341,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
+                        checkLogin();
                         Navigator.pushNamed(context, "listHouseInfo");
                       },
                     ),
@@ -348,6 +359,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
+                        checkLogin();
                         Navigator.pushNamed(context, "listAddress");
                       },
                     ),
@@ -365,6 +377,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
+                        checkLogin();
                         Navigator.pushNamed(context, "needPay");
                       },
                     ),
@@ -382,6 +395,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
+                        checkLogin();
                         Navigator.pushNamed(context, "repairPage");
                       },
                     ),
@@ -399,6 +413,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
+                        checkLogin();
                         Navigator.pushNamed(context, "notifications");
                       },
                     ),
@@ -416,6 +431,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                         textAlign: TextAlign.end,
                       ),
                       onTap: () {
+                        checkLogin();
                         Navigator.pushNamed(context, "report");
                       },
                     )
@@ -436,7 +452,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
   void getUserInfo() async {
     getUser().then((val) {
       if(val==null){
-        Navigator.of(context).pushNamed('login');
+//        Navigator.of(context).pushNamed('login');
         return;
       }
       Dio().request(api.getUserInfo + '?token=$val').then((response) {
@@ -447,6 +463,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
             imgUrl = data['data']['userMsgHead'];
             userName = data['data']['userMsgNike'];
             state = data['data']['userMsgStatus'];
+            login = '';
           });
         }else if(data['code'] == 0){
           Navigator.of(context).pushNamed('login');
@@ -478,6 +495,27 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
           });
         });
       }
+    });
+  }
+  checkLogin() {
+    getUser().then((val){
+      if(val==null){
+        Navigator.of(context).pushAndRemoveUntil(
+            new MaterialPageRoute(builder: (context) => new LoginPage()
+            ), (route) => route == null);
+        return;
+      }
+      var fromData = {'token':val};
+      Dio().post(api.testingToken,data: fromData).then((response){
+        var data = response.data;
+        if(data['code']==200){
+          return;
+        }else{
+          Navigator.of(context).pushAndRemoveUntil(
+              new MaterialPageRoute(builder: (context) => new LoginPage()
+              ), (route) => route == null);
+        }
+      });
     });
   }
 }

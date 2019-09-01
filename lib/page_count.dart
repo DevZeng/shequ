@@ -308,7 +308,8 @@ class _countPage extends State<countPage>{
                       });
                     });
                     var formData =
-                        '{"token": "$val", "store": "$products", "addressId":${addressId},"storeIdentity":2,"storeShopId":"${store.id}"}';
+                        '{"token": "$val", "store": "$products", "addressId":${addressId},"storeIdentity":${take==true?2:1},"storeShopId":"${store.id}"}';
+                    print(formData);
                     Dio().post(api.postHShopStoreOrder,data: formData).then((response){
                       var data = response.data;
                       print(data);
@@ -353,7 +354,8 @@ class _countPage extends State<countPage>{
                       });
                     });
                     var formData =
-                        '{"token": "$val", "takeout": "$products", "addressId":${addressId},"toOrderIdentity":2,"toOrderShopId":"${store.id}"}';
+                        '{"token": "$val", "takeout": "$products", "addressId":${addressId},"toOrderIdentity":${take==true?2:1},"toOrderShopId":"${store.id}"}';
+                    print(formData);
                     Dio().post(api.postHShopTakeoutOrder,data: formData).then((response){
                       var data = response.data;
                       print(data);

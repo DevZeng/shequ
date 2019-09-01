@@ -73,7 +73,9 @@ class Page extends State<HouseInfoPage> {
               icon: Icon(Icons.add),
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed('addHouseInfo', arguments: new HouseInfo());
+                    .pushNamed('addHouseInfo', arguments: new HouseInfo()).then((val){
+                  getInfos();
+                });
               }),
         ],
       ),

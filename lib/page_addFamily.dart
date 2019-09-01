@@ -269,6 +269,15 @@ class Page extends State<addFamily> {
           imageUrl = data['data'];
 //          houseInfo.imageAddress = url;
         });
+      }else{
+        Fluttertoast.showToast(
+            msg: data['msg'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0);
       }
     }).catchError((error) {
       print(error);
@@ -276,8 +285,30 @@ class Page extends State<addFamily> {
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    _upLoadImage(image);
+    showModalBottomSheet(context: context, builder: (context){
+      return Column(
+        children: <Widget>[
+          ListTile(title:Text('拍照'),onTap: (){Navigator.of(context).pop(1);},),
+          ListTile(title:Text('相册'),onTap: (){Navigator.of(context).pop(2);}),
+        ],
+      );
+    }).then((val){
+      if(val==null){
+        return ;
+      }
+      if(val==1){
+        ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 60).then((image){
+          _upLoadImage(image);
+        });
+
+      }
+      if(val==2){
+        ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 60).then((image){
+          _upLoadImage(image);
+        });
+      }
+    });
+
   }
 
   saveInfo() {

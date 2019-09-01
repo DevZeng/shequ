@@ -5,7 +5,7 @@ import 'api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'api.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class MoneyPage extends StatefulWidget {
@@ -18,6 +18,9 @@ class MoneyPage extends StatefulWidget {
 
 class Page extends State<MoneyPage> {
   double amount = 0;
+  int id = 0;
+  bool auto = false;
+  double price = 0;
   getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String user = prefs.getString('user');
@@ -50,6 +53,8 @@ class Page extends State<MoneyPage> {
         if(data['code']==200){
           print(data['data']);
           amount = data['data']['memberBalance']==null?0:data['data']['memberBalance'];
+          auto = data['data']['memberAutopay']==null?false:data['data']['memberAutopay'];
+          id = data['data']['memberId']==null?0:data['data']['memberId'];
           setState(() {
 
           });
@@ -106,64 +111,56 @@ class Page extends State<MoneyPage> {
 //color: Colors.grey,
                 alignment: Alignment.bottomRight,
 //              alignment: Alignment(0, 1),
-                child: RadioListTile(
-                  value: 0,
-                  groupValue: 1,
-                  onChanged: null,
+                child: SwitchListTile(
+                  value: auto,
+//                  groupValue: auto,
+                  onChanged: (val){
+//                    print(val);
+                    getUser().then((token){
+                      var formData = {
+                      'token':token,'memberId':id,'memberAutopay':auto
+                      };
+                      print(formData);
+                      Dio().put(api.putUserMember,data: formData).then((response){
+                        print(response);
+                        if(response.statusCode==200){
+                          var data = response.data;
+                          if(data['code']==200){
+                            setState(() {
+                              auto = val;
+                            });
+                          }else{
+                            Fluttertoast.showToast(
+                                msg: data['msg'],
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.white,
+                                textColor: Colors.black,
+                                fontSize: 16.0);
+                          }
+                        }
+                      });
+
+                    });
+                  },
                   title: Text('自动缴费'),
-                  controlAffinity: ListTileControlAffinity.leading,
+                  activeColor: Color.fromRGBO(243, 200, 70, 1),
+//                  controlAffinity: ListTileControlAffinity.leading,
                 ),
               ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
               Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40.0,
                 child: new RaisedButton(
                   onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (ctx) {
-                          TextEditingController _controller = new TextEditingController();
-                          return SimpleDialog(
-                            title: Text("请输入金额"),
-                            titlePadding: EdgeInsets.all(10),
-//                            backgroundColor: Colors.amber,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6))),
-                            children: <Widget>[
-                              ListTile(
-                                title: TextField(
-                                  controller: _controller,
-                                  keyboardType: TextInputType.phone,
-                                  inputFormatters: [
-//                              WhitelistingTextInputFormatter(RegExp(r'^\d+\.\d{2}\$'))
-//                                  TextInputFormatter();
-                                    _UsNumberTextInputFormatter(),//只允许输入小数
-                                  ],
-                                ),
-                              ),
-                              ListTile(
-                                leading: FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('取消')),
-                                trailing: FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(_controller.text);
-                                    },
-                                    child: Text('确认')),
-
-                              ),
-
-                            ],
-                          );
-                        }).then((val){
-                          if(val==null){
-                            return ;
-                          }
-                          var price  = double.parse(val);
-                          print(price);
+                    myDialog(context).then((val){
+                      if(price==0){
+                        return;
+                      }
+//                      var price  = double.parse(val);
+//                      print(price);
                       getUser().then((val) {
                         var formData =
                             '{"token": "$val", "moFeeValue":${price} }';
@@ -172,7 +169,7 @@ class Page extends State<MoneyPage> {
                             .post(api.postHUserMemberOrder,
                             data: formData)
                             .then((response) {
-                              print(response);
+                          print(response);
                           var data = response.data;
                           if (data['code'] == 200) {
                             var moId = data['data']['moId'];
@@ -214,6 +211,7 @@ class Page extends State<MoneyPage> {
                         });
                       });
                     });
+
 //                print(detailController.text);
 //                fluwx.pay(appId: 'wx00ce24906ff638d4', partnerId: '1544254701', prepayId: 'wx072037024038545b547813bd1534702000', packageValue: 'Sign=WXPay', nonceStr: 'mHJCkoKGtCfJpIqAfhnAGws9AeohgfPd', timeStamp: 1565181422, sign: 'F657FABDECD7E14ECC8CDF5FA7A8D66B');
 //                    showGeneralDialog(context: null, pageBuilder: null)
@@ -239,6 +237,54 @@ class Page extends State<MoneyPage> {
 //        fluwx.share(model)
       }),
     );
+  }
+  Future<AlertDialog> myDialog(BuildContext context) {
+    return showDialog<AlertDialog>(
+        context: context,
+        builder: (BuildContext context) {
+          TextEditingController _controller = new TextEditingController();
+          return SimpleDialog(
+            title: Text("请输入金额"),
+            titlePadding: EdgeInsets.all(10),
+//                            backgroundColor: Colors.amber,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(6))),
+            children: <Widget>[
+              ListTile(
+                title: TextField(
+                  controller: _controller,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+//                              WhitelistingTextInputFormatter(RegExp(r'^\d+\.\d{2}\$'))
+//                                  TextInputFormatter();
+                    _UsNumberTextInputFormatter(),//只允许输入小数
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('取消')),
+                trailing: FlatButton(
+                    onPressed: () {
+                      if(_controller.text.length==0){
+                        Navigator.of(context).pop();
+                      }
+                      setState(() {
+                        price = double.parse(_controller.text);
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('确认')),
+
+              ),
+
+            ],
+          );
+        });
   }
 }
 class _UsNumberTextInputFormatter extends TextInputFormatter {
@@ -267,5 +313,7 @@ class _UsNumberTextInputFormatter extends TextInputFormatter {
       selection: new TextSelection.collapsed(offset: selectionIndex),
     );
   }
+
+
 }
 
