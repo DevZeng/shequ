@@ -141,10 +141,11 @@ class LoginPageState extends State<LoginPage>{
               var lists = houses['listMsg'];
               if(lists!=null&&lists.length!=0){
                 for (var element in lists) {
-                  print(element['holdId']);
+                  print(element['holdIdentity']);
                   if (element['holdStatus']==1){
                     saveXq(element['holdXqId']);
                     saveHold(element['holdId']);
+                    saveHoldType(element['holdIdentity']);
                     saveAddress("${element['holdXqName']}${element['holdLdName']}${element['holdDyName']}");
                     break;
                   }

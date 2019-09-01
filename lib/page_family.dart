@@ -15,6 +15,7 @@ class _family extends State<Family>{
   var parsons = [
   ];
   List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  int type ;
 
   Api api = new Api();
   @override
@@ -22,6 +23,7 @@ class _family extends State<Family>{
     // TODO: implement initState
     super.initState();
     getUser().then((val){
+
       getHold().then((hold){
         Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${hold}").then((response){
           if(response.statusCode==200){
@@ -35,6 +37,12 @@ class _family extends State<Family>{
             }
           }
         });
+      });
+    });
+    getHoldType().then((val){
+//      print(type);
+      setState(() {
+        type = val;
       });
     });
   }
@@ -123,7 +131,7 @@ class _family extends State<Family>{
             .size
             .width * 0.7,
         height: 40.0,
-        child: new RaisedButton(
+        child: type==1?RaisedButton(
           onPressed: () {
             Navigator.pushNamed(context, 'addFamily').then((val){
               getUser().then((val){
@@ -154,7 +162,7 @@ class _family extends State<Family>{
                 style: BorderStyle.solid,
                 color: Color.fromRGBO(243, 200, 70, 1),
               )),
-        ),
+        ):null,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

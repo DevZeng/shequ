@@ -103,7 +103,7 @@ class Page extends State<FamilyDetail> {
           ),
         ),
       ),
-      floatingActionButton: Container(
+      floatingActionButton: info['identity']==1?Container(
         width: MediaQuery
             .of(context)
             .size
@@ -125,7 +125,7 @@ class Page extends State<FamilyDetail> {
                 color: Color.fromRGBO(243, 200, 70, 1),
               )),
         ),
-      ),
+      ):null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

@@ -4,6 +4,7 @@ import 'api.dart';
 import 'model.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class countPage extends StatefulWidget{
   @override
@@ -298,6 +299,18 @@ class _countPage extends State<countPage>{
               color: Colors.orange,
               width: MediaQuery.of(context).size.width*0.3,
               child: FlatButton(onPressed: (){
+                if(!take){
+                  if(addressId==0){
+                    Fluttertoast.showToast(
+                        msg: "配送地址为空！",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIos: 1,
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16.0);
+                  }
+                }
                 getUser().then((val){
                   if(store.type==2){
                     List products = [];

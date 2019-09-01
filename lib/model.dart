@@ -54,6 +54,15 @@ logout()async{
   await prefs.remove('xqId');
   await prefs.remove('holdId');
 }
+void saveHoldType(type) async{
+  var prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('holdType', type);
+}
+getHoldType() async {
+  var prefs = await SharedPreferences.getInstance();
+  int type =  prefs.getInt('holdType');
+  return type;
+}
 getXq() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   int holdId = prefs.getInt('xqId');

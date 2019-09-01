@@ -183,6 +183,8 @@ class Page extends State<HouseInfoPage> {
                     if(houseInfos[_index].state==1){
                       saveHold(houseInfos[_index].id);
                       saveXq(houseInfos[_index].holdXqId);
+                      print(houseInfos[_index].holdIdentity);
+                      saveHoldType(houseInfos[_index].holdIdentity);
                       saveAddress("${houseInfos[_index].holdXq}${houseInfos[_index].holdLd}${houseInfos[_index].holdDy}");
                       Fluttertoast.showToast(
                           msg: "切换成功！",
