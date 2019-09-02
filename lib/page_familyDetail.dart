@@ -22,7 +22,17 @@ class Page extends State<FamilyDetail> {
 //  HouseInfo houseInfo = new HouseInfo();
   Api api = new Api();
   var info = null;
-
+  int type ;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getHoldType().then((val){
+      setState(() {
+        type = val;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     if(info==null){
@@ -104,7 +114,7 @@ class Page extends State<FamilyDetail> {
           ),
         ),
       ),
-      floatingActionButton: info['identity']==1?Container(
+      floatingActionButton: type==1?Container(
         width: MediaQuery
             .of(context)
             .size

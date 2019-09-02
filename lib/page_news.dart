@@ -5,6 +5,8 @@ import 'api.dart';
 import "package:english_words/english_words.dart";
 import 'timetransfer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:amap_location/amap_location.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -24,11 +26,41 @@ class Page extends State<NewsPage> {
   var _words = <String>[loadingTag];
   Api api = new Api();
   int type = 0;
+  AMapLocation _loc ;
+  String wicon = 'images/weather/999.png';
+  String weather = '';
 
   Page() {
     getR();
     getIconsData();
     getNewsData(1, 0);
+    AMapLocationClient.startup(new AMapLocationOption(
+        desiredAccuracy: CLLocationAccuracy.kCLLocationAccuracyHundredMeters))
+        .catchError((error) {
+      print(error);
+    });
+    _checkPersmission().then((val){
+
+      if(_loc!=null){
+//        print(_loc.city);
+//        print('1');
+        Dio().get(api.getWeatherForecast+"?position=${_loc.city}").then((response){
+          if(response.statusCode==200){
+            var data = response.data;
+            if(data['code']==200){
+              var now = data['data']['now'];
+              if(now!=null){
+                setState(() {
+                  weather = '${now['tmp']}';
+                  wicon = 'images/weather/${now['cond_code']}.png';
+                });
+              }
+            }
+          }
+
+        });
+      }
+    });
   }
 
   int _current = 0;
@@ -42,6 +74,22 @@ class Page extends State<NewsPage> {
           print(_imageUrls);
         });
       }
+    });
+  }
+  _checkPersmission() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+    if (permission == PermissionStatus.denied) {
+      Map<PermissionGroup,
+          PermissionStatus> permissions = await PermissionHandler()
+          .requestPermissions([PermissionGroup.location]);
+      if (permissions[PermissionGroup.location] == PermissionStatus.denied) {
+
+      }
+    }
+    AMapLocation loc = await AMapLocationClient.getLocation(true);
+    setState(() {
+      _loc = loc;
     });
   }
 
@@ -136,8 +184,11 @@ class Page extends State<NewsPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('兴宁头条'),
         centerTitle: true, elevation: 0,actions: <Widget>[
-        Icon(Icons.wb_cloudy),
-        Center(child: Text('dsfasf'),),
+        ImageIcon(AssetImage(wicon),color: Colors.grey,size: 30,),
+        Center(child: Container(
+          child: Text(weather),
+          padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+        ),),
       ],backgroundColor: Colors.white,),
       body: SingleChildScrollView(
         child: Column(

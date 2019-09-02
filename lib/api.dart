@@ -58,4 +58,8 @@ class Api {
   final postHHouseUserFamily = host +'appHHouseUserFamily/postHHouseUserFamily';
   final testingToken = host +'appHUserAccount/testingToken';
   final putUserMember = host +'appHUserMember/putUserMember';
+  final getWeatherForecast = host +'WFController/getWeatherForecast';
+  final getUserOnekeyDoor = host +'appHOnekeyDoor/getUserOnekeyDoor';
+  final OpenDoor = host +'appHOnekeyDoor/OpenDoor';
+  final putHoldDefault = host +'appHHouseUserHold/putHoldDefault';
 }

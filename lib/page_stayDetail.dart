@@ -89,7 +89,7 @@ class Page extends State<StayDetail> {
                   Container(
                     child: Text(
                       info == null ? '' : '${info['score']}分',
-                      style: TextStyle(color: Colors.yellow),
+                      style: TextStyle(color: Colors.red),
                     ),
                     width: MediaQuery.of(context).size.width * 0.8,
                   ),

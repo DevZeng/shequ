@@ -181,30 +181,7 @@ class Page extends State<HouseInfoPage> {
                 height: 40.0,
                 child: new RaisedButton(
                   onPressed: () {
-                    if(houseInfos[_index].state==1){
-                      saveHold(houseInfos[_index].id);
-                      saveXq(houseInfos[_index].holdXqId);
-                      print(houseInfos[_index].holdIdentity);
-                      saveHoldType(houseInfos[_index].holdIdentity);
-                      saveAddress("${houseInfos[_index].holdXq}${houseInfos[_index].holdLd}${houseInfos[_index].holdDy}");
-                      Fluttertoast.showToast(
-                          msg: "切换成功！",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIos: 1,
-                          backgroundColor: Colors.white,
-                          textColor: Colors.black,
-                          fontSize: 16.0);
-                    }else{
-                      Fluttertoast.showToast(
-                          msg: "该状态不允许切换！",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIos: 1,
-                          backgroundColor: Colors.white,
-                          textColor: Colors.black,
-                          fontSize: 16.0);
-                    }
+                    switchHold(houseInfos[_index]);
                   },
                   color: Color.fromRGBO(243, 200, 70, 1),
                   child: new Text("切换",
@@ -256,5 +233,35 @@ class Page extends State<HouseInfoPage> {
     }
 
     return result;
+  }
+  switchHold(HouseInfo info){
+    if(info.state==1){
+      saveHold(info.id);
+      saveXq(info.holdXqId);
+      print(info.holdIdentity);
+      saveHoldType(info.holdIdentity);
+      saveAddress("${info.holdXq}${info.holdLd}${info.holdDy}");
+      Dio().put(api.putHoldDefault,data: {'holdId':info.id}).then((response){
+        print(response);
+      });
+      Fluttertoast.showToast(
+          msg: "切换成功！",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0);
+    }else{
+      Fluttertoast.showToast(
+          msg: "该状态不允许切换！",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0);
+    }
+
   }
 }

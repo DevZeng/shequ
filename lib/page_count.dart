@@ -23,6 +23,21 @@ class _countPage extends State<countPage>{
   int addressId = 0;
   bool take = true;
   _countPage(){
+    fluwx.responseFromPayment.listen((data) {
+      if(data.errCode==0){
+        Navigator.of(context).pop();
+      }else{
+        Fluttertoast.showToast(
+            msg: "取消支付！",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0);
+      }
+
+    });
     getUserAddress().then((val){
       if(val!=null&&val.length!=0){
         val.forEach((item){
