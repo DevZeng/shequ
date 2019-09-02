@@ -51,7 +51,8 @@ class _family extends State<Family>{
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(title: Text('家庭成员信息'),elevation: 0,),
+      appBar: AppBar(title: Text('家庭成员信息'),elevation: 0,
+        centerTitle: true,),
       body: Padding(padding: EdgeInsets.fromLTRB(5, 10, 5, 10),child: Wrap(
         spacing: 8.0, // 主轴(水平)方向间距
         runSpacing: 10.0, // 纵轴（垂直）方向间距

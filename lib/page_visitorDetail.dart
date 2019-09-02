@@ -28,6 +28,7 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('访客详情'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: ListView.builder(

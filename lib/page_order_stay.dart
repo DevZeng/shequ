@@ -76,6 +76,7 @@ class _stayOrderPage extends State<StayOrderPage>
       appBar: AppBar(
         title: Text('酒店订单'),
         elevation: 0,
+        centerTitle: true,
         bottom: TabBar(
           //生成Tab菜单
             controller: _tabController,
@@ -156,6 +157,10 @@ class _stayOrderPage extends State<StayOrderPage>
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
                                     child: Text('${unPayOrders[index]['hotelOrderInTime']} - ${unPayOrders[index]['hotelOrderOutTime']}'),
+                                  ),),
+                                  Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
+                                    width: MediaQuery.of(context).size.width-125,
+                                    child: Text('${unPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
                               ),
@@ -238,6 +243,10 @@ class _stayOrderPage extends State<StayOrderPage>
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
                                     child: Text('${payOrders[index]['hotelOrderInTime']} - ${payOrders[index]['hotelOrderOutTime']}'),
+                                  ),),
+                                  Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
+                                    width: MediaQuery.of(context).size.width-125,
+                                    child: Text('${unPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
                               ),
@@ -320,6 +329,10 @@ class _stayOrderPage extends State<StayOrderPage>
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
                                     child: Text('${waitPayOrders[index]['hotelOrderInTime']} - ${waitPayOrders[index]['hotelOrderOutTime']}'),
+                                  ),),
+                                  Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
+                                    width: MediaQuery.of(context).size.width-125,
+                                    child: Text('${unPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
                               ),
@@ -402,6 +415,10 @@ class _stayOrderPage extends State<StayOrderPage>
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
                                     child: Text('${finishPayOrders[index]['hotelOrderInTime']} - ${finishPayOrders[index]['hotelOrderOutTime']}'),
+                                  ),),
+                                  Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
+                                    width: MediaQuery.of(context).size.width-125,
+                                    child: Text('${unPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
                               ),

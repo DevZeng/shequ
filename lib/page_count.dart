@@ -59,6 +59,7 @@ class _countPage extends State<countPage>{
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text('提交订单'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: Container(

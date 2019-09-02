@@ -46,6 +46,7 @@ class _repairPage extends State<RepairPage>{
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('报修预约'),
+        centerTitle: true,
         elevation: 0,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.list), onPressed: () {

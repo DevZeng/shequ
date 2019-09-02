@@ -47,7 +47,8 @@ class Page extends State<listAddressPage> {
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(title: Text('我的地址'),elevation:0,),
+      appBar: AppBar(title: Text('我的地址'),
+        centerTitle: true,elevation:0,),
       body: SingleChildScrollView(child: Column(
         children: addresses.map((address){
           return Container(

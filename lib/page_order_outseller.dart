@@ -77,6 +77,7 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('外卖订单'),
+        centerTitle: true,
         elevation: 0,
         bottom: TabBar(
           //生成Tab菜单
@@ -181,6 +182,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                           alignment: Alignment.centerRight,
                           child: Text(
                               '共${unPayOrders[index].store.products.length}件商品，实付¥${unPayOrders[index].store.price}'),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          width: MediaQuery.of(context).size.width,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                              '${unPayOrders[index].date}'),
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -288,6 +296,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                           alignment: Alignment.centerRight,
                           child: Text(
                               '共${payOrders[index].store.products.length}件商品，实付¥${payOrders[index].store.price}'),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          width: MediaQuery.of(context).size.width,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                              '${payOrders[index].date}'),
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -400,6 +415,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                               '共${waitPayOrders[index].store.products.length}件商品，实付¥${waitPayOrders[index].store.price}'),
                         ),
                         Container(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          width: MediaQuery.of(context).size.width,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                              '${waitPayOrders[index].date}'),
+                        ),
+                        Container(
 //                          decoration: BoxDecoration(
 //                             border: new Border.all(width: 1.0 ),
 //                          ),
@@ -510,6 +532,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                               '共${finishPayOrders[index].store.products.length}件商品，实付¥${finishPayOrders[index].store.price}'),
                         ),
                         Container(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          width: MediaQuery.of(context).size.width,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                              '${finishPayOrders[index].date}'),
+                        ),
+                        Container(
 //                          decoration: BoxDecoration(
 //                             border: new Border.all(width: 1.0 ),
 //                          ),
@@ -564,7 +593,7 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                     good['stogTakeoutThumbnail']));
               });
               store.products = products;
-              Order order = new Order(item['toOrderId'], store);
+              Order order = new Order(item['toOrderId'], store,item['createTime']);
 
               orders.add(order);
             });
@@ -590,7 +619,7 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                     good['stogTakeoutThumbnail']));
               });
               store.products = products;
-              Order order = new Order(item['toOrderId'], store);
+              Order order = new Order(item['toOrderId'], store,item['createTime']);
 
               orders.add(order);
             });
@@ -617,7 +646,7 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                     good['stogTakeoutThumbnail']));
               });
               store.products = products;
-              Order order = new Order(item['toOrderId'], store);
+              Order order = new Order(item['toOrderId'], store,item['createTime']);
 
               orders.add(order);
             });
@@ -644,7 +673,7 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                     good['stogTakeoutThumbnail']));
               });
               store.products = products;
-              Order order = new Order(item['toOrderId'], store);
+              Order order = new Order(item['toOrderId'], store,item['createTime']);
 
               orders.add(order);
             });

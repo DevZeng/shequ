@@ -43,6 +43,7 @@ class Page extends State<addAddressPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('新增地址'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: Column(

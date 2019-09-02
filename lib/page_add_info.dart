@@ -40,6 +40,7 @@ class Page extends State<addPageInfo> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('基本信息'),
+        centerTitle: true,
         elevation: 0,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.exit_to_app), onPressed: (){

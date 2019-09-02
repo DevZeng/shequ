@@ -50,7 +50,8 @@ class Page extends State<OutSellerPage> {
       getShop(loc==null?0:loc['lat'],loc==null?0:loc['lon']);
     }
     return Scaffold(
-      appBar: AppBar(title: Text('美食外卖'),elevation: 0,),
+      appBar: AppBar(title: Text('美食外卖'),elevation: 0,
+        centerTitle: true,),
       backgroundColor: Colors.white,
       body: Container(
         child: Column(

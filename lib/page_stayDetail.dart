@@ -38,6 +38,7 @@ class Page extends State<StayDetail> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('酒店详情'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -213,14 +214,20 @@ class Page extends State<StayDetail> {
                         color: Colors.white,
                         child: Row(
                           children: <Widget>[
-                            Container(
-                              width: 120,
-                              decoration: BoxDecoration(
+                            GestureDetector(
+                              child: Container(
+                                width: 120,
+                                decoration: BoxDecoration(
 //                                  color: Colors.grey,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          rooms[index]['hotleThumbnail']),
-                                      fit: BoxFit.cover)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            rooms[index]['hotleThumbnail'].split(',')[0]),
+                                        fit: BoxFit.cover)),
+                              ),
+                              onTap: (){
+                                print(rooms[index]['hotleThumbnail'].split(',')[0]);
+                                Navigator.of(context).pushNamed('stayImage',arguments:rooms[index]['hotleThumbnail'].split(',') );
+                              },
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width - 150,

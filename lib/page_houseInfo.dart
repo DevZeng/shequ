@@ -66,6 +66,7 @@ class Page extends State<HouseInfoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('住户信息'),
+        centerTitle: true,
         elevation: 0,
         actions: <Widget>[
           //导航栏右侧菜单

@@ -68,6 +68,7 @@ class Page extends State<LifePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('便利生活'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: new Container(

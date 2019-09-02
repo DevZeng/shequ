@@ -34,6 +34,7 @@ class _commentPage extends State<CommentPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('全部评论'),
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
       ),

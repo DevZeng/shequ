@@ -40,6 +40,7 @@ import 'page_comments.dart';
 import 'page_product.dart';
 import 'page_search.dart';
 import 'page_addFamily.dart';
+import 'page_stayImage.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -148,7 +149,8 @@ class _MyApp extends State<MyApp> {
         'comments':(context)=>CommentPage(),
         'product':(context)=>ProductPage(),
         'search':(context)=>SearchPage(),
-        'addFamily':(context)=>addFamily()
+        'addFamily':(context)=>addFamily(),
+        'stayImage':(context)=>StayImagePage()
       },
     );
   }

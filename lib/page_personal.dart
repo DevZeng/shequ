@@ -3,6 +3,7 @@ import 'api.dart';
 import 'model.dart';
 import 'package:dio/dio.dart';
 import 'page_login.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PersonalPage extends StatefulWidget{
   @override
@@ -466,7 +467,14 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
             login = '';
           });
         }else if(data['code'] == 0){
-          Navigator.of(context).pushNamed('login');
+          Fluttertoast.showToast(
+              msg:data['msg'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.white,
+              textColor: Colors.black,
+              fontSize: 16.0);
         }
       });
     });

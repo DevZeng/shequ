@@ -134,7 +134,8 @@ class Page extends State<NewsPage> {
   Widget layout(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('兴宁头条'), elevation: 0,actions: <Widget>[
+      appBar: AppBar(title: Text('兴宁头条'),
+        centerTitle: true, elevation: 0,actions: <Widget>[
         Icon(Icons.wb_cloudy),
         Center(child: Text('dsfasf'),),
       ],backgroundColor: Colors.white,),

@@ -41,6 +41,7 @@ class Page extends State<LifeStorePage> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('商店详情'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(

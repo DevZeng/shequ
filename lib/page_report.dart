@@ -30,6 +30,7 @@ class Page extends State<ReportPage> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('投诉建议'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: Container(

@@ -62,6 +62,7 @@ class _visitorPage extends State<VisitorPage>
     return Scaffold(
       appBar: AppBar(
           title: Text('访客管理'),
+          centerTitle: true,
           elevation: 0,
           bottom: TabBar(
               controller: _tabController,

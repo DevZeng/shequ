@@ -48,6 +48,7 @@ class Page extends State<StayPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('酒店住宿'),
+        centerTitle: true,
         elevation: 0,
       ),
       backgroundColor: Colors.grey[100],

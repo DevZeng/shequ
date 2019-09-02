@@ -133,7 +133,8 @@ class Store{
 class Order{
   String number;
   Store store;
-  Order(this.number,this.store);
+  String date;
+  Order(this.number,this.store,this.date);
 }
 
 getDistance(int distance) {

@@ -72,6 +72,7 @@ class Page extends State<MoneyPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('钱包'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(

@@ -89,7 +89,8 @@ class Page extends State<OpenDoorPage> {
   Widget layout(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(title: Text('一键开门'), elevation: 0),
+      appBar: AppBar(title: Text('一键开门'),
+          centerTitle: true, elevation: 0),
       body: Container(
         padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.width * 0.14, 0, 0),
         width: MediaQuery.of(context).size.width,

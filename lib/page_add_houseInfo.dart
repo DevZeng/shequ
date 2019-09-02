@@ -32,6 +32,7 @@ class Page extends State<addHouseInfo> {
     return Scaffold(
       appBar: AppBar(
         title: Text('住户信息'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(

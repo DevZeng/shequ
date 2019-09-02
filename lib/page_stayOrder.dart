@@ -29,7 +29,8 @@ class _StayOrder extends State<StayOrder>{
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(title: Text('填写订单'),elevation: 0,),
+      appBar: AppBar(title: Text('填写订单'),
+        centerTitle: true,elevation: 0,),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

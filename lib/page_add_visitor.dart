@@ -23,7 +23,8 @@ class Page extends State<addVisitorPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text('新增访客组'),elevation: 0,),
+      appBar: AppBar(title: Text('新增访客组'),elevation: 0,
+        centerTitle: true,),
       body: Container(
         child: Column(
           children: <Widget>[

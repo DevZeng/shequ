@@ -109,6 +109,7 @@ class Page extends State<NeedPayPage>
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('缴费服务'),
+        centerTitle: true,
         elevation: 0,
         bottom: TabBar(
             controller: _tabController,

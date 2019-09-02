@@ -30,6 +30,7 @@ class _repairList extends State<RepairList>{
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('预约列表'),
+        centerTitle: true,
         elevation: 0,
       ),
       body: ListView.builder(
