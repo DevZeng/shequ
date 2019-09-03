@@ -18,12 +18,13 @@ class _visitorPage extends State<VisitorPage>
   TabController _tabController;
   List tabs = ["待审核", "历史来访"];
   var lists = [];
+  var histories = [];
   Api api = new Api();
 
   @override
   void initState() {
     super.initState();
-    getRooms(1).then((val) {
+    getRooms(1,0).then((val) {
             print(val);
       lists = val;
       setState(() {});
@@ -34,9 +35,16 @@ class _visitorPage extends State<VisitorPage>
 //      print(_tabController.index);
       switch (_tabController.index) {
         case 0:
-          getRooms(1).then((val) {
+          getRooms(1,0).then((val) {
             print(val);
             lists = val;
+            setState(() {});
+          });
+          break;
+        case 1:
+          getRooms(1,1).then((val) {
+            print(val);
+            histories = val;
             setState(() {});
           });
           break;
@@ -44,11 +52,17 @@ class _visitorPage extends State<VisitorPage>
     });
   }
 
-  getRooms(int page) async {
-    var returnData = [];
+  getRooms(int page,int type) async {
+    String url ;
     String token = await getUser();
+    if(type==0){
+      url = api.getUserHVisitorRoom + '?token=$token&start=$page&length=10+roomStatus=0';
+    }else{
+      url = api.getUserHVisitorRoom + '?token=$token&start=$page&length=10';
+    }
+    var returnData = [];
     Response response = await Dio()
-        .get(api.getUserHVisitorRoom + '?token=$token&start=$page&length=10');
+        .get(url);
     var data = response.data;
     if (data['code'] == 200) {
       returnData = data['data'];
@@ -83,7 +97,7 @@ class _visitorPage extends State<VisitorPage>
                         Navigator.of(context).pushNamed('visitorDetailPage',arguments:lists[index]['roomId']);
                       },
                         leading: ImageIcon(AssetImage('images/visitor.png')),
-                        title: Text(lists[index]['roomName']),
+                        title: Text('${lists[index]['listVisitor'].length}人  '+lists[index]['roomName']),
                         trailing:
                             OutlineButton(onPressed: () {
 //                              print(lists[index]['roomId']);
@@ -136,7 +150,16 @@ class _visitorPage extends State<VisitorPage>
                           print('long');
                     },);
                   })),
-          Container(),
+          Container(
+              child: ListView.builder(
+                  itemCount: histories.length,
+                  itemExtent: 50.0, //强制高度为50.0
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: ImageIcon(AssetImage('images/visitor.png')),
+                      title: Text('${histories[index]['listVisitor'].length}人  '+histories[index]['roomName']),
+                    );
+                  })),
         ],
       ),
       floatingActionButton: Container(

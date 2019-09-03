@@ -16,7 +16,7 @@ class HouseInfoPage extends StatefulWidget {
 class Page extends State<HouseInfoPage> {
   List<HouseInfo> houseInfos = [];
   List<String> types = ['家庭成员', '户主', '工人', '租客'];
-  List<String> status = ['未审核', '已通过', '不通过', '租客'];
+  List<String> status = ['待审核', '已通过', '不通过', '租客'];
   String image = '';
   Api api = new Api();
   int _index = 0;
@@ -203,7 +203,9 @@ class Page extends State<HouseInfoPage> {
 //                    print(_index);
 //                    print(houseInfos[_index].id);
                     Navigator.of(context).pushNamed('addHouseInfo',arguments: houseInfos[_index]).then((val){
-                      getInfos();
+                      setState(() {
+                        houseInfos[_index].state = 0;
+                      });
                     });
 //          print(detailController.text);
 //          print(index);

@@ -3,6 +3,8 @@ import 'api.dart';
 import 'package:dio/dio.dart';
 import 'model.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:amap_location/amap_location.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class OutSellerDetailPage extends StatefulWidget {
   @override
@@ -34,21 +36,52 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
   ];
   double price = 0;
   List<Product> buys = [];
+//  AMapLocation _loc;
+  int member = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getMember().then((val){
+      print(val);
+      setState(() {
+        member = val;
+      });
+    });
     _tabController = TabController(length: tabs.length, vsync: this);
+//    AMapLocationClient.startup(new AMapLocationOption(
+//        desiredAccuracy: CLLocationAccuracy.kCLLocationAccuracyHundredMeters))
+//        .catchError((error) {
+//      print(error);
+//    });
+
   }
+//  _checkPersmission() async {
+//    PermissionStatus permission = await PermissionHandler()
+//        .checkPermissionStatus(PermissionGroup.location);
+//    if (permission == PermissionStatus.denied) {
+//      Map<PermissionGroup,
+//          PermissionStatus> permissions = await PermissionHandler()
+//          .requestPermissions([PermissionGroup.location]);
+//      if (permissions[PermissionGroup.location] == PermissionStatus.denied) {
+//
+//      }
+//    }
+//    AMapLocation loc = await AMapLocationClient.getLocation(true);
+//    setState(() {
+//      _loc = loc;
+//    });
+//  }
   getProducts(takeoutCategoryId) {
     String url = api.getClassHShopTakeout+'?takeoutShopId=${id}';
     if(takeoutCategoryId!=0){
       url = url+'&takeoutCategoryId=${takeoutCategoryId}';
     }
-    print(url);
+//    print(url);
     Dio().get(url).then((response){
       if(response.statusCode==200){
         var data = response.data;
+        print(data);
         if(data['code']==200){
           setState(() {
             products = data['data'];
@@ -58,12 +91,17 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     if(id==0){
       id = ModalRoute.of(context).settings.arguments;
 //    getProducts(1);
+//      _checkPersmission().then((val){
+//        print('locatopmn');
+//      });
       getR();
+
       getComments(1);
       getProducts(0);
     }
@@ -114,7 +152,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
             color: Colors.white,
             width: MediaQuery.of(context).size.width,
             child: Center(
-              child: Text('评价${info == null ? '' : ''}    月售    km'),
+              child: Text('评价${info == null ? '' : ''}    月售${info == null ? '' : ''}'),
             ),
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           ),
@@ -225,7 +263,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                                                     width: MediaQuery.of(context).size.width * 0.75-170,
 //                                                      color: Colors.red,
                                                     alignment: Alignment.centerLeft,
-                                                    child: Text('￥ ${products[index]['takeoutMemberFee']}'),
+                                                    child: Text('￥ ${member==1?products[index]['takeoutMemberFee']:products[index]['takeoutFee']}'),
                                                   ),
                                                   GestureDetector(
                                                     child: Container(
@@ -242,13 +280,13 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                                                       Product buy = new Product(
                                                         products[index]['takeoutId'],
                                                         products[index]['taketoutName'],
-                                                        double.parse(products[index]['takeoutMemberFee'].toString()),
+                                                        double.parse(products[index]['takeoutFee'].toString()),
                                                         double.parse(products[index]['takeoutMemberFee'].toString()),
                                                         1,
                                                         products[index]['takeoutThumbnail'],
                                                       );
                                                       addBuy(buy);
-                                                      price += double.parse(products[index]['takeoutMemberFee'].toString());
+                                                      price += double.parse(member==1?products[index]['takeoutMemberFee'].toString():products[index]['takeoutFee'].toString());
                                                       showCart();
                                                     },
                                                   )
@@ -573,8 +611,12 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
   }
 
   void getR() {
+    String url ;
+//    print(_loc);
     if (info == null) {
-      Dio().request(api.getOneShopMsg + '?shopId=$id').then((response) {
+      url = api.getOneShopMsg + '?shopId=$id';
+      print(url);
+      Dio().request(url).then((response) {
         if (response.statusCode == 200) {
           var content = response.data;
           print(content['data']);

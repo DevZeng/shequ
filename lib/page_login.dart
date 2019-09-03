@@ -137,6 +137,7 @@ class LoginPageState extends State<LoginPage>{
 
             saveUser(data['data']['token']);
             var houses = data['data']['householdAllMsg'];
+            saveMember(data['data']['userMsgType']);
             if(houses!=null){
               var lists = houses['listMsg'];
               if(lists!=null&&lists.length!=0){

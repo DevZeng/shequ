@@ -73,7 +73,17 @@ void saveXq(id) async
   var prefs = await SharedPreferences.getInstance();
   await prefs.setInt('xqId', id);
 }
-
+void saveMember(int member) async
+{
+  var prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('member', member);
+}
+getMember() async
+{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  int member = prefs.getInt('member');
+  return member;
+}
 getDay(int hours){
   int day ;
   if(hours<24){

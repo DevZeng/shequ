@@ -22,7 +22,13 @@ class _countPage extends State<countPage>{
   Address defaultAddress = new Address(0, '', '', '请选择', '', 1);
   int addressId = 0;
   bool take = true;
+  int member = 0;
   _countPage(){
+    getMember().then((val){
+      setState(() {
+        member = val;
+      });
+    });
     fluwx.responseFromPayment.listen((data) {
       if(data.errCode==0){
         Navigator.of(context).pop();
@@ -249,7 +255,7 @@ class _countPage extends State<countPage>{
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                                   child: Text(
-                                    '￥ ${store.products[index].price}',
+                                    '￥ ${member==1?store.products[index].sprice:store.products[index].price}',
                                     style: TextStyle(
                                       fontSize: 18,
                                     ),
@@ -258,13 +264,13 @@ class _countPage extends State<countPage>{
                                   width: 100,
 //                             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  height: 40,
-                                  child:Text('${store.products[index].sprice}',style: TextStyle(color: Colors.grey[500],decoration:
-                                  TextDecoration.lineThrough),),
-                                  width: 100,
-                                )
+//                                Container(
+//                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+//                                  height: 40,
+//                                  child:Text('${store.products[index].sprice}',style: TextStyle(color: Colors.grey[500],decoration:
+//                                  TextDecoration.lineThrough),),
+//                                  width: 100,
+//                                )
                               ],
                             ),
                           ),
@@ -304,7 +310,7 @@ class _countPage extends State<countPage>{
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                      child: Text(store.price.toString(),style: TextStyle(color: Colors.red,fontSize: 18),),
+                      child: Text(take==true?store.price.toStringAsFixed(2):(store.price+store.sendPrice).toStringAsFixed(2),style: TextStyle(color: Colors.red,fontSize: 18),),
                     ),
                   ],
                 ),

@@ -70,7 +70,7 @@ class Page extends State<FamilyDetail> {
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           image: DecorationImage(
                               image: NetworkImage(info==null?'':info['image']),
-                              fit: BoxFit.fill)),
+                              fit: BoxFit.cover)),
                     ),
                     onTap: () {
                       print('tap');
@@ -207,9 +207,11 @@ class Page extends State<FamilyDetail> {
                 "familyHoldId":hold,
                 "familyId":info['id'],
                 "familyType":info['type'],
-                "familyId":val,
+                "familyStatus":val,
               };
+              print(formData);
               Dio().put(api.passUserFamily,data: formData).then((response){
+                print(response);
                 if(response.statusCode==200){
                   var data = response.data;
                   if(data['data']==200){
@@ -222,6 +224,15 @@ class Page extends State<FamilyDetail> {
                         textColor: Colors.black,
                         fontSize: 16.0);
                     Navigator.of(context).pop();
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: data['msg'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIos: 1,
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16.0);
                   }
                 }
               });

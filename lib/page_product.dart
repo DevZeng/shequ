@@ -18,6 +18,17 @@ class _productPage extends State<ProductPage>{
   var product = null;
   var info = null;
   Api api = new Api();
+  int member = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMember().then((val){
+      setState(() {
+        member = val;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     if(info==null){
@@ -78,10 +89,10 @@ class _productPage extends State<ProductPage>{
                   child: Row(
                     children: <Widget>[
                       Text('¥',style: TextStyle(fontSize: 16,color: Colors.red),),
-                      Text('${product==null?'':product['storePrice']}',style: TextStyle(fontSize: 24,color: Colors.red),),
+                      Text('${member==1?product==null?'':product['storeMemberPrice']:product==null?'':product['storePrice']}',style: TextStyle(fontSize: 24,color: Colors.red),),
                       Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0)),
-                      Text('会员价¥',style: TextStyle(fontSize: 16,color: Colors.orange),),
-                      Text('${product==null?'':product['storeMemberPrice']}',style: TextStyle(fontSize: 24,color: Colors.orange),),
+//                      Text('会员价',style: TextStyle(fontSize: 16,color: Colors.orange),),
+//                      Text('${product==null?'':product['storeMemberPrice']}',style: TextStyle(fontSize: 24,color: Colors.orange),),
                     ],
                   ),
                 ),),

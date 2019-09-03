@@ -104,14 +104,18 @@ class Page extends State<OpenDoorPage> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(title: Text('一键开门'),
           centerTitle: true, elevation: 0),
-      body: ListView.builder(
-        itemCount: lists.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context,index){
-        return Container(
-          padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.width * 0.14, 0, 0),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+      body:
+      Container(
+        child: ListView.builder(
+//          shrinkWrap: true,
+
+          itemCount: lists.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context,index){
+          return Container(
+            padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.width * 0.14, 0, 0),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
 //          decoration: BoxDecoration(
 //            image: DecorationImage(
 //              image: AssetImage(
@@ -120,85 +124,92 @@ class Page extends State<OpenDoorPage> {
 //              alignment: Alignment.topCenter,
 //            ),
 //          ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width*0.8,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width*0.8,
 //              height: MediaQuery.of(context).size.height*0.6,
 
 //              color: Colors.black,
 //            decoration: BoxShadow(color: Color(0xffff0000), offset: Offset(3.0, 3.0),blurRadius: 2,spreadRadius: 5.0),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: MediaQuery.of(context).size.height*0.135,
-                      padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.width * 0.1, 0, 0),
-                      width: MediaQuery.of(context).size.width,
-                      color: colors[index%3],
-                      child: Column(
-                        children: <Widget>[
-                          Text(lists[index]['doorName'],style: TextStyle(color: Colors.white,fontSize: 20,fontWeight:FontWeight.w600),),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.135,
+                        padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.width * 0.1, 0, 0),
+                        width: MediaQuery.of(context).size.width,
+                        color: colors[index%3],
+                        child: Column(
+                          children: <Widget>[
+                            Text(lists[index]['doorName'],style: TextStyle(color: Colors.white,fontSize: 20,fontWeight:FontWeight.w600),),
 //                        Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-                          Text('点击开门后请耐心等待系统反应哟！',style: TextStyle(color: Colors.white),),
+                            Text('点击开门后请耐心等待系统反应哟！',style: TextStyle(color: Colors.white),),
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      color: Colors.white,
-                      width: MediaQuery.of(context).size.width*0.8,
-                      height: MediaQuery.of(context).size.height*0.4,
+                      Container(
+                        color: Colors.white,
+                        width: MediaQuery.of(context).size.width*0.8,
+                        height: MediaQuery.of(context).size.height*0.4,
 
-                      child: Column(
-                        children: <Widget>[
-                          Padding(padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.05, 0, 0)),
-                          Container(
-                            width: MediaQuery.of(context).size.width*0.25,
-                            height: MediaQuery.of(context).size.height*0.2,
-                            child:Image.asset('images/door.png'),
-                          ),
-                          Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-                          lists[index]['doorEnterNumber'].length==0?Container():Container(
-                            //修饰黑色背景与圆角
-                            decoration: new BoxDecoration(
-                              color: Color.fromRGBO(243, 200, 70, 1),
-                              borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.05, 0, 0)),
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.25,
+                              height: MediaQuery.of(context).size.height*0.2,
+                              child:Image.asset('images/door.png'),
                             ),
-                            height: MediaQuery.of(context).size.height*0.04,
-                            width: MediaQuery.of(context).size.width*0.45,
-                            child: FlatButton(onPressed: (){
-                              openDoor(lists[index]['doorEnterNumber']);
+                            Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+                            lists[index]['doorEnterNumber'].length==0?Container():Container(
+                              //修饰黑色背景与圆角
+                              decoration: new BoxDecoration(
+                                color: Color.fromRGBO(243, 200, 70, 1),
+                                borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                              ),
+                              height: MediaQuery.of(context).size.height*0.04,
+                              width: MediaQuery.of(context).size.width*0.45,
+                              child: FlatButton(onPressed: (){
+                                openDoor(lists[index]['doorEnterNumber']);
 //                              show
 //                              showMenu(context: context, position: RelativeRect.fill, items: null)
-                              print(MediaQuery.of(context).size.aspectRatio);
-                            }, child: Text('立即开门(进)',style: TextStyle(color: Colors.white),)),
-                          ),
-                          Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-                          lists[index]['doorOutNumber'].length==0?Container():Container(
-                            //修饰黑色背景与圆角
-                            decoration: new BoxDecoration(
-                              color: Color.fromRGBO(243, 200, 70, 1),
-                              borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                                print(MediaQuery.of(context).size.aspectRatio);
+                              }, child: Text('立即开门(进)',style: TextStyle(color: Colors.white),)),
                             ),
-                            height: MediaQuery.of(context).size.height*0.04,
-                            width: MediaQuery.of(context).size.width*0.45,
-                            child: FlatButton(onPressed: (){
-                              openDoor(lists[index]['doorOutNumber']);
+                            Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+                            lists[index]['doorOutNumber'].length==0?Container():Container(
+                              //修饰黑色背景与圆角
+                              decoration: new BoxDecoration(
+                                color: Color.fromRGBO(243, 200, 70, 1),
+                                borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                              ),
+                              height: MediaQuery.of(context).size.height*0.04,
+                              width: MediaQuery.of(context).size.width*0.45,
+                              child: FlatButton(onPressed: (){
+                                openDoor(lists[index]['doorOutNumber']);
 //                              show
 //                              showMenu(context: context, position: RelativeRect.fill, items: null)
-                              print(MediaQuery.of(context).size.aspectRatio);
-                            }, child: Text('立即开门(出)',style: TextStyle(color: Colors.white),)),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      }),
+                                print(MediaQuery.of(context).size.aspectRatio);
+                              }, child: Text('立即开门(出)',style: TextStyle(color: Colors.white),)),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        }),
+      ),
+//      ListView.builder(
+//        itemCount: lists.length,
+//          scrollDirection: Axis.horizontal,
+//          itemBuilder: (context,index){
+//        return ;
+//      }),
     );
   }
   openDoor(number){

@@ -18,10 +18,21 @@ class Page extends State<StayDetail> {
   var parms = null;
   var info = null;
   List<String> remarks = [];
+  int member = 0;
   var attrs = [];
   var rooms = [
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMember().then((val){
+      setState(() {
+        member = val;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,11 +202,23 @@ class Page extends State<StayDetail> {
                 children: attrs.map((attr) {
                   return Padding(
                     padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: Container(
+                    child: GestureDetector(child: Container(
                       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                       color: Colors.grey[200],
                       child: Text(attr['attributeName']),
                     ),
+                    onTap: (){
+                      Dio().get(api.getAttribute+"?hotleShopId=${info['shopId']}&key=${attr['attributeName']}").then((response){
+                        if(response.statusCode==200){
+                          var data = response.data;
+                          if(data['code']==200){
+                            setState(() {
+                              rooms = data['data'];
+                            });
+                          }
+                        }
+                      });
+                    },)
                   );
                 }).toList(),
               ),
@@ -247,7 +270,7 @@ class Page extends State<StayDetail> {
                                         Container(
                                           alignment: Alignment.centerRight,
                                           child: Text(
-                                            '¥ ${rooms[index]['hotlePrice']}',
+                                            '¥ ${member==1?rooms[index]['hotleMemberPrice']:rooms[index]['hotlePrice']}',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 18,color: Colors.red),
@@ -304,7 +327,8 @@ class Page extends State<StayDetail> {
                           'outdate':parms['outdate'],
                           'livenum':rooms[index]['hotleNum'],
                           'exist':rooms[index]['ifExistRoom']==null?1:rooms[index]['ifExistRoom'],
-                          'price':rooms[index]['hotlePrice']
+                          'price':rooms[index]['hotlePrice'],
+                          'memberPrice':rooms[index]['hotleMemberPrice']
                         });
                       },
                     ),Divider(height: 1,)],);

@@ -7,6 +7,7 @@ import 'page_web.dart';
 import 'package:amap_location/amap_location.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'page_login.dart';
 
 
 class ServicePage extends StatefulWidget {
@@ -92,6 +93,7 @@ class Page extends State<ServicePage> {
 //                    ),
                     ),
                     onTap: (){
+                      checkLogin();
                       Navigator.of(context).pushNamed('search');
                     },
                   ),),
@@ -124,17 +126,20 @@ class Page extends State<ServicePage> {
                               switch(url['rotationType']){
                                 case 2:
                                   if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                    checkLogin();
                                     Navigator.of(context).pushNamed('outsellerDetail',arguments: int.parse(url['rotationLink']));
                                   }
                                   break;
                                 case 3:
                                   if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                    checkLogin();
                                     Navigator.of(context).pushNamed("lifeStore", arguments: int.parse(url['rotationLink']));
                                   }
 
                                   break;
                                 case 4:
                                   if(url['rotationLink']!=null&&url['rotationLink'].length!=0){
+                                    checkLogin();
                                     Navigator.of(context).pushNamed('stayDetail',arguments: {
                                       'id':int.parse(url['rotationLink']),
                                       'indate':DateTime.now(),
@@ -166,6 +171,7 @@ class Page extends State<ServicePage> {
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
+                                  checkLogin();
                                   Navigator.pushNamed(context, "outseller",arguments: {
                                     'lat':_loc==null?0:_loc.latitude,
                                     'lon':_loc==null?0:_loc.longitude
@@ -196,6 +202,7 @@ class Page extends State<ServicePage> {
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
+                                  checkLogin();
                                   Navigator.pushNamed(context, "life",arguments: {
                                     'lat':_loc==null?0:_loc.latitude,
                                     'lon':_loc==null?0:_loc.longitude
@@ -226,6 +233,7 @@ class Page extends State<ServicePage> {
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
+                                  checkLogin();
                                   Navigator.pushNamed(context, "stayPage",arguments: {
                                     'lat':_loc==null?0:_loc.latitude,
                                     'lon':_loc==null?0:_loc.longitude
@@ -331,12 +339,15 @@ class Page extends State<ServicePage> {
                         ),),onTap: (){
                         switch(lists[index]['shopType']){
                           case 1:
+                            checkLogin();
                             Navigator.of(context).pushNamed('outsellerDetail',arguments: lists[index]['shopId']);
                             break;
                           case 2:
+                            checkLogin();
                             Navigator.of(context).pushNamed("lifeStore", arguments: lists[index]['shopId']);
                             break;
                           case 3:
+                            checkLogin();
                             Navigator.of(context).pushNamed('stayDetail',arguments: {
                               'id':lists[index]['shopId'],
                               'indate':DateTime.now(),
@@ -427,6 +438,38 @@ class Page extends State<ServicePage> {
     AMapLocation loc = await AMapLocationClient.getLocation(true);
     setState(() {
         _loc = loc;
+    });
+  }
+  checkLogin() {
+    getUser().then((val){
+      if(val==null){
+        Navigator.of(context).pushAndRemoveUntil(
+            new MaterialPageRoute(builder: (context) => new LoginPage()
+            ), (route) => route == null);
+        return;
+      }
+      print('da');
+      var fromData = {'token':val};
+      Dio().post(api.testingToken,data: fromData).then((response){
+        if(response.statusCode==200){
+          var data = response.data;
+          if(data['code']==200){
+            saveMember(data['data']['userMsgType']);
+            print('test');
+            return;
+          }else{
+            Navigator.of(context).pushAndRemoveUntil(
+                new MaterialPageRoute(builder: (context) => new LoginPage()
+                ), (route) => route == null);
+          }
+        }else{
+          Navigator.of(context).pushAndRemoveUntil(
+              new MaterialPageRoute(builder: (context) => new LoginPage()
+              ), (route) => route == null);
+        }
+      }).catchError((error){Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => new LoginPage()
+          ), (route) => route == null);});
     });
   }
 }

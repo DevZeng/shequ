@@ -19,6 +19,7 @@ class _StayOrder extends State<StayOrder>{
   var names = [];
   var parms = null;
   Api api = new Api();
+  int member = 0;
   TextEditingController phoneController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -126,7 +127,7 @@ class _StayOrder extends State<StayOrder>{
               color: Colors.white,
               height: 60,
               alignment: Alignment.centerLeft,
-              child: Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),child: Text('¥${parms['price']*number}',style: TextStyle(fontSize: 20,color: Colors.red),),),
+              child: Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),child: Text('¥${member==1?parms['memberPrice']*number:parms['price']*number}',style: TextStyle(fontSize: 20,color: Colors.red),),),
             ),
             Container(
               width: MediaQuery.of(context).size.width*0.3,

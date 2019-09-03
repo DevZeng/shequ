@@ -22,9 +22,15 @@ class Page extends State<LifeStorePage> {
   int id = 0;
   List<String> images = [];
   List<Product> buys = [];
+  int member = 0;
 //  var
 
   Page() {
+    getMember().then((val){
+      setState(() {
+        member = val;
+      });
+    });
     Future.delayed(Duration(seconds: 2)).then((e) {
       print(id);
     });
@@ -107,19 +113,19 @@ class Page extends State<LifeStorePage> {
                           ),
                           padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                         ),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.location_on,size: 12,color: Colors.yellow,),
-                              Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
-                              Text(
-                                info == null ? '' : info['shopPhone'],
-                                style: TextStyle(fontSize: 12),
-                              )
-                            ],
-                          ),
-                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        ),
+//                        Container(
+//                          child: Row(
+//                            children: <Widget>[
+//                              Icon(Icons.location_on,size: 12,color: Colors.yellow,),
+//                              Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
+//                              Text(
+//                                info == null ? '' : info['shopPhone'],
+//                                style: TextStyle(fontSize: 12),
+//                              )
+//                            ],
+//                          ),
+//                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+//                        ),
                         Container(
                           child: Row(
                             children: <Widget>[
@@ -189,27 +195,24 @@ class Page extends State<LifeStorePage> {
                                     child: Row(
                                       children: <Widget>[
                                         Text(
-                                          '¥' +
-                                              products[index]
-                                              ['storeMemberPrice']
-                                                  .toString(),
+                                          '¥ ${member==1?products[index]['storeMemberPrice']:products[index]['storePrice']}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 18,
                                               color: Colors.red),
                                         ),
-                                        Container(
-                                          child: Text(
-                                            products[index]['storePrice']
-                                                .toString(),
-                                            style: TextStyle(
-                                                color: Colors.grey[500],
-                                                decoration:
-                                                TextDecoration.lineThrough),
-                                          ),
-                                          padding:
-                                          EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                        )
+//                                        Container(
+//                                          child: Text(
+//
+//                                                .toString(),
+//                                            style: TextStyle(
+//                                                color: Colors.grey[500],
+//                                                decoration:
+//                                                TextDecoration.lineThrough),
+//                                          ),
+//                                          padding:
+//                                          EdgeInsets.fromLTRB(10, 0, 0, 0),
+//                                        )
                                       ],
                                     ),
                                   ),
@@ -220,13 +223,13 @@ class Page extends State<LifeStorePage> {
                                         Product buy = new Product(
                                           products[index]['storeId'],
                                           products[index]['storeName'],
-                                          products[index]['storeMemberPrice'],
                                           products[index]['storePrice'],
+                                          products[index]['storeMemberPrice'],
                                           1,
                                           products[index]['storeThumbnail'],
                                         );
                                         addBuy(buy);
-                                        price += products[index]['storeMemberPrice'];
+                                        price += member==1?products[index]['storeMemberPrice']:products[index]['storePrice'];
                                         showCart();
                                       }),
                                 ],
@@ -271,7 +274,7 @@ class Page extends State<LifeStorePage> {
       Dio().request(api.getOneShopMsg + '?shopId=$id').then((response) {
         if (response.statusCode == 200) {
           var content = response.data;
-//          print(content['data']['shopRotation']);
+//          print(content['data']);
           setState(() {
             info = content['data'];
             images = content['data']['shopRotation'].split(',');

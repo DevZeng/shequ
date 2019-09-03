@@ -7,6 +7,7 @@ import 'timetransfer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:amap_location/amap_location.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:convert';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -42,17 +43,19 @@ class Page extends State<NewsPage> {
     _checkPersmission().then((val){
 
       if(_loc!=null){
-//        print(_loc.city);
-//        print('1');
+        print(_loc.city);
+        print('1');
         Dio().get(api.getWeatherForecast+"?position=${_loc.city}").then((response){
           if(response.statusCode==200){
             var data = response.data;
             if(data['code']==200){
-              var now = data['data']['now'];
+//              var Htr = data['data'];
+              var now = data['data'][0];
+              print(now);
               if(now!=null){
                 setState(() {
-                  weather = '${now['tmp']}';
-                  wicon = 'images/weather/${now['cond_code']}.png';
+                  weather = '${now['now']['tmp']}℃';
+                  wicon = 'images/weather/${now['now']['cond_code']}.png';
                 });
               }
             }
@@ -186,7 +189,7 @@ class Page extends State<NewsPage> {
         centerTitle: true, elevation: 0,actions: <Widget>[
         ImageIcon(AssetImage(wicon),color: Colors.grey,size: 30,),
         Center(child: Container(
-          child: Text(weather),
+          child: Text(weather,style: TextStyle(color: Colors.grey),),
           padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
         ),),
       ],backgroundColor: Colors.white,),

@@ -19,6 +19,7 @@ class _PersonalPage extends State<PersonalPage> {
   String login = '请登录';
   int state = 0;
   Api api = new Api();
+  int member = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -107,14 +108,14 @@ class _PersonalPage extends State<PersonalPage> {
                               child: Container(
                                 height: 35,
 
-                                width: 100,
+                                width: 105,
                                 decoration: BoxDecoration(
                                     color: Colors.orange,
                                   shape: BoxShape.rectangle,
 borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.circular(50) )
 //                                  border: B
                                 ),
-                                child: FlatButton.icon(onPressed: null, icon: ImageIcon(AssetImage('images/member.png'),color: Colors.white,), label: Text('会员',style: TextStyle(color: Colors.white),)),
+                                child: FlatButton.icon(onPressed: null, icon: ImageIcon(AssetImage('images/member.png'),color: Colors.white,), label: Text(member==1?'会员':'非会员',style: TextStyle(color: Colors.white),)),
                               ),
                             )
                           ],
@@ -460,11 +461,14 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
         var data = response.data;
         print(data);
         if (data['code'] == 200) {
+          saveMember(data['data']['userMsgType']);
           setState(() {
             imgUrl = data['data']['userMsgHead'];
             userName = data['data']['userMsgNike'];
             state = data['data']['userMsgStatus'];
             login = '';
+            member = data['data']['userMsgType'];
+
           });
         }else if(data['code'] == 0){
           Fluttertoast.showToast(
@@ -513,17 +517,28 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
             ), (route) => route == null);
         return;
       }
+      print('da');
       var fromData = {'token':val};
       Dio().post(api.testingToken,data: fromData).then((response){
-        var data = response.data;
-        if(data['code']==200){
-          return;
+        if(response.statusCode==200){
+          var data = response.data;
+          if(data['code']==200){
+            saveMember(data['data']['userMsgType']);
+            print('test');
+            return;
+          }else{
+            Navigator.of(context).pushAndRemoveUntil(
+                new MaterialPageRoute(builder: (context) => new LoginPage()
+                ), (route) => route == null);
+          }
         }else{
           Navigator.of(context).pushAndRemoveUntil(
               new MaterialPageRoute(builder: (context) => new LoginPage()
               ), (route) => route == null);
         }
-      });
+      }).catchError((error){Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => new LoginPage()
+          ), (route) => route == null);});
     });
   }
 }
