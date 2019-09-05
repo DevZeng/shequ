@@ -18,7 +18,7 @@ class FamilyDetail extends StatefulWidget {
 }
 
 class Page extends State<FamilyDetail> {
-  List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  List<String> types = ['家庭成员', '户主', '管理人员', '租客'];
 //  HouseInfo houseInfo = new HouseInfo();
   Api api = new Api();
   var info = null;
@@ -214,7 +214,7 @@ class Page extends State<FamilyDetail> {
                 print(response);
                 if(response.statusCode==200){
                   var data = response.data;
-                  if(data['data']==200){
+                  if(data['code']==200){
                     Fluttertoast.showToast(
                         msg: "审核成功！",
                         toastLength: Toast.LENGTH_SHORT,
@@ -223,6 +223,9 @@ class Page extends State<FamilyDetail> {
                         backgroundColor: Colors.white,
                         textColor: Colors.black,
                         fontSize: 16.0);
+                    setState(() {
+                      info['status'] = val;
+                    });
                     Navigator.of(context).pop();
                   }else{
                     Fluttertoast.showToast(

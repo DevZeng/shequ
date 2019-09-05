@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'model.dart';
 import 'api.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class VisitorDetailPage extends StatefulWidget{
   @override
@@ -15,10 +16,14 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
   int id = 0;
   var lists = [];
   Api api = new Api();
+  var args ;
+  int type = 0;
   @override
   Widget build(BuildContext context) {
     if(id==0){
-      id = ModalRoute.of(context).settings.arguments;
+       args = ModalRoute.of(context).settings.arguments;
+      id = args['id'];
+      type = args['type'];
       getLists(1);
 //    getProducts(1);
     print(id);
@@ -31,30 +36,39 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
         centerTitle: true,
         elevation: 0,
       ),
-      body: ListView.builder(
-        itemCount: lists.length,
-          itemBuilder: (context,index){
-        return ListTile(leading: CircleAvatar(backgroundImage: NetworkImage(lists[index]['visitorHead']),),title: Text('${lists[index]['visitorName']}   ${lists[index]['visitorPhone']}'),trailing: RaisedButton(onPressed: (){
-          Dio().delete(api.delHVisitorRoom+"/${lists[index]['visitorId']}").then((response){
-            var data = response.data;
-            print(data);
-            if(data['code']==200){
-              setState(() {
-                lists.removeAt(index);
-              });
-            }
-          });
-        },color: Colors.red,child: Text('删除',style: TextStyle(color: Colors.white),),),);
-      }),
-      floatingActionButton: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: buildList(),
+        ),
+      ),
+      floatingActionButton: type==1?null:Container(
         width: MediaQuery.of(context).size.width*0.7,
         height: 40.0  ,
         child: new RaisedButton(onPressed: (){
+          Dio().post(api.passVisitorRoom,data: {'roomId':id,'roomStatus':1}).then((response){
+            if(response.statusCode==200){
+              var data = response.data;
+              if(data['code']==200){
+                Fluttertoast.showToast(
+                    msg: '审核通过！',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIos: 1,
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    fontSize: 16.0);
+                Navigator.of(context).pop();
+//                setState(() {
+//                  type == 1;
+//                });
+              }
+            }
+          });
 //          print(lists);
-                    Navigator.of(context).pushNamed('addVisitorList',arguments: id);
+//                    Navigator.of(context).pushNamed('addVisitorList',arguments: id);
 //          print(detailController.text);
         },color: Color.fromRGBO(243, 200, 70, 1),
-          child: new Text("添加",style: TextStyle(color: Colors.white,)),
+          child: new Text("审核",style: TextStyle(color: Colors.white,)),
           shape: new StadiumBorder(side: new BorderSide(
             style: BorderStyle.solid,
             color: Color.fromRGBO(243, 200, 70, 1),
@@ -66,14 +80,58 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
   }
   getLists(page){
     getUser().then((val){
-      Dio().get(api.getUserHVisitorRoom+"?token=${val}&page=${page}&roomId=${id}&length=10").then((response){
+      Dio().get(api.getHVisitor+"?roomId=${id}").then((response){
         var data = response.data;
+        print(data);
         if(data['code']==200){
           setState(() {
-            lists = data['data']['listVisitor'];
+            lists = data['data'];
           });
         }
       });
     });
+  }
+  buildList()
+  {
+    List<Widget> returnWidgets = [];
+    print(lists);
+    for(int i=0;i<lists.length;i++){
+      returnWidgets.add(ListTile(onTap: (){
+        Navigator.of(context).pushNamed('showVisitorList',arguments:lists[i] ).then((val){
+          getLists(1);
+        });
+      },title: Text('${lists[i]['visitorName']}  ${lists[i]['visitorPhone']}'),trailing: type==1?null:RaisedButton(onPressed: (){
+        Dio().delete(api.delHVisitorRoom+"/${lists[i]['visitorId']}").then((response){
+          var data = response.data;
+          print(data);
+          if(data['code']==200){
+            setState(() {
+              lists.removeAt(i);
+            });
+          }
+        });
+      },color: Colors.red,child: Text('删除',style: TextStyle(color: Colors.white),),),));
+    }
+    returnWidgets.add( Container(
+      alignment: Alignment.center,
+      child: Container(
+        width: MediaQuery.of(context).size.width*0.7,
+        height: 40.0  ,
+        child: new RaisedButton(onPressed: (){
+//          print(lists);
+          Navigator.of(context).pushNamed('addVisitorList',arguments: id).then((val){
+            getLists(1);
+          });
+//          print(detailController.text);
+        },color: Color.fromRGBO(243, 200, 70, 1),
+          child: new Text("添加",style: TextStyle(color: Colors.white,)),
+          shape: new StadiumBorder(side: new BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromRGBO(243, 200, 70, 1),
+          )),
+        ),
+      ),
+    ));
+    return returnWidgets;
   }
 }

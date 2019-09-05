@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 
 class MoneyPage extends StatefulWidget {
@@ -27,11 +28,16 @@ class Page extends State<MoneyPage> {
     return user;
   }
   String _result = "无";
+  String remark = '';
   Api api = new Api();
+  bool loading = false;
 
   void initState() {
     super.initState();
     fluwx.responseFromPayment.listen((data) {
+      setState(() {
+        loading = false;
+      });
       if(data.errCode==0){
         getUser().then((val){
           Dio().request(api.getUserMember+'?token=$val').then((response){
@@ -47,6 +53,7 @@ class Page extends State<MoneyPage> {
         });
       }
     });
+//    fluwx.
     getUser().then((val){
       Dio().request(api.getUserMember+'?token=$val').then((response){
         var data = response.data;
@@ -55,6 +62,7 @@ class Page extends State<MoneyPage> {
           amount = data['data']['memberBalance']==null?0:data['data']['memberBalance'];
           auto = data['data']['memberAutopay']==null?false:data['data']['memberAutopay'];
           id = data['data']['memberId']==null?0:data['data']['memberId'];
+          remark = data['data']['memberDifferPrice']==0?'':data['data']['memberSetRemarks1']+'${data['data']['memberDifferPrice']}'+data['data']['memberSetRemarks2'];
           setState(() {
 
           });
@@ -75,7 +83,7 @@ class Page extends State<MoneyPage> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
+      body: ModalProgressHUD(inAsyncCall: loading, child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
 //          color: Colors.white,
@@ -103,7 +111,7 @@ class Page extends State<MoneyPage> {
 //                    color: Colors.white,
                     ),
                     Text('¥余额',style: TextStyle(fontWeight: FontWeight.w600),),
-                    Text('888',style: TextStyle(fontSize: 12,color: Colors.grey[600]),),
+                    Text(remark,style: TextStyle(fontSize: 12,color: Colors.grey[600]),),
                   ],
                 ),
               ),
@@ -116,16 +124,17 @@ class Page extends State<MoneyPage> {
                   value: auto,
 //                  groupValue: auto,
                   onChanged: (val){
-//                    print(val);
+                    print(val);
                     getUser().then((token){
                       var formData = {
-                      'token':token,'memberId':id,'memberAutopay':auto
+                        'token':token,'memberId':id,'memberAutopay':val
                       };
                       print(formData);
                       Dio().put(api.putUserMember,data: formData).then((response){
                         print(response);
                         if(response.statusCode==200){
                           var data = response.data;
+                          print(data);
                           if(data['code']==200){
                             setState(() {
                               auto = val;
@@ -184,6 +193,9 @@ class Page extends State<MoneyPage> {
                               data = response.data;
                               print(data);
                               if (data['code'] == 200) {
+                                setState(() {
+                                  loading = true;
+                                });
                                 data = jsonDecode(data['data']);
                                 fluwx
                                     .pay(
@@ -205,6 +217,9 @@ class Page extends State<MoneyPage> {
                                   print(val);
                                 }).catchError((error) {
                                   print(error);
+                                  setState(() {
+                                    loading = false;
+                                  });
                                 });
                               }
                             });
@@ -232,7 +247,7 @@ class Page extends State<MoneyPage> {
             ],
           ),
         ),
-      ),
+      )),
       floatingActionButton: FloatingActionButton(onPressed: () {
         print(amount);
 //        fluwx.share(model)

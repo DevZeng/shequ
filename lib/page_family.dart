@@ -14,7 +14,7 @@ class Family extends StatefulWidget{
 class _family extends State<Family>{
   var parsons = [
   ];
-  List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  List<String> types = ['家庭成员', '户主', '管理人员', '租客'];
   int type ;
 
   Api api = new Api();

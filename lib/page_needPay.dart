@@ -5,6 +5,7 @@ import 'model.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class NeedPayPage extends StatefulWidget {
   @override
@@ -26,10 +27,18 @@ class Page extends State<NeedPayPage>
   int code = 1;
   int type = 0;
   int payid = 0;
+  int holdType = 0 ;
+  bool loading = false;
   @override
   void initState() {
     super.initState();
+    getHoldType().then((val){
+      setState(() {
+        holdType = val;
+      });
+    });
     fluwx.responseFromPayment.listen((data) {
+      loading = false;
       if(data.errCode==0){
         switch(type){
           case 1:
@@ -43,9 +52,7 @@ class Page extends State<NeedPayPage>
             break;
 
         }
-        setState(() {
-//        code = data.errCode;
-        });
+
       }else{
         Fluttertoast.showToast(
             msg: "取消支付！",
@@ -56,7 +63,9 @@ class Page extends State<NeedPayPage>
             textColor: Colors.black,
             fontSize: 16.0);
       }
-
+      setState(() {
+//        code = data.errCode;
+      });
     });
     getUser().then((val) {
       token = val;
@@ -118,114 +127,114 @@ class Page extends State<NeedPayPage>
             indicatorColor: Color.fromRGBO(243, 200, 70, 1),
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
-      body: TabBarView(
+      body: ModalProgressHUD(inAsyncCall: loading, child: TabBarView(
         controller: _tabController,
         children: [
           //物业费
           ListView.builder(
-            itemCount: wuyes.length,
+              itemCount: wuyes.length,
               itemBuilder: (context,index){
-            return Padding(padding: EdgeInsets.fromLTRB(15, 15, 15, 0),child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey[100],
+                return Padding(padding: EdgeInsets.fromLTRB(15, 15, 15, 0),child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[100],
 //                    blurRadius: 2.0,
 //                    spreadRadius: 1.0,
-                      offset: Offset(-1.0, 1.0),
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              width: MediaQuery.of(context).size.width-30,
-
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Text('物业管理费',style: TextStyle(fontWeight: FontWeight.w700),),
-                          width: MediaQuery.of(context).size.width*0.7-50,
-                        ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Text(wuyes[index]['propertyStatus']==0?'未支付':'已支付',style: TextStyle(
-                            color: wuyes[index]['propertyStatus']==0?Colors.red:Colors.grey[300],
-                            fontSize: 12
-                          ),),
-                          width: MediaQuery.of(context).size.width*0.3,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(height: 1,),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('住所：',style: TextStyle(color: Colors.grey[500]),),
-                              Text(wuyes[index]['propertyHouse'],style: TextStyle(fontSize: 20),),
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width-160,
-                        ),
-                        Container(
-//                          color: Colors.green,
-                          alignment: Alignment.centerRight,
-                          child: Row(
-                            children: <Widget>[
-                              Text('总计：',style: TextStyle(color: Colors.grey[500]),),
-                              Text('¥ '+wuyes[index]['propertyFee'].toString(),style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20
-                              ),)
-                            ],
-                          ),
-                          width: 110,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('月份：',style: TextStyle(color: Colors.grey[500]),),
-                              Text(wuyes[index]['propertyMonth'],style: TextStyle(fontSize: 20),),
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width-130,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: wuyes[index]['propertyStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
-                              borderRadius: BorderRadius.all(Radius.circular(5))),
-                          height: 30,
-                          width:80,
-                          child: FlatButton(onPressed: (){
-                            setState(() {
-                              type=1;
-                              payid = index;
-                            });
-                            payOrder(1, wuyes[index]['propertyId']);
-                          },child: Text(wuyes[index]['propertyStatus']==0?'缴费':'已缴费'
-                          ,style: TextStyle(color: wuyes[index]['propertyStatus']==0?Colors.white:Colors.grey[500]),),),
+                          offset: Offset(-1.0, 1.0),
                         )
                       ],
-                    ),
-                  )
-                ],
-              ),
-            ),);
-          }),
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  width: MediaQuery.of(context).size.width-30,
+
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              child: Text('物业管理费',style: TextStyle(fontWeight: FontWeight.w700),),
+                              width: MediaQuery.of(context).size.width*0.7-50,
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(wuyes[index]['propertyStatus']==0?'未支付':'已支付',style: TextStyle(
+                                  color: wuyes[index]['propertyStatus']==0?Colors.red:Colors.grey[300],
+                                  fontSize: 12
+                              ),),
+                              width: MediaQuery.of(context).size.width*0.3,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(height: 1,),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: <Widget>[
+                                  Text('住所：',style: TextStyle(color: Colors.grey[500]),),
+                                  Text(wuyes[index]['propertyHouse'],style: TextStyle(fontSize: 20),),
+                                ],
+                              ),
+                              width: MediaQuery.of(context).size.width-160,
+                            ),
+                            Container(
+//                          color: Colors.green,
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                children: <Widget>[
+                                  Text('总计：',style: TextStyle(color: Colors.grey[500]),),
+                                  Text('¥ '+wuyes[index]['propertyFee'].toString(),style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20
+                                  ),)
+                                ],
+                              ),
+                              width: 110,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: <Widget>[
+                                  Text('月份：',style: TextStyle(color: Colors.grey[500]),),
+                                  Text(wuyes[index]['propertyMonth'],style: TextStyle(fontSize: 20),),
+                                ],
+                              ),
+                              width: MediaQuery.of(context).size.width-130,
+                            ),
+                            holdType!=1?Container():Container(
+                              decoration: BoxDecoration(
+                                  color: wuyes[index]['propertyStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
+                                  borderRadius: BorderRadius.all(Radius.circular(5))),
+                              height: 30,
+                              width:80,
+                              child: FlatButton(onPressed: (){
+                                setState(() {
+                                  type=1;
+                                  payid = index;
+                                });
+                                payOrder(1, wuyes[index]['propertyId']);
+                              },child: Text(wuyes[index]['propertyStatus']==0?'缴费':'已缴费'
+                                ,style: TextStyle(color: wuyes[index]['propertyStatus']==0?Colors.white:Colors.grey[500]),),),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),);
+              }),
           ListView.builder(
               itemCount: shuis.length,
               itemBuilder: (context,index){
@@ -309,7 +318,7 @@ class Page extends State<NeedPayPage>
                               ),
                               width: MediaQuery.of(context).size.width-130,
                             ),
-                            Container(
+                            holdType!=1?Container():Container(
                               decoration: BoxDecoration(
                                   color: shuis[index]['waterStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -414,7 +423,7 @@ class Page extends State<NeedPayPage>
                               ),
                               width: MediaQuery.of(context).size.width-130,
                             ),
-                            Container(
+                            holdType!=1?Container():Container(
                               decoration: BoxDecoration(
                                   color: cars[index]['parkingStatus']==0?Color.fromRGBO(243, 200, 70, 1):Colors.grey[100],
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -437,7 +446,7 @@ class Page extends State<NeedPayPage>
                 ),);
               }),
         ],
-      ),
+      )),
       floatingActionButton: FloatingActionButton(onPressed: (){
         print(cars);
       }),
@@ -461,6 +470,9 @@ class Page extends State<NeedPayPage>
             data = response.data;
             print(data);
             if (data['code'] == 200) {
+              setState(() {
+                loading = true;
+              });
               data = jsonDecode(data['data']);
               fluwx
                   .pay(
@@ -479,7 +491,9 @@ class Page extends State<NeedPayPage>
                   sign: data['sign']
                       .toString())
                   .then((val) {
-                print(val);
+                setState(() {
+                  loading = false;
+                });
               }).catchError((error) {
                 print(error);
               });

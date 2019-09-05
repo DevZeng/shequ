@@ -15,7 +15,7 @@ class HouseInfoPage extends StatefulWidget {
 
 class Page extends State<HouseInfoPage> {
   List<HouseInfo> houseInfos = [];
-  List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  List<String> types = ['家庭成员', '户主', '管理人员', '租客'];
   List<String> status = ['待审核', '已通过', '不通过', '租客'];
   String image = '';
   Api api = new Api();
@@ -112,7 +112,7 @@ class Page extends State<HouseInfoPage> {
                         image: DecorationImage(
                             image: NetworkImage(
                                 image),
-                            fit: BoxFit.fill)),
+                            fit: BoxFit.cover)),
                   )),
               Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
               Container(

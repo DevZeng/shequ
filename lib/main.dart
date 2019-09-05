@@ -41,6 +41,7 @@ import 'page_product.dart';
 import 'page_search.dart';
 import 'page_addFamily.dart';
 import 'page_stayImage.dart';
+import 'page_show_visitorList.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -150,7 +151,8 @@ class _MyApp extends State<MyApp> {
         'product':(context)=>ProductPage(),
         'search':(context)=>SearchPage(),
         'addFamily':(context)=>addFamily(),
-        'stayImage':(context)=>StayImagePage()
+        'stayImage':(context)=>StayImagePage(),
+        'showVisitorList':(context)=>showVisitorListPage()
       },
     );
   }

@@ -18,7 +18,7 @@ class addHouseInfo extends StatefulWidget {
 }
 
 class Page extends State<addHouseInfo> {
-  List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  List<String> types = ['家庭成员', '户主', '管理人员', '租客'];
   HouseInfo houseInfo = new HouseInfo();
   Api api = new Api();
 
@@ -56,7 +56,7 @@ class Page extends State<addHouseInfo> {
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           image: DecorationImage(
                               image: NetworkImage(houseInfo.imageAddress),
-                              fit: BoxFit.fill)),
+                              fit: BoxFit.cover)),
                     ),
                     onTap: () {
                       print('tap');

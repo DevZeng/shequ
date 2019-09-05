@@ -45,6 +45,8 @@ dependencies:
   permission_handler: ^3.2.2
   smooth_star_rating: ^1.0.3
   photo_view: ^0.4.2
+  modal_progress_hud: ^0.1.3
+
 
 
 

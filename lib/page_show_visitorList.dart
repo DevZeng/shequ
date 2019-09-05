@@ -6,27 +6,28 @@ import 'api.dart';
 import 'model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class addVisitorListPage extends StatefulWidget{
+class showVisitorListPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _addVisitorListPage();
+    return _showVisitorListPage();
   }
 }
-class _addVisitorListPage extends State<addVisitorListPage>{
+class _showVisitorListPage extends State<showVisitorListPage>{
   int id = 0;
   String imageUrl = '';
   Api api = new Api();
+  var info = null;
   TextEditingController nameController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
   TextEditingController idController = new TextEditingController();
   TextEditingController reasonController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    if(id==0){
-      id = ModalRoute.of(context).settings.arguments;
+    if(info==null){
+      info = ModalRoute.of(context).settings.arguments;
 //    getProducts(1);
-      print(id);
+//      print(id);
     }
     // TODO: implement build
     return Scaffold(
@@ -47,7 +48,7 @@ class _addVisitorListPage extends State<addVisitorListPage>{
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         image: DecorationImage(
                             image: NetworkImage(
-                                imageUrl),
+                                info==null?'':info['visitorHead']),
                             fit: BoxFit.cover)),
                   ),
                   onTap: (){
@@ -56,39 +57,22 @@ class _addVisitorListPage extends State<addVisitorListPage>{
                 )),
             Divider(height: 1,),
             Container(
-              child: ListTile(leading:Text('访客名称*'),title: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: '请输入访客名称'),
-              ),),
+              child: ListTile(leading:Text('访客名称*'),title: Text(info==null?'':info['visitorName']),),
               color: Colors.white,
             ),
             Divider(height: 1,),
             Container(
-              child: ListTile(leading:Text('身份证'),title: TextField(
-                controller: idController,
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: '请输入身份证'),
-              ),),
+              child: ListTile(leading:Text('身份证'),title: Text(info==null?'':info['visitorCard']),),
               color: Colors.white,
             ),
             Divider(height: 1,),
             Container(
-              child: ListTile(leading:Text('电话号码'),title: TextField(
-                controller: phoneController,
-                keyboardType: TextInputType.numberWithOptions(),
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: '请输入电话号码'),
-              ),),
+              child: ListTile(leading:Text('电话号码'),title: Text(info==null?'':info['visitorPhone'].toString()),),
               color: Colors.white,
             ),
             Divider(height: 1,),
             Container(
-              child: ListTile(leading:Text('理由'),title: TextField(
-                controller: reasonController,
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: '请输入理由'),
-              ),),
+              child: ListTile(leading:Text('理由'),title: Text(info==null?'':info['visitorReason']),),
               color: Colors.white,
             ),
             Divider(height: 1,),
@@ -96,13 +80,19 @@ class _addVisitorListPage extends State<addVisitorListPage>{
               width: MediaQuery.of(context).size.width*0.7,
               height: 40.0  ,
               child: new RaisedButton(onPressed: (){
-                submitVisitor();
+                Dio().delete(api.delHVisitorRoom+"/${info['visitorId']}").then((response){
+                  var data = response.data;
+                  print(data);
+                  if(data['code']==200){
+                    Navigator.of(context).pop();
+                  }
+                });
 //          print(detailController.text);
-              },color: Color.fromRGBO(243, 200, 70, 1),
-                child: new Text("添加",style: TextStyle(color: Colors.white,)),
+              },color: Colors.red,
+                child: new Text("删除",style: TextStyle(color: Colors.white,)),
                 shape: new StadiumBorder(side: new BorderSide(
                   style: BorderStyle.solid,
-                  color: Color.fromRGBO(243, 200, 70, 1),
+                  color: Colors.red,
                 )),
               ),
             ),)

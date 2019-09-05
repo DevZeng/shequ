@@ -18,7 +18,7 @@ class addFamily extends StatefulWidget {
 }
 
 class Page extends State<addFamily> {
-  List<String> types = ['家庭成员', '户主', '工人', '租客'];
+  List<String> types = ['家庭成员', '户主', '管理人员', '租客'];
   TextEditingController nameController = new TextEditingController();
   TextEditingController idController = new TextEditingController();
 //  HouseInfo houseInfo = new HouseInfo();

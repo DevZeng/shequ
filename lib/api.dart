@@ -62,4 +62,6 @@ class Api {
   final getUserOnekeyDoor = host +'appHOnekeyDoor/getUserOnekeyDoor';
   final OpenDoor = host +'appHOnekeyDoor/OpenDoor';
   final putHoldDefault = host +'appHHouseUserHold/putHoldDefault';
+  final getHVisitor = host +'appHVisitor/getHVisitor';
+  final passVisitorRoom = host +'appHVisitor/passVisitorRoom';
 }
