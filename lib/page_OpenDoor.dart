@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'api.dart';
 import 'model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'page_login.dart';
+
 
 class OpenDoorPage extends StatefulWidget {
   @override
@@ -24,17 +26,66 @@ class Page extends State<OpenDoorPage> {
   ];
 
   Page(){
-    getHold().then((val){
-      Dio().get(api.getUserOnekeyDoor+'?holdId=${val}').then((response){
+    getUser().then((token){
+      if(token==null){
+        Navigator.of(context).pushAndRemoveUntil(
+            new MaterialPageRoute(builder: (context) => new LoginPage()
+            ), (route) => route == null);
+        return;
+      }
+      print('da');
+      var fromData = {'token':token};
+      Dio().post(api.testingToken,data: fromData).then((response){
         if(response.statusCode==200){
-          var data  = response.data;
+          var data = response.data;
           if(data['code']==200){
-            setState(() {
-              lists = data['data'];
+            saveMember(data['data']['userMsgType']);
+            getHold().then((val){
+              Dio().get(api.getUserOnekeyDoor+'?holdId=${val}').then((response){
+                if(val==null){
+                  Fluttertoast.showToast(
+                      msg: '请先选择住户',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
+                      fontSize: 16.0);
+                  Navigator.of(context).pushNamed('listHouseInfo');
+                }
+                if(response.statusCode==200){
+                  var data  = response.data;
+                  if(data['code']==200){
+                    setState(() {
+                      lists = data['data'];
+                    });
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: data['msg'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIos: 1,
+                        backgroundColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16.0);
+//            Navigator.of(context).pushNamed('listHouseInfo');
+                  }
+                }
+              });
             });
+            return;
+          }else{
+            Navigator.of(context).pushAndRemoveUntil(
+                new MaterialPageRoute(builder: (context) => new LoginPage()
+                ), (route) => route == null);
           }
+        }else{
+          Navigator.of(context).pushAndRemoveUntil(
+              new MaterialPageRoute(builder: (context) => new LoginPage()
+              ), (route) => route == null);
         }
       });
+
     });
   }
 

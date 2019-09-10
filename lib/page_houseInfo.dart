@@ -20,6 +20,7 @@ class Page extends State<HouseInfoPage> {
   String image = '';
   Api api = new Api();
   int _index = 0;
+  int defaultHold;
   var info = [
     {'a': 'aa', 'b': 'bb', 'c': 'cc'},
     {'a': 'qq', 'b': 'ww', 'c': 'ee'},
@@ -27,6 +28,18 @@ class Page extends State<HouseInfoPage> {
   ];
   Page(){
     getInfos();
+    getHold().then((val){
+      setState(() {
+        defaultHold = val;
+      });
+    });
+//    getHold().then((val){
+//      if(val==null){
+//        if(houseInfos.length!=0){
+//          saveHold(houseInfos[0].id);
+//        }
+//      }
+//    });
   }
   getInfos() {
     getUser().then((val){
@@ -176,7 +189,7 @@ class Page extends State<HouseInfoPage> {
                   }),
                 ),
               ),
-              houseInfos.length<=1?Container():Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
+              houseInfos.length<=1&&defaultHold!=null?Container():Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40.0,
                 child: new RaisedButton(
@@ -254,6 +267,9 @@ class Page extends State<HouseInfoPage> {
           backgroundColor: Colors.white,
           textColor: Colors.black,
           fontSize: 16.0);
+      setState(() {
+        defaultHold = info.id;
+      });
     }else{
       Fluttertoast.showToast(
           msg: "该状态不允许切换！",

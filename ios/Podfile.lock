@@ -13,6 +13,9 @@ PODS:
   - city_pickers (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_image_compress (0.0.1):
+    - Flutter
+    - Mantle
   - flutter_webview_plugin (0.0.1):
     - Flutter
   - fluttertoast (0.0.2):
@@ -21,6 +24,9 @@ PODS:
     - Flutter
   - image_picker (0.0.1):
     - Flutter
+  - Mantle (2.1.0):
+    - Mantle/extobjc (= 2.1.0)
+  - Mantle/extobjc (2.1.0)
   - multi_image_picker (4.5.1):
     - BSImagePicker (~> 2.10.0)
     - Flutter
@@ -35,6 +41,7 @@ DEPENDENCIES:
   - amap_location (from `.symlinks/plugins/amap_location/ios`)
   - city_pickers (from `.symlinks/plugins/city_pickers/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
@@ -51,6 +58,7 @@ SPEC REPOS:
     - BSGridCollectionViewLayout
     - BSImagePicker
     - BSImageView
+    - Mantle
 
 EXTERNAL SOURCES:
   amap_location:
@@ -59,6 +67,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/city_pickers/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_image_compress:
+    :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_webview_plugin:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   fluttertoast:
@@ -85,10 +95,12 @@ SPEC CHECKSUMS:
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   city_pickers: b0370f4c35c201723b5b7fcce10ec29b59d5bc35
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
   fluwx: 19524c5e4c9c539a646407259139c9c1e4eaf9e5
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
+  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   multi_image_picker: fc88872db7d5fe97fd6ee4529d46fd6cc57e3c86
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   permission_handler: d59f41439f5bc6c4d1005f3355e98f05ddc68ece

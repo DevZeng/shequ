@@ -15,9 +15,11 @@ class showVisitorListPage extends StatefulWidget{
 }
 class _showVisitorListPage extends State<showVisitorListPage>{
   int id = 0;
+  int type =0;
   String imageUrl = '';
   Api api = new Api();
   var info = null;
+  var param = null;
   TextEditingController nameController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
   TextEditingController idController = new TextEditingController();
@@ -25,9 +27,11 @@ class _showVisitorListPage extends State<showVisitorListPage>{
   @override
   Widget build(BuildContext context) {
     if(info==null){
-      info = ModalRoute.of(context).settings.arguments;
+      param= ModalRoute.of(context).settings.arguments;
+      info = param['info'];
+      type = param['type'];
 //    getProducts(1);
-//      print(id);
+      print(type);
     }
     // TODO: implement build
     return Scaffold(
@@ -76,7 +80,7 @@ class _showVisitorListPage extends State<showVisitorListPage>{
               color: Colors.white,
             ),
             Divider(height: 1,),
-            Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),child: Container(
+            type==1?Container():Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),child: Container(
               width: MediaQuery.of(context).size.width*0.7,
               height: 40.0  ,
               child: new RaisedButton(onPressed: (){

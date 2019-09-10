@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'model.dart';
 import 'api.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Family extends StatefulWidget{
   @override
@@ -34,6 +35,16 @@ class _family extends State<Family>{
                 print(data['data']);
                 parsons = data['data'];
               });
+            }else{
+              Fluttertoast.showToast(
+                  msg: data['msg'],
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+              Navigator.of(context).pushNamed('listHouseInfo');
             }
           }
         });

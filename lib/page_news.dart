@@ -27,6 +27,7 @@ class Page extends State<NewsPage> {
   var _words = <String>[loadingTag];
   Api api = new Api();
   int type = 0;
+  int total = 0;
   AMapLocation _loc ;
   String wicon = 'images/weather/999.png';
   String weather = '';

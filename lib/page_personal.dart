@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'page_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class PersonalPage extends StatefulWidget{
+class PersonalPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -20,13 +20,21 @@ class _PersonalPage extends State<PersonalPage> {
   int state = 0;
   Api api = new Api();
   int member = 0;
+  int holdType = 0;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUserInfo();
     getInfos();
+    getHoldType().then((val) {
+      setState(() {
+        holdType = val;
+      });
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -48,15 +56,18 @@ class _PersonalPage extends State<PersonalPage> {
                           children: <Widget>[
                             Container(
 //                              padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
-                              width:
-                              MediaQuery.of(context).size.width * 0.3,
+                              width: MediaQuery.of(context).size.width * 0.25,
 //                              color: Colors.green,
                               height: 100,
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
                                 child: Container(
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage(imgUrl),child: Text(login),backgroundColor: Colors.white,foregroundColor: Colors.grey,),
+                                    backgroundImage: NetworkImage(imgUrl),
+                                    child: Text(login),
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.grey,
+                                  ),
                                   width: 80,
                                   height: 80,
                                 ),
@@ -64,7 +75,8 @@ class _PersonalPage extends State<PersonalPage> {
                                   checkLogin();
 //                                  print()
                                   Navigator.of(context)
-                                      .pushNamed('userInfo').then((val){
+                                      .pushNamed('userInfo')
+                                      .then((val) {
                                     getUserInfo();
                                   });
                                 },
@@ -72,26 +84,41 @@ class _PersonalPage extends State<PersonalPage> {
                             ),
                             Container(
                               padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                              width:
-                              MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.4,
 //                              color: Colors.green,
-                              height: 100,
+                              height: 130,
 //                              alignment: Alignment.bottomCenter,
                               child: Column(
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                    child: Text(userName,style: TextStyle(color: Colors.white,fontSize: 18),),
+                                    child: Text(
+                                      userName,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
                                     width:
-                                    MediaQuery.of(context).size.width * 0.4,
+                                        MediaQuery.of(context).size.width * 0.4,
                                   ),
                                   Container(
                                     padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                    height: 30,
                                     child: Row(
                                       children: <Widget>[
-                                        ImageIcon(AssetImage('images/card.png'),color: Colors.white,size: 16,),
-                                        Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                        child: Text(state==0?'未完善信息':'已完善信息',style: TextStyle(color: Colors.white),),),
+                                        ImageIcon(
+                                          AssetImage('images/card.png'),
+                                          color: Colors.white,
+                                          size: 16,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                          child: Text(
+                                            state == 0 ? '未完善信息' : '已完善信息',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   )
@@ -100,22 +127,32 @@ class _PersonalPage extends State<PersonalPage> {
                             ),
                             Container(
                               padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                              width:
-                              MediaQuery.of(context).size.width * 0.3,
+                              width: MediaQuery.of(context).size.width * 0.35,
 //                              color: Colors.green,
                               height: 100,
                               alignment: Alignment.centerRight,
                               child: Container(
                                 height: 35,
-
                                 width: 105,
                                 decoration: BoxDecoration(
                                     color: Colors.orange,
-                                  shape: BoxShape.rectangle,
-borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.circular(50) )
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(50),
+                                        bottomLeft: Radius.circular(50))
 //                                  border: B
-                                ),
-                                child: FlatButton.icon(onPressed: null, icon: ImageIcon(AssetImage('images/member.png'),color: Colors.white,), label: Text(member==1?'会员':'非会员',style: TextStyle(color: Colors.white),)),
+                                    ),
+                                child: FlatButton.icon(
+                                  padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                    onPressed: null,
+                                    icon: ImageIcon(
+                                      AssetImage('images/member.png'),
+                                      color: Colors.white,
+                                    ),
+                                    label: Text(
+                                      member == 1 ? '会员' : '非会员',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                             )
                           ],
@@ -138,49 +175,48 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                       ],
                       borderRadius: BorderRadius.all(Radius.circular(5))),
 //                color: Colors.white,
-                  height: 112,
-                  width: MediaQuery.of(context).size.width-20 ,
+//                  height: 120,
+                  width: MediaQuery.of(context).size.width - 20,
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Row(
                     children: <Widget>[
+                      holdType == 2
+                          ? Container()
+                          : Container(
+                              width: MediaQuery.of(context).size.width * 1 / 3 -
+                                  10,
+                              height: 80,
+                              child: Column(
+                                children: <Widget>[
+                                  FlatButton(
+                                    onPressed: () {
+                                      checkLogin();
+                                      Navigator.of(context).pushNamed('family');
+                                    },
+                                    disabledColor: Colors.white,
+                                    child: Image(
+                                      image:
+                                          AssetImage('images/homemember.png'),
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Text('家庭成员')
+                                ],
+                              )),
                       Container(
-                          width: MediaQuery.of(context).size.width * 1 / 3 -
-                              10,
-                          height: 72,
+                          width: MediaQuery.of(context).size.width * 1 / 3 - 10,
+                          height: 80,
                           child: Column(
                             children: <Widget>[
                               FlatButton(
                                 onPressed: () {
                                   checkLogin();
-                                  Navigator.of(context).pushNamed('family');
+                                  Navigator.pushNamed(context, "visitorePage");
                                 },
                                 disabledColor: Colors.white,
                                 child: Image(
-                                  image: AssetImage(
-                                      'images/homemember.png'),
-                                  width: 50,
-                                  height: 50,
-                                ),
-                              ),
-                              Text('家庭成员')
-                            ],
-                          )),
-                      Container(
-                          width: MediaQuery.of(context).size.width * 1 / 3 -
-                              10,
-                          height: 72,
-                          child: Column(
-                            children: <Widget>[
-                              FlatButton(
-                                onPressed: () {
-                                  checkLogin();
-                                  Navigator.pushNamed(
-                                      context, "visitorePage");
-                                },
-                                disabledColor: Colors.white,
-                                child: Image(
-                                  image:
-                                  AssetImage('images/visitors.png'),
+                                  image: AssetImage('images/visitors.png'),
                                   width: 50,
                                   height: 50,
                                 ),
@@ -189,9 +225,8 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                             ],
                           )),
                       Container(
-                          width: MediaQuery.of(context).size.width * 1 / 3 -
-                              10,
-                          height: 72,
+                          width: MediaQuery.of(context).size.width * 1 / 3 - 10,
+                          height: 80,
                           child: Column(
                             children: <Widget>[
                               FlatButton(
@@ -201,8 +236,7 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                 },
                                 disabledColor: Colors.white,
                                 child: Image(
-                                  image:
-                                  AssetImage('images/moneypacket.png'),
+                                  image: AssetImage('images/moneypacket.png'),
                                   width: 50,
                                   height: 50,
                                 ),
@@ -246,15 +280,16 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                       child: Row(
                         children: <Widget>[
                           Container(
-                              width:
-                              MediaQuery.of(context).size.width * 1 / 3 - 10,
-                              height: 72,
+                              width: MediaQuery.of(context).size.width * 1 / 3 -
+                                  10,
+                              height: 80,
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
                                     onPressed: () {
                                       checkLogin();
-                                      Navigator.of(context).pushNamed('outsellerOrderPage');
+                                      Navigator.of(context)
+                                          .pushNamed('outsellerOrderPage');
                                     },
                                     disabledColor: Colors.white,
                                     child: Image(
@@ -268,9 +303,9 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                 ],
                               )),
                           Container(
-                              width:
-                              MediaQuery.of(context).size.width * 1 / 3 - 10,
-                              height: 72,
+                              width: MediaQuery.of(context).size.width * 1 / 3 -
+                                  10,
+                              height: 80,
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
@@ -281,7 +316,8 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                     },
                                     disabledColor: Colors.white,
                                     child: Image(
-                                      image: AssetImage('images/order_life.png'),
+                                      image:
+                                          AssetImage('images/order_life.png'),
                                       width: 50,
                                       height: 50,
                                     ),
@@ -290,19 +326,21 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                                 ],
                               )),
                           Container(
-                              width:
-                              MediaQuery.of(context).size.width * 1 / 3 - 10,
-                              height: 72,
+                              width: MediaQuery.of(context).size.width * 1 / 3 -
+                                  10,
+                              height: 80,
                               child: Column(
                                 children: <Widget>[
                                   FlatButton(
                                     onPressed: () {
                                       checkLogin();
-                                      Navigator.of(context).pushNamed('stayOrderPage');
+                                      Navigator.of(context)
+                                          .pushNamed('stayOrderPage');
                                     },
                                     disabledColor: Colors.white,
                                     child: Image(
-                                      image: AssetImage('images/order_stay.png'),
+                                      image:
+                                          AssetImage('images/order_stay.png'),
                                       width: 50,
                                       height: 50,
                                     ),
@@ -335,7 +373,10 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                     ListTile(
                       title: Text('住户信息'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/info.png'),color: Color.fromRGBO(243, 200, 70, 1),),
+                        child: ImageIcon(
+                          AssetImage('images/info.png'),
+                          color: Color.fromRGBO(243, 200, 70, 1),
+                        ),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -353,7 +394,10 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                     ListTile(
                       title: Text('我的地址'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/address.png'),color: Color.fromRGBO(243, 200, 70, 1),),
+                        child: ImageIcon(
+                          AssetImage('images/address.png'),
+                          color: Color.fromRGBO(243, 200, 70, 1),
+                        ),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -368,28 +412,37 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                     Divider(
                       height: 1,
                     ),
-                    ListTile(
-                      title: Text('缴费服务'),
-                      leading: Container(
-                        child: ImageIcon(AssetImage('images/needpay.png'),color: Color.fromRGBO(243, 200, 70, 1),),
-                        width: MediaQuery.of(context).size.width * 0.1 - 15,
-                      ),
-                      trailing: Text(
-                        '>',
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
-                        checkLogin();
-                        Navigator.pushNamed(context, "needPay");
-                      },
-                    ),
+                    holdType == 2
+                        ? Container()
+                        : ListTile(
+                            title: Text('缴费服务'),
+                            leading: Container(
+                              child: ImageIcon(
+                                AssetImage('images/needpay.png'),
+                                color: Color.fromRGBO(243, 200, 70, 1),
+                              ),
+                              width:
+                                  MediaQuery.of(context).size.width * 0.1 - 15,
+                            ),
+                            trailing: Text(
+                              '>',
+                              textAlign: TextAlign.end,
+                            ),
+                            onTap: () {
+                              checkLogin();
+                              Navigator.pushNamed(context, "needPay");
+                            },
+                          ),
                     Divider(
                       height: 1,
                     ),
                     ListTile(
                       title: Text('报修预约'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/repair.png'),color: Color.fromRGBO(243, 200, 70, 1),),
+                        child: ImageIcon(
+                          AssetImage('images/repair.png'),
+                          color: Color.fromRGBO(243, 200, 70, 1),
+                        ),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -407,7 +460,10 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                     ListTile(
                       title: Text('社区通知'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/notify.png'),color: Color.fromRGBO(243, 200, 70, 1),),
+                        child: ImageIcon(
+                          AssetImage('images/notify.png'),
+                          color: Color.fromRGBO(243, 200, 70, 1),
+                        ),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -425,7 +481,10 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
                     ListTile(
                       title: Text('投诉建议'),
                       leading: Container(
-                        child: ImageIcon(AssetImage('images/report.png'),color: Color.fromRGBO(243, 200, 70, 1),),
+                        child: ImageIcon(
+                          AssetImage('images/report.png'),
+                          color: Color.fromRGBO(243, 200, 70, 1),
+                        ),
                         width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
@@ -444,16 +503,17 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        getUser().then((val){
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        getUser().then((val) {
           print(val);
         });
       }),
     );
   }
+
   void getUserInfo() async {
     getUser().then((val) {
-      if(val==null){
+      if (val == null) {
 //        Navigator.of(context).pushNamed('login');
         return;
       }
@@ -468,11 +528,10 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
             state = data['data']['userMsgStatus'];
             login = '';
             member = data['data']['userMsgType'];
-
           });
-        }else if(data['code'] == 0){
+        } else if (data['code'] == 0) {
           Fluttertoast.showToast(
-              msg:data['msg'],
+              msg: data['msg'],
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIos: 1,
@@ -483,22 +542,24 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
       });
     });
   }
+
   getInfos() async {
-    getHold().then((val){
-      if(val==null){
-        getUser().then((val){
-          Dio().get(api.getHHouseUserHold+'?token=$val').then((response){
+    getHold().then((val) {
+      if (val == null) {
+        getUser().then((val) {
+          Dio().get(api.getHHouseUserHold + '?token=$val').then((response) {
             var data = response.data;
-            if(data['code']==200){
+            if (data['code'] == 200) {
               print(data['data']);
               var listMsg = data['data']['listMsg'];
-              if(listMsg!=null){
+              if (listMsg != null) {
                 for (var element in listMsg) {
                   print(element['holdId']);
-                  if (element['holdStatus']==1){
+                  if (element['holdStatus'] == 1) {
                     saveXq(element['holdXqId']);
                     saveHold(element['holdId']);
-                    saveAddress("${element['holdXqName']}${element['holdLdName']}${element['holdDyName']}");
+                    saveAddress(
+                        "${element['holdXqName']}${element['holdLdName']}${element['holdDyName']}");
                     break;
                   }
                 }
@@ -509,36 +570,39 @@ borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft:Radius.c
       }
     });
   }
+
   checkLogin() {
-    getUser().then((val){
-      if(val==null){
+    getUser().then((val) {
+      if (val == null) {
         Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => new LoginPage()
-            ), (route) => route == null);
+            new MaterialPageRoute(builder: (context) => new LoginPage()),
+            (route) => route == null);
         return;
       }
       print('da');
-      var fromData = {'token':val};
-      Dio().post(api.testingToken,data: fromData).then((response){
-        if(response.statusCode==200){
+      var fromData = {'token': val};
+      Dio().post(api.testingToken, data: fromData).then((response) {
+        if (response.statusCode == 200) {
           var data = response.data;
-          if(data['code']==200){
+          if (data['code'] == 200) {
             saveMember(data['data']['userMsgType']);
             print('test');
             return;
-          }else{
+          } else {
             Navigator.of(context).pushAndRemoveUntil(
-                new MaterialPageRoute(builder: (context) => new LoginPage()
-                ), (route) => route == null);
+                new MaterialPageRoute(builder: (context) => new LoginPage()),
+                (route) => route == null);
           }
-        }else{
+        } else {
           Navigator.of(context).pushAndRemoveUntil(
-              new MaterialPageRoute(builder: (context) => new LoginPage()
-              ), (route) => route == null);
+              new MaterialPageRoute(builder: (context) => new LoginPage()),
+              (route) => route == null);
         }
-      }).catchError((error){Navigator.of(context).pushAndRemoveUntil(
-          new MaterialPageRoute(builder: (context) => new LoginPage()
-          ), (route) => route == null);});
+      }).catchError((error) {
+        Navigator.of(context).pushAndRemoveUntil(
+            new MaterialPageRoute(builder: (context) => new LoginPage()),
+            (route) => route == null);
+      });
     });
   }
 }

@@ -22,10 +22,17 @@ class LoginPageState extends State<LoginPage>{
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            '手机登录',
+            '快捷登录',
           ),
           elevation: 0,
-          centerTitle: false,
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.home), onPressed: (){
+              Navigator.of(context).pushAndRemoveUntil(
+                  new MaterialPageRoute(builder: (context) => new MyApp()
+                  ), (route) => route == null);
+            })
+          ],
         ),
         body: SingleChildScrollView(child: Container(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),

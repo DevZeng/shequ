@@ -97,7 +97,7 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
     print(lists);
     for(int i=0;i<lists.length;i++){
       returnWidgets.add(ListTile(onTap: (){
-        Navigator.of(context).pushNamed('showVisitorList',arguments:lists[i] ).then((val){
+        Navigator.of(context).pushNamed('showVisitorList',arguments:{'info':lists[i],'type':type} ).then((val){
           getLists(1);
         });
       },title: Text('${lists[i]['visitorName']}  ${lists[i]['visitorPhone']}'),trailing: type==1?null:RaisedButton(onPressed: (){
@@ -112,7 +112,7 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
         });
       },color: Colors.red,child: Text('删除',style: TextStyle(color: Colors.white),),),));
     }
-    returnWidgets.add( Container(
+    returnWidgets.add( type==1?Container():Container(
       alignment: Alignment.center,
       child: Container(
         width: MediaQuery.of(context).size.width*0.7,

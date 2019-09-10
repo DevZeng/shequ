@@ -191,7 +191,7 @@ class _visitorPage extends State<VisitorPage>
 //                        contentPadding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                         onTap: (){
                           Navigator.of(context).pushNamed('visitorDetailPage',arguments:{
-                            'id':lists[index]['roomId'],
+                            'id':histories[index]['roomId'],
                             'type':type
                           });
                         },

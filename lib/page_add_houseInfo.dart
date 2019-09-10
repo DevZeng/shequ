@@ -82,13 +82,6 @@ class Page extends State<addHouseInfo> {
                                 return Column(
                                   children: [
                                     ListTile(
-                                      title: Text(types[0]),
-                                      onTap: () {
-                                        houseInfo.holdIdentity = 0;
-                                        Navigator.of(context).pop(0);
-                                      },
-                                    ),
-                                    ListTile(
                                       title: Text(types[1]),
                                       onTap: () {
                                         houseInfo.holdIdentity = 1;
@@ -96,10 +89,10 @@ class Page extends State<addHouseInfo> {
                                       },
                                     ),
                                     ListTile(
-                                      title: Text(types[2]),
+                                      title: Text(types[0]),
                                       onTap: () {
-                                        houseInfo.holdIdentity = 2;
-                                        Navigator.of(context).pop(2);
+                                        houseInfo.holdIdentity = 0;
+                                        Navigator.of(context).pop(0);
                                       },
                                     ),
                                     ListTile(
@@ -109,6 +102,15 @@ class Page extends State<addHouseInfo> {
                                         Navigator.of(context).pop(3);
                                       },
                                     ),
+
+                                    ListTile(
+                                      title: Text(types[2]),
+                                      onTap: () {
+                                        houseInfo.holdIdentity = 2;
+                                        Navigator.of(context).pop(2);
+                                      },
+                                    ),
+
                                   ],
                                 );
                               }).then((val) {
@@ -157,7 +159,8 @@ class Page extends State<addHouseInfo> {
                     Divider(
                       height: 1,
                     ),
-                    ListTile(
+
+                    houseInfo.holdIdentity==2?Container():ListTile(
                       leading: Text('楼栋号'),
                       trailing: GestureDetector(
                         child: Text(houseInfo.holdLd),
@@ -189,10 +192,10 @@ class Page extends State<addHouseInfo> {
                         },
                       ),
                     ),
-                    Divider(
+                    houseInfo.holdIdentity==2?Container():Divider(
                       height: 1,
                     ),
-                    ListTile(
+                    houseInfo.holdIdentity==2?Container():ListTile(
                       leading: Text('单元号'),
                       trailing: GestureDetector(
                         child: Text(houseInfo.holdDy),

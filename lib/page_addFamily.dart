@@ -8,6 +8,7 @@ import 'api.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class addFamily extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class Page extends State<addFamily> {
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           image: DecorationImage(
                               image: NetworkImage(imageUrl),
-                              fit: BoxFit.fill)),
+                              fit: BoxFit.cover)),
                     ),
                     onTap: () {
                       print('tap');
@@ -299,7 +300,13 @@ class Page extends State<addFamily> {
       }
       if(val==1){
         ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 60).then((image){
-          _upLoadImage(image);
+          print('select');
+//          _upLoadImage(image);
+          FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
+            print('compress');
+            _upLoadImage(newImage);
+          });
+
         });
 
       }
