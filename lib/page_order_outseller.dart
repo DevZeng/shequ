@@ -83,6 +83,8 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
           //生成Tab菜单
             controller: _tabController,
             labelColor: Color.fromRGBO(243, 200, 70, 1),
+            labelStyle: TextStyle(fontSize: 16),
+            unselectedLabelColor: Colors.black,
             indicatorColor: Color.fromRGBO(243, 200, 70, 1),
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
@@ -102,9 +104,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(unPayOrders[index].store.icon),
+//                              child: Image.network(unPayOrders[index].store.icon),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                image: DecorationImage(image: NetworkImage(unPayOrders[index].store.icon))
+                              ),
                             ),
                             Container(
                               child: Column(
@@ -221,9 +227,12 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(payOrders[index].store.icon),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(payOrders[index].store.icon))
+                              ),
                             ),
                             Container(
                               child: Column(
@@ -333,9 +342,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(waitPayOrders[index].store.icon),
+//                              child: Image.network(waitPayOrders[index].store.icon),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(waitPayOrders[index].store.icon))
+                              ),
                             ),
                             Container(
                               child: Column(
@@ -450,9 +463,13 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(finishPayOrders[index].store.icon),
+//                              child: Image.network(finishPayOrders[index].store.icon),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(finishPayOrders[index].store.icon))
+                              ),
                             ),
                             Container(
                               child: Column(

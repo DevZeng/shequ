@@ -126,7 +126,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                 height: 80,
                 color: Colors.red,
                 child: Image.network(
-                    'http://hongyuan-1258763596.cos.ap-guangzhou.myqcloud.com/hy/2019/156463976334501.jpg'),
+                    info == null ? '' : info['shopThumbnail'] ),
               ),
 //                color: Colors.red,
             ),

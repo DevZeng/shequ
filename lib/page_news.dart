@@ -207,9 +207,9 @@ class Page extends State<NewsPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('兴宁头条'),
         centerTitle: true, elevation: 0,actions: <Widget>[
-        ImageIcon(AssetImage(wicon),color: Colors.grey,size: 30,),
+        ImageIcon(AssetImage(wicon),color: Color.fromRGBO(223, 207, 110, 1),size: 30,),
         Center(child: Container(
-          child: Text(weather,style: TextStyle(color: Colors.grey),),
+          child: Text(weather,style: TextStyle(color:Color.fromRGBO(223, 207, 110, 1)),),
           padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
         ),),
       ],backgroundColor: Colors.white,),

@@ -81,6 +81,8 @@ class _stayOrderPage extends State<StayOrderPage>
           //生成Tab菜单
             controller: _tabController,
             labelColor: Color.fromRGBO(243, 200, 70, 1),
+            labelStyle: TextStyle(fontSize: 16),
+            unselectedLabelColor: Colors.black,
             indicatorColor: Color.fromRGBO(243, 200, 70, 1),
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
@@ -100,9 +102,13 @@ class _stayOrderPage extends State<StayOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(unPayOrders[index]['hotelOrderShopThumbnail']),
+//                              child: Image.network(),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(unPayOrders[index]['hotelOrderShopThumbnail']))
+                              ),
                             ),
                             Container(
                               child: Column(
@@ -186,9 +192,13 @@ class _stayOrderPage extends State<StayOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(payOrders[index]['hotelOrderShopThumbnail']),
+//                              child: Image.network(payOrders[index]['hotelOrderShopThumbnail']),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(payOrders[index]['hotelOrderShopThumbnail']))
+                              ),
                             ),
                             Container(
                               child: Column(
@@ -272,9 +282,13 @@ class _stayOrderPage extends State<StayOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(waitPayOrders[index]['hotelOrderShopThumbnail']),
+//                              child: Image.network(waitPayOrders[index]['hotelOrderShopThumbnail']),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(waitPayOrders[index]['hotelOrderShopThumbnail']))
+                              ),
                             ),
                             Container(
                               child: Column(
@@ -358,9 +372,13 @@ class _stayOrderPage extends State<StayOrderPage>
                         Row(
                           children: <Widget>[
                             Container(
-                              child: Image.network(finishPayOrders[index]['hotelOrderShopThumbnail']),
+//                              child: Image.network(finishPayOrders[index]['hotelOrderShopThumbnail']),
                               width: 60,
                               height: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  image: DecorationImage(image: NetworkImage(finishPayOrders[index]['hotelOrderShopThumbnail']))
+                              ),
                             ),
                             Container(
                               child: Column(

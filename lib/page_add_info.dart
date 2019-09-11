@@ -109,24 +109,28 @@ class Page extends State<addPageInfo> {
                           ? ''
                           : info['userMsgNike']),
                     ),
+                    Divider(height: 1,),
                     ListTile(
                       leading: Text('姓名'),
                       trailing: Text(info['userMsgName'] == null
                           ? ''
                           : info['userMsgName']),
                     ),
+                    Divider(height: 1,),
                     ListTile(
                       leading: Text('性别'),
                       trailing: Text(info['userMsgSex'] == null
                           ? ''
                           : info['userMsgSex']),
                     ),
+                    Divider(height: 1,),
                     ListTile(
                       leading: Text('手机号'),
                       trailing: Text(info['userMsgPhone'] == null
                           ? ''
                           : info['userMsgPhone']),
                     ),
+                    Divider(height: 1,),
                     ListTile(
                         leading: Text('身份证号码'),
                         trailing: Text(info['userMsgIdcard'] == null
