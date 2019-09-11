@@ -22,7 +22,7 @@ class Page extends State<NewsPage> {
 
   var _icons = [];
   var _news = [];
-  int page = 0;
+  int page = 1;
   static const loadingTag = "##loading##"; //表尾标记
   var _words = <String>[loadingTag];
   Api api = new Api();
@@ -113,12 +113,31 @@ class Page extends State<NewsPage> {
     if (type != 0) {
       url = api.information + '?start=$page&inforClassId=$type&length=10';
     }
+    print(url);
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
         print(content);
         setState(() {
           _news = content['data'];
+          total = content['total'];
+        });
+      }
+    });
+  }
+  getNewsDatas(int page, int type) {
+    var url = api.information + '?start=$page&length=10';
+    if (type != 0) {
+      url = api.information + '?start=$page&inforClassId=$type&length=10';
+    }
+    print(url);
+    Dio().request(url).then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+        print(content);
+        setState(() {
+          _news.addAll(content['data']);
+//          total = content['total'];
         });
       }
     });
@@ -348,7 +367,9 @@ class Page extends State<NewsPage> {
           ],
         ),
       ),
-
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        print(total);
+      }),
     );
   }
 

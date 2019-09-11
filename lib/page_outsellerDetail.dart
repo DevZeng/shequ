@@ -28,6 +28,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
   var types = [];
   int id = 0;
   int select = 0;
+  int total = 0;
   String category = '全部';
   var products = [
   ];
@@ -85,6 +86,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
         if(data['code']==200){
           setState(() {
             products = data['data'];
+            total = data['total'];
           });
         }
       }
@@ -822,8 +824,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
 //        var images = data['data']['list'];
         setState(() {
           comments = data['data'];
-          lists = data['data']['list'];
-
+          lists = data['data']['list']?data['data']['list']:[];
         });
       }
     });

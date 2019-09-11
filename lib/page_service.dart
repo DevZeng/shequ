@@ -319,9 +319,9 @@ class Page extends State<ServicePage> {
                                 decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(lists[index]['shopThumbnail']),fit: BoxFit.cover)),
                               ),),
                               Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 10),
                                 alignment: Alignment.center,
-                                child: Text(lists[index]['shopName'],style: TextStyle(fontSize: 18),),
+                                child: Text(lists[index]['shopName'],overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 18),),
                               ),
                               Container(
                                 padding: EdgeInsets.fromLTRB(30, 0, 0, 10),
