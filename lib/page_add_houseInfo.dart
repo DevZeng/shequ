@@ -49,6 +49,7 @@ class Page extends State<addHouseInfo> {
                   alignment: Alignment.center,
                   child: GestureDetector(
                     child: Container(
+                      child: houseInfo.imageAddress.length!=0?Container():Icon(Icons.add,size: 50,color: Colors.grey,),
                       width: 120,
                       height: 120,
                       decoration: BoxDecoration(
