@@ -145,31 +145,27 @@ class Page extends State<StayDetail> {
                       }).toList(),
                     ),
                   ),
-                  Container(
-
-                    alignment: Alignment.bottomRight,
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.centerRight,
-                          width: MediaQuery.of(context).size.width * 0.05,
-                          child: Icon(
-                            Icons.phone,
-                            size: 14,
-                          ),
+                  Expanded(child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+//                        alignment: Alignment.centerRight,
+//                        width: MediaQuery.of(context).size.width * 0.05,
+                        child: Icon(
+                          Icons.phone,
+                          size: 14,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                          child: Text(
-                            info == null ? '' : info['shopPhone'],
-                            textAlign: TextAlign.right,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+                      ),
+                      Container(
+//                        width: MediaQuery.of(context).size.width * 0.3,
+                        padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                        child: Text(
+                          info == null ? '' : info['shopPhone'],
+                          textAlign: TextAlign.right,
+                        ),
+                      )
+                    ],
+                  ))
                 ],
               ),
             ),
@@ -177,22 +173,19 @@ class Page extends State<StayDetail> {
               height: 1,
             ),
             Container(
+              height: 40,
               color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(info == null ? '' : info['shopAddress']),
-                    padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                  )
-                ],
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Text(info == null ? '' : info['shopAddress']),
+                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               ),
             ),
             Divider(
               height: 1,
             ),
             Container(
-              height: 60,
+              height: 40,
               color: Colors.white,
 //              alignment: Alignment.bottomCenter,
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -242,6 +235,7 @@ class Page extends State<StayDetail> {
                                 width: 120,
                                 decoration: BoxDecoration(
 //                                  color: Colors.grey,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
                                     image: DecorationImage(
                                         image: NetworkImage(
                                             rooms[index]['hotleThumbnail'].split(',')[0]),
@@ -282,6 +276,7 @@ class Page extends State<StayDetail> {
                                     width:
                                     MediaQuery.of(context).size.width - 150,
                                     padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+
                                   ),
                                   Container(
                                     padding: EdgeInsets.fromLTRB(15,0, 2, 0),

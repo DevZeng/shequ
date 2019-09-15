@@ -182,19 +182,23 @@ class lifeOrderPage extends State<LifeOrderPage>
                             }).toList(),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '共${unPayOrders[index].store.products.length}件商品，实付¥${unPayOrders[index].store.price}'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '${unPayOrders[index].date}'),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  '${unPayOrders[index].date}'),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                  '共${unPayOrders[index].store.products.length}件商品，实付¥${unPayOrders[index].store.price}'),
+                            ),
+                          ],
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -300,19 +304,23 @@ class lifeOrderPage extends State<LifeOrderPage>
                             }).toList(),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '共${payOrders[index].store.products.length}件商品，实付¥${payOrders[index].store.price}'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '${payOrders[index].date}'),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  '${payOrders[index].date}'),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                  '共${payOrders[index].store.products.length}件商品，实付¥${payOrders[index].store.price}'),
+                            ),
+                          ],
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -421,19 +429,23 @@ class lifeOrderPage extends State<LifeOrderPage>
                             }).toList(),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '共${waitPayOrders[index].store.products.length}件商品，实付¥${waitPayOrders[index].store.price}'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '${waitPayOrders[index].date}'),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  '${waitPayOrders[index].date}'),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                  '共${waitPayOrders[index].store.products.length}件商品，实付¥${waitPayOrders[index].store.price}'),
+                            ),
+                          ],
                         ),
                         Container(
 //                          decoration: BoxDecoration(
@@ -542,19 +554,23 @@ class lifeOrderPage extends State<LifeOrderPage>
                             }).toList(),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '共${finishPayOrders[index].store.products.length}件商品，实付¥${finishPayOrders[index].store.price}'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                              '${finishPayOrders[index].date}'),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  '${finishPayOrders[index].date}'),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              width: MediaQuery.of(context).size.width/2-25,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                  '共${finishPayOrders[index].store.products.length}件商品，实付¥${finishPayOrders[index].store.price}'),
+                            ),
+                          ],
                         ),
                         Container(
 //                          decoration: BoxDecoration(

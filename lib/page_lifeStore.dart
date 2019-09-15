@@ -164,10 +164,11 @@ class Page extends State<LifeStorePage> {
                         height: 80,
                         width: 110,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           image: DecorationImage(
                               image: NetworkImage(
                                   products[index]['storeThumbnail']),
-                              fit: BoxFit.fill),
+                              fit: BoxFit.cover),
                         ),
                       ),
                       Container(
@@ -218,7 +219,7 @@ class Page extends State<LifeStorePage> {
                                   ),
                                   IconButton(
                                       icon: ImageIcon(
-                                          AssetImage('images/cart.png')),
+                                          AssetImage('images/cart.png'),color: Color.fromRGBO(243, 200, 70, 1),),
                                       onPressed: () {
                                         Product buy = new Product(
                                           products[index]['storeId'],
@@ -341,7 +342,7 @@ class Page extends State<LifeStorePage> {
                     alignment: Alignment.centerRight,
                     width: MediaQuery.of(context).size.width,
                     child: Container(
-                      width: 130,
+                      width: 140,
                       child: FlatButton(
                         onPressed: () {
                           state(() {
@@ -400,7 +401,7 @@ class Page extends State<LifeStorePage> {
                                         ),
                                         Text(buys[index].number.toString()),
                                         IconButton(
-                                            icon: Icon(Icons.delete),
+                                            icon: Icon(Icons.remove),
                                             onPressed: () {
                                               setState(() {
                                                 state(() {
@@ -469,7 +470,7 @@ class Page extends State<LifeStorePage> {
                               Container(
 //                height: 50,
                                 width: MediaQuery.of(context).size.width * 0.35,
-                                color: Colors.yellow,
+                                color: Color.fromRGBO(243, 200, 70, 1),
                                 child: FlatButton(
                                   onPressed: () {
                                     Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,2,info['shopIfDelivery'],info['shopStartFee'],info['shopDeliveryFee']));

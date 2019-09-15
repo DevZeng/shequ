@@ -42,6 +42,8 @@ import 'page_search.dart';
 import 'page_addFamily.dart';
 import 'page_stayImage.dart';
 import 'page_show_visitorList.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -55,7 +57,11 @@ final ThemeData kIOSTheme = new ThemeData(
 //    primarySwatch: MaterialColor(primary, {
 //      50:
 //    }),
-    primaryColor: Colors.white,
+    primaryColor: Colors.grey,
+    appBarTheme: AppBarTheme(
+      elevation: 0,
+      color: Colors.white
+    )
 //    primaryColorBrightness: Brightness.light,
 //    backgroundColor: Colors.white,
 //    unselectedWidgetColor: ,
@@ -67,7 +73,7 @@ final ThemeData kIOSTheme = new ThemeData(
 );
 
 final ThemeData kDefaultTheme = new ThemeData(
-  primarySwatch: Colors.blue,
+  primarySwatch: Colors.grey,
   accentColor: Colors.orangeAccent[400],
 );
 
@@ -154,6 +160,17 @@ class _MyApp extends State<MyApp> {
         'stayImage':(context)=>StayImagePage(),
         'showVisitorList':(context)=>showVisitorListPage()
       },
+        localizationsDelegates: [
+          //此处
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          //此处
+          const Locale('zh', 'CH'),
+          const Locale('en', 'US'),
+        ],
+      locale: Locale('zh'),
     );
   }
 }

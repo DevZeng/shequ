@@ -64,4 +64,5 @@ class Api {
   final putHoldDefault = host +'appHHouseUserHold/putHoldDefault';
   final getHVisitor = host +'appHVisitor/getHVisitor';
   final passVisitorRoom = host +'appHVisitor/passVisitorRoom';
+  final searchHotel = host +'appHShopHotel/searchHotel';
 }

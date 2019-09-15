@@ -14,9 +14,9 @@ class StayPage extends StatefulWidget {
 class Page extends State<StayPage> {
   DateTime intime = DateTime.now();
   DateTime outtime = DateTime.now().add(new Duration(days: 1));
+  TextEditingController searchController = new TextEditingController();
   Api api = new Api();
-  var stores = [
-  ];
+  var stores = [];
   var loc;
   ScrollController scrollController = new ScrollController();
 
@@ -90,6 +90,8 @@ class Page extends State<StayPage> {
                                     ),
                                     onTap: () {
                                       showDatePicker(
+
+                                        locale: Locale('zh'),
                                         context: context,
                                         initialDate: new DateTime.now(),
                                         firstDate: new DateTime.now()
@@ -131,6 +133,7 @@ class Page extends State<StayPage> {
                                     ),
                                     onTap: () {
                                       showDatePicker(
+                                        locale: Locale('zh'),
                                         context: context,
                                         initialDate: new DateTime.now(),
                                         firstDate: new DateTime.now()
@@ -165,11 +168,13 @@ class Page extends State<StayPage> {
                               ),
                               alignment: Alignment.center,
                               child: TextField(
+                                controller: searchController,
                                 decoration: InputDecoration(
                                     contentPadding:
                                         new EdgeInsets.only(left: 0.0),
                                     border: InputBorder.none,
-                                    icon: Icon(Icons.search),
+                                    icon: Icon(Icons.search,),
+                                    hoverColor: Colors.grey,
                                     hintText: "搜索酒店名称",
                                     hintStyle: new TextStyle(
                                         fontSize: 14, color: Colors.grey)),
@@ -177,24 +182,29 @@ class Page extends State<StayPage> {
                                     fontSize: 14, color: Colors.grey),
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              height: 40.0,
-                              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                              child: new RaisedButton(
-                                onPressed: null,
-                                color: Color.fromRGBO(240, 190, 60, 1),
-                                disabledColor: Color.fromRGBO(240, 190, 60, 1),
-                                child: new Text("搜索酒店",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    )),
-                                shape: new StadiumBorder(
-                                    side: new BorderSide(
-                                  style: BorderStyle.solid,
+                            GestureDetector(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                height: 40.0,
+                                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                child: RaisedButton(
+//                                onPressed: searchShop(1,searchController.text,loc['lat'],loc['lon']),
                                   color: Color.fromRGBO(240, 190, 60, 1),
-                                )),
+                                  disabledColor: Color.fromRGBO(240, 190, 60, 1),
+                                  child: new Text("搜索酒店",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      )),
+                                  shape: new StadiumBorder(
+                                      side: new BorderSide(
+                                        style: BorderStyle.solid,
+                                        color: Color.fromRGBO(240, 190, 60, 1),
+                                      )),
+                                ),
                               ),
+                              onTap: (){
+                                searchShop(1, searchController.text,loc['lat'],loc['lon']);
+                              },
                             ),
                           ],
                         ),
@@ -226,6 +236,7 @@ class Page extends State<StayPage> {
                                   MediaQuery.of(context).size.width * 0.5 -
                                       19,
                                   decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
                                       image: DecorationImage(
                                           image: NetworkImage(
                                               store['shopThumbnail']),
@@ -237,6 +248,7 @@ class Page extends State<StayPage> {
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700),
+                                    maxLines: 2,
                                   ),
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
@@ -295,6 +307,7 @@ class Page extends State<StayPage> {
     if(lat!=0&&lat!=null){
       url+="&lat=${lat}&log=${lon}";
     }
+    print(url);
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
@@ -302,6 +315,29 @@ class Page extends State<StayPage> {
         setState(() {
           stores = content['data'];
         });
+      }
+    });
+  }
+  searchShop(int page,String key,lat ,lon)
+  {
+    print('search');
+    if(key.length==0){
+      return ;
+    }
+    String url = api.searchHotel+ "?start=$page&length=100&key="+key;
+    if(lat!=0&&lat!=null){
+      url+="&lat=${loc['lat']}&log=${loc['lon']}";
+    }
+    print(url);
+    Dio().request(url).then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+        print(content);
+        if(content['code']==200){
+          setState(() {
+            stores = content['data'];
+          });
+        }
       }
     });
   }

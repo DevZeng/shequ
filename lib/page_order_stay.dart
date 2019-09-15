@@ -162,10 +162,12 @@ class _stayOrderPage extends State<StayOrderPage>
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
-                                    child: Text('${unPayOrders[index]['hotelOrderInTime']} - ${unPayOrders[index]['hotelOrderOutTime']}'),
+                                    alignment: Alignment.centerRight,
+                                    child: Text('入住时间 ${unPayOrders[index]['hotelOrderInTime']} - ${unPayOrders[index]['hotelOrderOutTime']}'),
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
+                                    alignment: Alignment.centerRight,
                                     child: Text('${unPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
@@ -252,10 +254,12 @@ class _stayOrderPage extends State<StayOrderPage>
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
-                                    child: Text('${payOrders[index]['hotelOrderInTime']} - ${payOrders[index]['hotelOrderOutTime']}'),
+                                    alignment: Alignment.centerRight,
+                                    child: Text('入住时间 ${payOrders[index]['hotelOrderInTime']} - ${payOrders[index]['hotelOrderOutTime']}'),
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
+                                    alignment: Alignment.centerRight,
                                     child: Text('${unPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
@@ -342,11 +346,13 @@ class _stayOrderPage extends State<StayOrderPage>
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
-                                    child: Text('${waitPayOrders[index]['hotelOrderInTime']} - ${waitPayOrders[index]['hotelOrderOutTime']}'),
+                                    alignment: Alignment.centerRight,
+                                    child: Text('入住时间 ${waitPayOrders[index]['hotelOrderInTime']} - ${waitPayOrders[index]['hotelOrderOutTime']}'),
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
-                                    child: Text('${unPayOrders[index]['createTime']}'),
+                                    alignment: Alignment.centerRight,
+                                    child: Text('${waitPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
                               ),
@@ -424,6 +430,7 @@ class _stayOrderPage extends State<StayOrderPage>
                                         Container(
                                           alignment: Alignment.centerRight,
                                           width: MediaQuery.of(context).size.width*0.2,
+
                                           child: Text(
                                             '¥${finishPayOrders[index]['hotelOrderTotalFee']}',style: TextStyle(color: Colors.red,fontSize: 18),),
                                         )
@@ -432,11 +439,13 @@ class _stayOrderPage extends State<StayOrderPage>
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
-                                    child: Text('${finishPayOrders[index]['hotelOrderInTime']} - ${finishPayOrders[index]['hotelOrderOutTime']}'),
+                                    alignment: Alignment.centerRight,
+                                    child: Text('入住时间 ${finishPayOrders[index]['hotelOrderInTime']} - ${finishPayOrders[index]['hotelOrderOutTime']}'),
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
-                                    child: Text('${unPayOrders[index]['createTime']}'),
+                                    alignment: Alignment.centerRight,
+                                    child: Text('${finishPayOrders[index]['createTime']}'),
                                   ),)
                                 ],
                               ),

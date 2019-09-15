@@ -236,6 +236,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                                         width: 100,
                                         height: 100,
                                         decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(Radius.circular(10)),
                                             image: DecorationImage(image: NetworkImage(products[index]['takeoutThumbnail']),fit: BoxFit.cover)
                                         ),
                                       ),),
@@ -649,7 +650,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                     alignment: Alignment.centerRight,
                     width: MediaQuery.of(context).size.width,
                     child: Container(
-                      width: 130,
+                      width: 140,
                       child: FlatButton(
                         onPressed: () {
                           state(() {
@@ -708,7 +709,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                                         ),
                                         Text(buys[index].number.toString()),
                                         IconButton(
-                                            icon: Icon(Icons.delete),
+                                            icon: Icon(Icons.remove),
                                             onPressed: () {
                                               setState(() {
                                                 state(() {
@@ -777,7 +778,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                               Container(
 //                height: 50,
                                 width: MediaQuery.of(context).size.width * 0.35,
-                                color: Colors.yellow,
+                                color: Color.fromRGBO(243, 200, 70, 1),
                                 child: FlatButton(
                                   onPressed: () {
                                     Navigator.of(context).pushNamed('countPage',arguments: new Store(id, info['shopName'], info['shopThumbnail'], buys,price,1,info['shopIfDelivery'],info['shopStartFee'],info['shopDeliveryFee']));

@@ -371,13 +371,16 @@ class _PersonalPage extends State<PersonalPage> {
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      title: Text('住户信息'),
+                      title: Container(
+                        child: Text('住户信息'),
+                      ),
                       leading: Container(
+//                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: ImageIcon(
                           AssetImage('images/info.png'),
                           color: Color.fromRGBO(243, 200, 70, 1),
                         ),
-                        width: MediaQuery.of(context).size.width * 0.1 - 15,
+//                        width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
                       trailing: Text(
                         '>',
