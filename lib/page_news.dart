@@ -144,7 +144,7 @@ class Page extends State<NewsPage> {
   }
 
   getNews(int page, int type) {
-    print('dad');
+//    print('dad');
     var url = api.information + '?start=$page&length=10';
     if (type != 0) {
       url = api.information + '?start=$page&inforClassId=$type&length=10';
@@ -307,6 +307,18 @@ class Page extends State<NewsPage> {
                     itemCount: _news.length,
                     //强制高度为50.0
                     itemBuilder: (BuildContext context, int index) {
+                      if(index==_news.length-1&&_news.length!=total){
+                        _retrieveData();
+                        return Container(
+                          padding: const EdgeInsets.all(16.0),
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                              width: 24.0,
+                              height: 24.0,
+                              child: CircularProgressIndicator(strokeWidth: 2.0)
+                          ),
+                        );
+                      }
                       return InkWell(child: GestureDetector(
                         child: Container(
 //                          color: Colors.red,
@@ -403,11 +415,9 @@ class Page extends State<NewsPage> {
 
   void _retrieveData() {
     Future.delayed(Duration(seconds: 2)).then((e) {
-      _words.insertAll(
-          _words.length - 1,
-          //每次生成20个单词
-          generateWordPairs().take(20).map((e) => e.asPascalCase).toList());
+      getNews(page+1, type);
       setState(() {
+        page = page+1;
         //重新构建列表
       });
     });
@@ -428,4 +438,5 @@ class Page extends State<NewsPage> {
     String user = prefs.getString('user');
     return user;
   }
+
 }

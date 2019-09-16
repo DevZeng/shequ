@@ -72,7 +72,7 @@ class Page extends State<LifePage> {
         elevation: 0,
       ),
       body: new Container(
-          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: Column(
             children: <Widget>[
               Container(
@@ -86,8 +86,6 @@ class Page extends State<LifePage> {
                           (url) {
                             return GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5.0, horizontal: 15.0),
                                 child: ClipRRect(
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(10.0)),
@@ -109,20 +107,22 @@ class Page extends State<LifePage> {
                         autoPlay: true,
                       ),
               ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
               Wrap(
                 spacing: 8.0, // 主轴(水平)方向间距
-                runSpacing: 4.0, // 纵轴（垂直）方向间距
+                runSpacing: 8.0, // 纵轴（垂直）方向间距
                 alignment: WrapAlignment.start, //沿主轴方向居中
                 children:  shops.map((shop) {
                         return GestureDetector(
                           child: Container(
-                            height: 160,
-                            width: MediaQuery.of(context).size.width * 1 / 3 - 20,
+                            height: 170,
+                            width: MediaQuery.of(context).size.width * 1 / 3 -12,
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
                                 border: Border.all(
                                   //添加边框
                                   width: 1, //边框宽度
-                                  color: Colors.grey[100], //边框颜色
+                                  color: Colors.grey[200], //边框颜色
                                 )),
 //                color: Colors.grey,
                             child: Column(
@@ -130,6 +130,7 @@ class Page extends State<LifePage> {
                                 Container(
                                   height: 110,
                                   decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
                                       image: DecorationImage(
                                           image:
                                           NetworkImage(shop['shopThumbnail']),
@@ -158,12 +159,13 @@ class Page extends State<LifePage> {
                                             ImageIcon(
                                               AssetImage('images/location.png'),
                                               size: 10,
+                                                color: Color.fromRGBO(243, 200, 70, 1)
                                             ),
                                             Text(
                                               shop['shopDistance'] == null
                                                   ? ' 未知'
                                                   : getDistance(shop['shopDistance']),
-                                              style: TextStyle(fontSize: 10),
+                                              style: TextStyle(fontSize: 10,color: Colors.grey),
                                             ),
                                           ],
                                         ),

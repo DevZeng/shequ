@@ -56,7 +56,7 @@ class Page extends State<ServicePage> {
   Widget layout(BuildContext context) {
     return new Scaffold(
         body: SafeArea(
-            child: Container(
+            child: SingleChildScrollView(
 //      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Column(
                 children: <Widget>[
@@ -74,7 +74,7 @@ class Page extends State<ServicePage> {
                       width: MediaQuery
                           .of(context)
                           .size
-                          .width - 30,
+                          .width - 20,
                       child: Row(
                         children: <Widget>[
                           Icon(Icons.search),
@@ -111,7 +111,7 @@ class Page extends State<ServicePage> {
                             (url) {
                           return GestureDetector(
                             child: Container(
-                              padding: EdgeInsets.fromLTRB(15, 15, 15, 5),
+                              padding: EdgeInsets.fromLTRB(10, 15, 10, 5),
                               child: ClipRRect(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
@@ -286,19 +286,18 @@ class Page extends State<ServicePage> {
                   ),
                   Container(child: Text('附近推荐',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),width: MediaQuery.of(context).size.width,padding: EdgeInsets.fromLTRB(15, 15, 15, 0),),
                   Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                    height: 180,
-                    child: lists==null?null:ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: lists.length,
-                        itemBuilder: (context,index){
-                      return GestureDetector(child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  Wrap(
+                    spacing: 8.0, // 主轴(水平)方向间距
+                    runSpacing: 8.0, // 纵轴（垂直）方向间距
+                    alignment: WrapAlignment.start,
+                    children: lists.map((item){
+                      return GestureDetector(child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Container(
                           width: 120,
-                          height: 160,
+                          height: 165,
 //          color: Colors.red,
                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: Colors.white,
                             border: Border.all(width: 1,color: Colors.grey[200]),
                             boxShadow: [
@@ -316,12 +315,15 @@ class Page extends State<ServicePage> {
                                 width: 80,
                                 height: 80,
 //                              color: Colors.blueGrey,
-                                decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(lists[index]['shopThumbnail']),fit: BoxFit.cover)),
+                                decoration: BoxDecoration(
+
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                    image: DecorationImage(image: NetworkImage(item['shopThumbnail']),fit: BoxFit.cover)),
                               ),),
                               Container(
                                 padding: EdgeInsets.fromLTRB(5, 0, 0, 10),
                                 alignment: Alignment.center,
-                                child: Text(lists[index]['shopName'],overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 18),),
+                                child: Text(item['shopName'],overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 18),),
                               ),
                               Container(
                                 padding: EdgeInsets.fromLTRB(30, 0, 0, 10),
@@ -329,27 +331,27 @@ class Page extends State<ServicePage> {
 //                              color: Colors.red,
                                 child: Row(
                                   children: <Widget>[
-                                    Container(child: Icon(Icons.location_on,size: 12,)),
-                                    Container(child: Text(getDistance(lists[index]['shopDistance'])))
+                                    Container(child: Icon(Icons.location_on,color: Color.fromRGBO(243, 200, 70, 1),size: 12,)),
+                                    Container(child: Text(getDistance(item['shopDistance']),style: TextStyle(color: Colors.grey),))
                                   ],
                                 ),
                               )
                             ],
                           ),
                         ),),onTap: (){
-                        switch(lists[index]['shopType']){
+                        switch(item['shopType']){
                           case 1:
                             checkLogin();
-                            Navigator.of(context).pushNamed('outsellerDetail',arguments: lists[index]['shopId']);
+                            Navigator.of(context).pushNamed('outsellerDetail',arguments: item['shopId']);
                             break;
                           case 2:
                             checkLogin();
-                            Navigator.of(context).pushNamed("lifeStore", arguments: lists[index]['shopId']);
+                            Navigator.of(context).pushNamed("lifeStore", arguments: item['shopId']);
                             break;
                           case 3:
                             checkLogin();
                             Navigator.of(context).pushNamed('stayDetail',arguments: {
-                              'id':lists[index]['shopId'],
+                              'id':item['shopId'],
                               'indate':DateTime.now(),
                               'outdate':DateTime.now().add(new Duration(days: 1)),
                             });
@@ -357,8 +359,19 @@ class Page extends State<ServicePage> {
                         }
 //                        print('dafa');
                       },);
-                    }),
-                  )
+                    }).toList(),
+                  ),
+//                  Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+//                  Container(
+//                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+//                    height: 180,
+//                    child: lists==null?null:ListView.builder(
+//                      scrollDirection: Axis.horizontal,
+//                      itemCount: lists.length,
+//                        itemBuilder: (context,index){
+//                      return ;
+//                    }),
+//                  )
                 ],
               ),
             )),
