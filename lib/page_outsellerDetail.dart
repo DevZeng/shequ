@@ -110,10 +110,10 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-          backgroundColor: Color.fromRGBO(251, 239, 199, 1),
-        elevation: 0,
-      ),
+//      appBar: AppBar(
+//          backgroundColor: Color.fromRGBO(251, 239, 199, 1),
+//        elevation: 0,
+//      ),
       body: ListView(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         children: <Widget>[
@@ -124,19 +124,19 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
               child: Container(
                 width: 80,
                 height: 80,
-                color: Colors.red,
+//                color: Colors.red,
                 child: Image.network(
                     info == null ? '' : info['shopThumbnail'] ),
               ),
 //                color: Colors.red,
             ),
-            height: 160,
+            height: 240,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
-                    image: AssetImage('images/outsellerbg.png'),
-                    fit: BoxFit.fitWidth,
+                    image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),
+                    fit: BoxFit.cover,
                     alignment: Alignment.topCenter)),
           ),
           Container(
