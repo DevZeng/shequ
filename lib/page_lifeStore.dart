@@ -151,6 +151,7 @@ class Page extends State<LifeStorePage> {
             ),
             Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
             ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: products.length==0?0:products.length,
               //列表项构造器

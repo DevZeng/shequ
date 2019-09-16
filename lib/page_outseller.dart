@@ -118,7 +118,10 @@ class Page extends State<OutSellerPage> {
                         Container(
 //                          color: Colors.green,
                           width: 80,
-                          child: Image.network(shops[index]['shopThumbnail']),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(image: NetworkImage(shops[index]['shopThumbnail'])),
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
                         ),
                         Container(
                           child: Column(
@@ -160,7 +163,7 @@ class Page extends State<OutSellerPage> {
                                     Container(
                                       alignment: Alignment.centerRight,
                                       width: 80,
-                                      child: Text(shops[index]['shopDistance']==null?'未知':getDistance(shops[index]['shopDistance'])),
+                                      child: Text(shops[index]['shopDistance']==null?'未知':getDistance(shops[index]['shopDistance']),style: TextStyle(color: Colors.grey),),
                                     )
                                   ],
                                 ),

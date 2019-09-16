@@ -165,7 +165,7 @@ class Page extends State<LifePage> {
                                               shop['shopDistance'] == null
                                                   ? ' 未知'
                                                   : getDistance(shop['shopDistance']),
-                                              style: TextStyle(fontSize: 10,color: Colors.grey),
+                                              style: TextStyle(fontSize: 11,color: Colors.grey),
                                             ),
                                           ],
                                         ),

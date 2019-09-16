@@ -332,7 +332,7 @@ class Page extends State<ServicePage> {
                                 child: Row(
                                   children: <Widget>[
                                     Container(child: Icon(Icons.location_on,color: Color.fromRGBO(243, 200, 70, 1),size: 12,)),
-                                    Container(child: Text(getDistance(item['shopDistance']),style: TextStyle(color: Colors.grey),))
+                                    Container(child: Text(getDistance(item['shopDistance']),style: TextStyle(color: Colors.grey,fontSize: 15),))
                                   ],
                                 ),
                               )
