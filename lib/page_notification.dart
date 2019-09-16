@@ -38,7 +38,7 @@ class Page extends State<NotificationPage>{
         child: Column(
           children: news.map((info){
             return Container(
-              margin: EdgeInsets.fromLTRB(25 , 10, 25, 0),
+              margin: EdgeInsets.fromLTRB(15 , 10, 15, 0),
 //            color: Colors.white,
               width: MediaQuery.of(context).size.width-30,
               decoration: BoxDecoration(

@@ -27,7 +27,7 @@ class LoginPageState extends State<LoginPage>{
           elevation: 0,
           centerTitle: true,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.home), onPressed: (){
+            IconButton(icon: Icon(Icons.home,color: Color.fromRGBO(243, 200, 70, 1),), onPressed: (){
               Navigator.of(context).pushAndRemoveUntil(
                   new MaterialPageRoute(builder: (context) => new MyApp()
                   ), (route) => route == null);
