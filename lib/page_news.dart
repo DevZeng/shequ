@@ -185,8 +185,12 @@ class Page extends State<NewsPage> {
                   getNewsData(1, list[i]['inforClassId']);
                 },
                 disabledColor: Colors.white,
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(list[i]['inforClassPicture']),
+                child: Container(
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(list[i]['inforClassPicture']),
+                  ),
+                  width: 45,
+                  height: 45,
                 ),
               ),
               Text(list[i]['inforClassName'])
@@ -207,9 +211,9 @@ class Page extends State<NewsPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('兴宁头条'),
         centerTitle: true, elevation: 0,actions: <Widget>[
-        ImageIcon(AssetImage(wicon),color: Color.fromRGBO(223, 207, 110, 1),size: 30,),
+        ImageIcon(AssetImage(wicon),color: Color.fromRGBO(243, 200, 70, 1),size: 30,),
         Center(child: Container(
-          child: Text(weather,style: TextStyle(color:Color.fromRGBO(223, 207, 110, 1)),),
+          child: Text(weather,style: TextStyle(color:Color.fromRGBO(243, 200, 70, 1)),),
           padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
         ),),
       ],backgroundColor: Colors.white,),
@@ -228,7 +232,7 @@ class Page extends State<NewsPage> {
                           return GestureDetector(
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 15.0),
+                                  vertical: 5.0, horizontal: 10.0),
                               child: ClipRRect(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
@@ -257,6 +261,7 @@ class Page extends State<NewsPage> {
               height: 80,
               items: map<Widget>(_icons, (index, icons) {
                 return Container(
+                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                   child: Row(
                     children: getIcons(icons).toList(),
                   ),
@@ -300,28 +305,29 @@ class Page extends State<NewsPage> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: _news.length,
-//                    itemExtent: MediaQuery.of(context).size.height * 0.2,
                     //强制高度为50.0
                     itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
+                      return InkWell(child: GestureDetector(
                         child: Container(
-                          height: 120,
-//              color:Colors.red,
+//                          color: Colors.red,
+                          height: 110,
                           child: Row(
                             children: <Widget>[
-                              Padding(padding: EdgeInsets.fromLTRB(15, 10, 0, 10),child: Container(
-                                width: MediaQuery.of(context).size.width-180,
+                              Padding(padding: EdgeInsets.fromLTRB(10, 10, 0, 0),child: Container(
+
+                                width: MediaQuery.of(context).size.width-140,
 //                    color: Colors.amber,
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),child: Container(
-                                        height: 70,
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0),child: Container(
+//                                      color: Colors.orange,
+                                        height: 65,
                                         width: MediaQuery.of(context).size.width,
                                         child: Text(_news[index]['inforTitle']
                                           ,style: TextStyle(fontSize: 18,),maxLines: 2,overflow: TextOverflow.ellipsis,)
                                     ),),
                                     Container(
-                                      height: 30,
+                                      height: 20,
                                       width: MediaQuery.of(context).size.width,
 //                          color: Colors.blue,
                                       child: Row(
@@ -329,12 +335,12 @@ class Page extends State<NewsPage> {
                                           Container(child: ImageIcon(AssetImage('images/see.png'),size: 10,color: Colors.grey,),width: 30,),
                                           Container(child: Text(_news[index]['count'].toString(),overflow: TextOverflow.clip,style: TextStyle(fontSize: 12,color: Colors.grey),),width: 60,),
                                           Container(
-                                            width: MediaQuery.of(context).size.width*0.5-150,
+                                            width: MediaQuery.of(context).size.width*0.5-170,
                                             alignment: Alignment.center,
                                             child: Text(_news[index]['inforKey'],style: TextStyle(fontSize: 12,color: Colors.grey),),
                                           ),
                                           Container(
-                                            width: MediaQuery.of(context).size.width*0.5-120,
+                                            width: MediaQuery.of(context).size.width*0.5-80,
                                             alignment: Alignment.centerRight,
                                             child: Text(RelativeDateFormat.format(
                                                 DateTime.parse(
@@ -346,10 +352,11 @@ class Page extends State<NewsPage> {
                                   ],
                                 ),
                               ),),
-                              Padding(padding: EdgeInsets.fromLTRB(10, 10, 15, 10),child: Container(
-                                width: 140,
-//                    color: Colors.blueGrey,
+                              Padding(padding: EdgeInsets.fromLTRB(0, 10, 10, 10),child: Container(
+                                width: 120,
+                                height: 96,
                                 decoration: BoxDecoration(
+//                                    color: Colors.blueGrey,
                                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                                     image: DecorationImage(
                                         image: NetworkImage(_news[index]['image'][0]==null?'':_news[index]['image'][0]),fit: BoxFit.cover)
@@ -358,11 +365,12 @@ class Page extends State<NewsPage> {
                             ],
                           ),
                         ),
-                        onTap: () {
-                          Navigator.of(context).pushNamed("reading",
-                              arguments: _news[index]['inforId']);
-                        },
-                      );
+
+                        onLongPress: (){},
+                      ),onTap: () {
+                        Navigator.of(context).pushNamed("reading",
+                            arguments: _news[index]['inforId']);
+                      },);
                     })
           ],
         ),

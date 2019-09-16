@@ -30,13 +30,14 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
     }
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('访客详情'),
         centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
+
         child: Column(
           children: buildList(),
         ),
@@ -96,27 +97,39 @@ class _visitorDetailPage extends State<VisitorDetailPage>{
     List<Widget> returnWidgets = [];
     print(lists);
     for(int i=0;i<lists.length;i++){
-      returnWidgets.add(ListTile(onTap: (){
-        Navigator.of(context).pushNamed('showVisitorList',arguments:{'info':lists[i],'type':type} ).then((val){
-          getLists(1);
-        });
-      },title: Text('${lists[i]['visitorName']}  ${lists[i]['visitorPhone']}'),trailing: type==1?null:RaisedButton(onPressed: (){
-        Dio().delete(api.delHVisitorRoom+"/${lists[i]['visitorId']}").then((response){
-          var data = response.data;
-          print(data);
-          if(data['code']==200){
-            setState(() {
-              lists.removeAt(i);
-            });
-          }
-        });
-      },color: Colors.red,child: Text('删除',style: TextStyle(color: Colors.white),),),));
+      returnWidgets.add(Container(
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            ListTile(onTap: (){
+              Navigator.of(context).pushNamed('showVisitorList',arguments:{'info':lists[i],'type':type} ).then((val){
+                getLists(1);
+              });
+            },leading: Container(
+              child: Image.asset('images/single_visitor.png'),
+              width: 24,
+            ),title: Text('${lists[i]['visitorName']}      ${lists[i]['visitorPhone']}'),trailing: type==1?null:RaisedButton(onPressed: (){
+              Dio().delete(api.delHVisitorRoom+"/${lists[i]['visitorId']}").then((response){
+                var data = response.data;
+                print(data);
+                if(data['code']==200){
+                  setState(() {
+                    lists.removeAt(i);
+                  });
+                }
+              });
+            },color: Colors.red,child: Text('删除',style: TextStyle(color: Colors.white),),),),
+            Divider(height: 1,)
+          ],
+        ),
+      ));
     }
     returnWidgets.add( type==1?Container():Container(
       alignment: Alignment.center,
       child: Container(
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
         width: MediaQuery.of(context).size.width*0.7,
-        height: 40.0  ,
+        height: 60.0  ,
         child: new RaisedButton(onPressed: (){
 //          print(lists);
           Navigator.of(context).pushNamed('addVisitorList',arguments: id).then((val){

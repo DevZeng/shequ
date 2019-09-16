@@ -54,6 +54,7 @@ class _RegisterPage extends State<RegisterPage> {
           backgroundColor: Colors.white,
           textColor: Colors.black,
           fontSize: 16.0);
+      return ;
     }
     var formData = {"userPhone": usernameController.text, "sUserAccount": usernameController.text};
     print(formData);
@@ -172,6 +173,7 @@ class _RegisterPage extends State<RegisterPage> {
                 padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
               ),
               Container(
+
                 child: TextField(
                     controller: usernameController,
                     keyboardType: TextInputType.number,
@@ -179,13 +181,15 @@ class _RegisterPage extends State<RegisterPage> {
                         border: InputBorder.none,
                         hintText: '请输入手机号',
                         suffix: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50))
+                          ),
+                          color: Color.fromRGBO(243, 200, 70, 1),
                             child: Text(
                               countdownTime > 0 ? '$countdownTime后重新获取' : '获取验证码',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: countdownTime > 0
-                                    ? Color.fromARGB(255, 183, 184, 195)
-                                    : Color.fromARGB(255, 17, 132, 255),
+                                color: Colors.white,
                               ),
                             ), onPressed: sendCode))
                 ),
@@ -196,11 +200,22 @@ class _RegisterPage extends State<RegisterPage> {
                         BorderSide(color: Colors.grey[200], width: 1.0))),
               ),
               Container(
-                child: TextField(
-                  controller: codeController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      border: InputBorder.none, hintText: '请输入短信验证码'),
+                
+                child: Center(
+                  child: TextField(
+                    controller: codeController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: '请输入短信验证码',suffix: Container(
+                      width: 1,
+                      child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50))
+                          ),
+                          color: Color.fromRGBO(243, 200, 70, 0),
+                          child:Text('')),
+                    )),
+                  ),
                 ),
                 decoration: BoxDecoration(
                   // 下滑线浅灰色，宽度1像素
@@ -220,7 +235,15 @@ class _RegisterPage extends State<RegisterPage> {
                 child: TextField(
                   controller: passwordController,
                   decoration: InputDecoration(
-                      hintText: '请输入密码', border: InputBorder.none),
+                      hintText: '请输入密码', border: InputBorder.none,suffix: Container(
+                    width: 1,
+                    child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50))
+                        ),
+                        color: Color.fromRGBO(243, 200, 70, 0),
+                        child:Text('')),
+                  )),
                 ),
                 decoration: BoxDecoration(
                   // 下滑线浅灰色，宽度1像素

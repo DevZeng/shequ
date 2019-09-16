@@ -18,7 +18,9 @@ class Page extends State<ReadingPage>{
   @override
   Widget build(BuildContext context) {
     infoId = ModalRoute.of(context).settings.arguments;
-    getNews(infoId);
+    if(news==null){
+      getNews(infoId);
+    }
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.white,
@@ -29,7 +31,7 @@ class Page extends State<ReadingPage>{
       ),
       body: SingleChildScrollView(
         child: news==null?null:Container(
-          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Column(
             children: <Widget>[
               Container(
@@ -53,6 +55,7 @@ class Page extends State<ReadingPage>{
     );
   }
   getNews(int id) {
+    print('get');
     var url = api.informationOne + '?inforId=$infoId';
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {

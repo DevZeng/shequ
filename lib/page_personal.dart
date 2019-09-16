@@ -46,19 +46,19 @@ class _PersonalPage extends State<PersonalPage> {
           child: Column(
             children: <Widget>[
               Container(
-                  height: 165,
+                  height: 170,
                   color: Color.fromRGBO(243, 200, 70, 1),
                   child: Column(
                     children: <Widget>[
                       Container(
-                        height: 160,
+                        height: 170,
                         child: Row(
                           children: <Widget>[
                             Container(
 //                              padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
                               width: MediaQuery.of(context).size.width * 0.25,
 //                              color: Colors.green,
-                              height: 100,
+                              height: 110,
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
                                 child: Container(
@@ -370,23 +370,27 @@ class _PersonalPage extends State<PersonalPage> {
 //              color: Colors.white,
                 child: Column(
                   children: <Widget>[
-                    ListTile(
-                      title: Container(
-                        child: Text('住户信息'),
-                      ),
-                      leading: Container(
-//                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: ImageIcon(
-                          AssetImage('images/info.png'),
-                          color: Color.fromRGBO(243, 200, 70, 1),
+                    GestureDetector(
+                      child: Container(
+                        height: 55,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 0),child: ImageIcon(
+                              AssetImage('images/info.png'),
+                              color: Color.fromRGBO(243, 200, 70, 1),
+                            ),),
+                            Container(
+                              child: Text('住户信息',style: TextStyle(fontSize: 17.5),),
+                              width: MediaQuery.of(context).size.width-78,
+                            ),
+                            Text(
+                              '>',
+                              textAlign: TextAlign.end,
+                            )
+                          ],
                         ),
-//                        width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
-                      trailing: Text(
-                        '>',
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
+                      onTap: (){
                         checkLogin();
                         Navigator.pushNamed(context, "listHouseInfo");
                       },
@@ -394,20 +398,27 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    ListTile(
-                      title: Text('我的地址'),
-                      leading: Container(
-                        child: ImageIcon(
-                          AssetImage('images/address.png'),
-                          color: Color.fromRGBO(243, 200, 70, 1),
+                    GestureDetector(
+                      child: Container(
+                        height: 55,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 0),child: ImageIcon(
+                              AssetImage('images/address.png'),
+                              color: Color.fromRGBO(243, 200, 70, 1),
+                            ),),
+                            Container(
+                              child: Text('我的地址',style: TextStyle(fontSize: 17.5),),
+                              width: MediaQuery.of(context).size.width-78,
+                            ),
+                            Text(
+                              '>',
+                              textAlign: TextAlign.end,
+                            )
+                          ],
                         ),
-                        width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
-                      trailing: Text(
-                        '>',
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
+                      onTap: (){
                         checkLogin();
                         Navigator.pushNamed(context, "listAddress");
                       },
@@ -417,42 +428,55 @@ class _PersonalPage extends State<PersonalPage> {
                     ),
                     holdType == 2
                         ? Container()
-                        : ListTile(
-                            title: Text('缴费服务'),
-                            leading: Container(
-                              child: ImageIcon(
-                                AssetImage('images/needpay.png'),
-                                color: Color.fromRGBO(243, 200, 70, 1),
-                              ),
-                              width:
-                                  MediaQuery.of(context).size.width * 0.1 - 15,
+                        : GestureDetector(
+                      child: Container(
+                        height: 55,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 0),child: ImageIcon(
+                              AssetImage('images/needpay.png'),
+                              color: Color.fromRGBO(243, 200, 70, 1),
+                            ),),
+                            Container(
+                              child: Text('缴费服务',style: TextStyle(fontSize: 17.5),),
+                              width: MediaQuery.of(context).size.width-78,
                             ),
-                            trailing: Text(
+                            Text(
                               '>',
                               textAlign: TextAlign.end,
-                            ),
-                            onTap: () {
-                              checkLogin();
-                              Navigator.pushNamed(context, "needPay");
-                            },
-                          ),
+                            )
+                          ],
+                        ),
+                      ),
+                      onTap: (){
+                        checkLogin();
+                        Navigator.pushNamed(context, "needPay");
+                      },
+                    ),
                     Divider(
                       height: 1,
                     ),
-                    ListTile(
-                      title: Text('报修预约'),
-                      leading: Container(
-                        child: ImageIcon(
-                          AssetImage('images/repair.png'),
-                          color: Color.fromRGBO(243, 200, 70, 1),
+                    GestureDetector(
+                      child: Container(
+                        height: 55,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 0),child: ImageIcon(
+                              AssetImage('images/repair.png'),
+                              color: Color.fromRGBO(243, 200, 70, 1),
+                            ),),
+                            Container(
+                              child: Text('报修预约',style: TextStyle(fontSize: 17.5),),
+                              width: MediaQuery.of(context).size.width-78,
+                            ),
+                            Text(
+                              '>',
+                              textAlign: TextAlign.end,
+                            )
+                          ],
                         ),
-                        width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
-                      trailing: Text(
-                        '>',
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
+                      onTap: (){
                         checkLogin();
                         Navigator.pushNamed(context, "repairPage");
                       },
@@ -460,20 +484,27 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    ListTile(
-                      title: Text('社区通知'),
-                      leading: Container(
-                        child: ImageIcon(
-                          AssetImage('images/notify.png'),
-                          color: Color.fromRGBO(243, 200, 70, 1),
+                    GestureDetector(
+                      child: Container(
+                        height: 55,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 0),child: ImageIcon(
+                              AssetImage('images/notify.png'),
+                              color: Color.fromRGBO(243, 200, 70, 1),
+                            ),),
+                            Container(
+                              child: Text('社区通知',style: TextStyle(fontSize: 17.5),),
+                              width: MediaQuery.of(context).size.width-78,
+                            ),
+                            Text(
+                              '>',
+                              textAlign: TextAlign.end,
+                            )
+                          ],
                         ),
-                        width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
-                      trailing: Text(
-                        '>',
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
+                      onTap: (){
                         checkLogin();
                         Navigator.pushNamed(context, "notifications");
                       },
@@ -481,20 +512,27 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    ListTile(
-                      title: Text('投诉建议'),
-                      leading: Container(
-                        child: ImageIcon(
-                          AssetImage('images/report.png'),
-                          color: Color.fromRGBO(243, 200, 70, 1),
+                    GestureDetector(
+                      child: Container(
+                        height: 55,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 0),child: ImageIcon(
+                              AssetImage('images/report.png'),
+                              color: Color.fromRGBO(243, 200, 70, 1),
+                            ),),
+                            Container(
+                              child: Text('投诉建议',style: TextStyle(fontSize: 17.5),),
+                              width: MediaQuery.of(context).size.width-78,
+                            ),
+                            Text(
+                              '>',
+                              textAlign: TextAlign.end,
+                            )
+                          ],
                         ),
-                        width: MediaQuery.of(context).size.width * 0.1 - 15,
                       ),
-                      trailing: Text(
-                        '>',
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
+                      onTap: (){
                         checkLogin();
                         Navigator.pushNamed(context, "report");
                       },

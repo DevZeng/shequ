@@ -101,11 +101,11 @@ SPEC CHECKSUMS:
   fluwx: 19524c5e4c9c539a646407259139c9c1e4eaf9e5
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  multi_image_picker: fc88872db7d5fe97fd6ee4529d46fd6cc57e3c86
+  multi_image_picker: 335500427fbfe836a3bd9cd0e467a0f9953c4b1c
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
   permission_handler: d59f41439f5bc6c4d1005f3355e98f05ddc68ece
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
 
 PODFILE CHECKSUM: d231b65d6bea6d24555f84ca7901720538b5791f
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.6.1

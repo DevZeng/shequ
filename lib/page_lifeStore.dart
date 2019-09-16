@@ -149,14 +149,14 @@ class Page extends State<LifeStorePage> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 12, 0, 0)),
+            Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
             ListView.separated(
               shrinkWrap: true,
               itemCount: products.length==0?0:products.length,
               //列表项构造器
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(child: Container(
-                  padding: EdgeInsets.fromLTRB(15, 15, 5, 15),
+                  padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
                   color: Colors.white,
                   child: Row(
                     children: <Widget>[

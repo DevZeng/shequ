@@ -195,6 +195,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                       height: MediaQuery.of(context).size.height,
 //                      color: Colors.green,
                       child: ListView.builder(
+                        physics: PageScrollPhysics(),
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                           itemCount: types.length,
                           itemExtent: 50,
@@ -221,6 +222,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                       child: Column(children: <Widget>[
                         ListTile(title: Text(category),),
                         ListView.builder(
+                            physics: PageScrollPhysics(),
                             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                             shrinkWrap: true,
                             itemCount: products.length,

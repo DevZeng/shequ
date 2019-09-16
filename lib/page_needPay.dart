@@ -121,6 +121,7 @@ class Page extends State<NeedPayPage>
         centerTitle: true,
         elevation: 0,
         bottom: TabBar(
+          labelStyle: TextStyle(fontSize: 18),
             controller: _tabController,
             labelColor: Color.fromRGBO(243, 200, 70, 1),
             unselectedLabelColor: Colors.black,
@@ -177,8 +178,8 @@ class Page extends State<NeedPayPage>
                             Container(
                               child: Row(
                                 children: <Widget>[
-                                  Text('住所：',style: TextStyle(color: Colors.grey[500]),),
-                                  Text(wuyes[index]['propertyHouse'],style: TextStyle(fontSize: 20),),
+                                  Text('住所：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
+                                  Text(wuyes[index]['propertyHouse'],style: TextStyle(fontSize: 16),),
                                 ],
                               ),
                               width: MediaQuery.of(context).size.width-160,
@@ -188,7 +189,7 @@ class Page extends State<NeedPayPage>
                               alignment: Alignment.centerRight,
                               child: Row(
                                 children: <Widget>[
-                                  Text('总计：',style: TextStyle(color: Colors.grey[500]),),
+                                  Text('总计：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
                                   Text('¥ '+wuyes[index]['propertyFee'].toString(),style: TextStyle(
                                       color: Colors.red,
                                       fontSize: 20
@@ -207,8 +208,8 @@ class Page extends State<NeedPayPage>
                             Container(
                               child: Row(
                                 children: <Widget>[
-                                  Text('月份：',style: TextStyle(color: Colors.grey[500]),),
-                                  Text(wuyes[index]['propertyMonth'],style: TextStyle(fontSize: 20),),
+                                  Text('月份：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
+                                  Text(wuyes[index]['propertyMonth'],style: TextStyle(fontSize: 16),),
                                 ],
                               ),
                               width: MediaQuery.of(context).size.width-130,
@@ -282,8 +283,8 @@ class Page extends State<NeedPayPage>
                             Container(
                               child: Row(
                                 children: <Widget>[
-                                  Text('住所：',style: TextStyle(color: Colors.grey[500]),),
-                                  Text(shuis[index]['waterHouse'],style: TextStyle(fontSize: 20),),
+                                  Text('住所：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
+                                  Text(shuis[index]['waterHouse'],style: TextStyle(fontSize: 16),),
                                 ],
                               ),
                               width: MediaQuery.of(context).size.width-160,
@@ -293,7 +294,7 @@ class Page extends State<NeedPayPage>
                               alignment: Alignment.centerRight,
                               child: Row(
                                 children: <Widget>[
-                                  Text('总计：',style: TextStyle(color: Colors.grey[500]),),
+                                  Text('总计：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
                                   Text('¥ '+shuis[index]['waterFee'].toString(),style: TextStyle(
                                       color: Colors.red,
                                       fontSize: 20
@@ -312,8 +313,8 @@ class Page extends State<NeedPayPage>
                             Container(
                               child: Row(
                                 children: <Widget>[
-                                  Text('月份：',style: TextStyle(color: Colors.grey[500]),),
-                                  Text(shuis[index]['waterMonth'],style: TextStyle(fontSize: 20),),
+                                  Text('月份：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
+                                  Text(shuis[index]['waterMonth'],style: TextStyle(fontSize: 16),),
                                 ],
                               ),
                               width: MediaQuery.of(context).size.width-130,
@@ -387,8 +388,8 @@ class Page extends State<NeedPayPage>
                             Container(
                               child: Row(
                                 children: <Widget>[
-                                  Text('车位：',style: TextStyle(color: Colors.grey[500]),),
-                                  Text(cars[index]['parkingLot'],style: TextStyle(fontSize: 20),),
+                                  Text('车位：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
+                                  Text(cars[index]['parkingLot'],style: TextStyle(fontSize: 16),),
                                 ],
                               ),
                               width: MediaQuery.of(context).size.width-160,
@@ -398,7 +399,7 @@ class Page extends State<NeedPayPage>
                               alignment: Alignment.centerRight,
                               child: Row(
                                 children: <Widget>[
-                                  Text('总计：',style: TextStyle(color: Colors.grey[500]),),
+                                  Text('总计：',style: TextStyle(color: Colors.grey[500],fontSize: 14),),
                                   Text('¥ '+cars[index]['parkingFee'].toString(),style: TextStyle(
                                       color: Colors.red,
                                       fontSize: 20

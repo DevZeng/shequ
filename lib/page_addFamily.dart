@@ -59,7 +59,7 @@ class Page extends State<addFamily> {
                           image: DecorationImage(
                               image: NetworkImage(imageUrl),
                               fit: BoxFit.cover)),
-                      child: imageUrl.length!=0?Container():Icon(Icons.add,size: 50,color: Colors.grey,),
+                      child: imageUrl.length!=0?Container():Icon(Icons.add,size: 50,color: Colors.white,),
                     ),
                     onTap: () {
                       print('tap');

@@ -38,7 +38,7 @@ class Page extends State<NotificationPage>{
         child: Column(
           children: news.map((info){
             return Container(
-              margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
+              margin: EdgeInsets.fromLTRB(25 , 10, 25, 0),
 //            color: Colors.white,
               width: MediaQuery.of(context).size.width-30,
               decoration: BoxDecoration(
@@ -69,10 +69,10 @@ class Page extends State<NotificationPage>{
                   Container(
                     child: Row(
                       children: <Widget>[
-                        Container(child: Text(info['createTime'],style: TextStyle(fontSize: 18,color: Colors.grey[400]),),
-                          width: MediaQuery.of(context).size.width*0.6-60,),
-                        Container(child: Text(info['infoAuthor'],style: TextStyle(fontSize: 18,color: Colors.grey[400]),textAlign: TextAlign.right,),
-                          width: MediaQuery.of(context).size.width*0.4,),
+                        Container(child: Text(info['createTime'],style: TextStyle(color: Colors.grey[400]),),
+                          width: MediaQuery.of(context).size.width*0.65-80,),
+                        Container(child: Text('发布者：'+info['infoAuthor'],style: TextStyle(color: Colors.grey[400]),textAlign: TextAlign.right,),
+                          width: MediaQuery.of(context).size.width*0.35,),
                       ],
                     ),
                     padding: EdgeInsets.fromLTRB(15, 5, 15, 15),

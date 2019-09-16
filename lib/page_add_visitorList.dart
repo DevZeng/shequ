@@ -42,8 +42,9 @@ class _addVisitorListPage extends State<addVisitorListPage>{
                   child: Container(
                     width: 120,
                     height: 120,
+                    child: imageUrl.length!=0?Container():Icon(Icons.add,size: 40,color: Colors.white,),
                     decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Color.fromRGBO(243, 200, 70, 1),
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         image: DecorationImage(
                             image: NetworkImage(
@@ -82,15 +83,15 @@ class _addVisitorListPage extends State<addVisitorListPage>{
               ),),
               color: Colors.white,
             ),
-            Divider(height: 1,),
-            Container(
-              child: ListTile(leading:Text('理由'),title: TextField(
-                controller: reasonController,
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: '请输入理由'),
-              ),),
-              color: Colors.white,
-            ),
+//            Divider(height: 1,),
+//            Container(
+//              child: ListTile(leading:Text('理由'),title: TextField(
+//                controller: reasonController,
+//                decoration: InputDecoration(
+//                    border: InputBorder.none, hintText: '请输入理由'),
+//              ),),
+//              color: Colors.white,
+//            ),
             Divider(height: 1,),
             Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),child: Container(
               width: MediaQuery.of(context).size.width*0.7,

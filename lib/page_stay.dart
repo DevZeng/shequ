@@ -151,7 +151,7 @@ class Page extends State<StayPage> {
                                   ),
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 0.2-2,
+                                        MediaQuery.of(context).size.width * 0.2-4,
 //                                padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                     child: Text(
                                         "共${getDay(outtime.difference(intime).inHours)}晚"),

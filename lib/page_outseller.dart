@@ -53,7 +53,7 @@ class Page extends State<OutSellerPage> {
       appBar: AppBar(title: Text('美食外卖'),elevation: 0,
         centerTitle: true,),
       backgroundColor: Colors.white,
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(

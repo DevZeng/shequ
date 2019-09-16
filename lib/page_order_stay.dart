@@ -163,7 +163,13 @@ class _stayOrderPage extends State<StayOrderPage>
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,
                                     alignment: Alignment.centerRight,
-                                    child: Text('入住时间 ${unPayOrders[index]['hotelOrderInTime']} - ${unPayOrders[index]['hotelOrderOutTime']}'),
+                                    child: Row(
+                                      children: <Widget>[Container(
+                                        width: 60,
+                                        child: Text('入住时间 '),
+                                      ),
+                                      Expanded(child: Text('${unPayOrders[index]['hotelOrderInTime']} - ${unPayOrders[index]['hotelOrderOutTime']}',textAlign: TextAlign.right,))],
+                                    ),
                                   ),),
                                   Padding(padding: EdgeInsets.fromLTRB(15, 0, 0, 0),child: Container(
                                     width: MediaQuery.of(context).size.width-125,

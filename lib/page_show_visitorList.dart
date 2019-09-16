@@ -74,11 +74,11 @@ class _showVisitorListPage extends State<showVisitorListPage>{
               child: ListTile(leading:Text('电话号码'),title: Text(info==null?'':info['visitorPhone'].toString()),),
               color: Colors.white,
             ),
-            Divider(height: 1,),
-            Container(
-              child: ListTile(leading:Text('理由'),title: Text(info==null?'':info['visitorReason']),),
-              color: Colors.white,
-            ),
+//            Divider(height: 1,),
+//            Container(
+//              child: ListTile(leading:Text('理由'),title: Text(info==null?'':info['visitorReason']),),
+//              color: Colors.white,
+//            ),
             Divider(height: 1,),
             type==1?Container():Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),child: Container(
               width: MediaQuery.of(context).size.width*0.7,

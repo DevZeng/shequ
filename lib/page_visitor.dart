@@ -113,7 +113,7 @@ class _visitorPage extends State<VisitorPage>
                             'type':type
                           });
                         },
-                        leading: ImageIcon(AssetImage('images/visitor.png')),
+                        leading: ImageIcon(AssetImage('images/visitor.png'),color: Color.fromRGBO(243, 200, 70, 1),),
                         title: Text('${lists[index]['totaNumber']==null?0:lists[index]['totaNumber']}人  '),
                         trailing:
                         OutlineButton(onPressed: () {
@@ -195,8 +195,10 @@ class _visitorPage extends State<VisitorPage>
                             'type':type
                           });
                         },
+                        leading: ImageIcon(AssetImage('images/visitor.png'),color: Color.fromRGBO(243, 200, 70, 1),),
 //                        leading: ImageIcon(AssetImage('images/visitor.png')),
-                        title: Text('${histories[index]['totaNumber']==null?0:histories[index]['totaNumber']}人  '+histories[index]['createTime']),
+                        title: Text('${histories[index]['totaNumber']==null?0:histories[index]['totaNumber']}人  '),
+                        trailing: Text(histories[index]['createTime']),
                       ),
 
                     );
