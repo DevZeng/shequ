@@ -22,6 +22,9 @@ class Page extends State<ServicePage> {
   AMapLocation _loc;
   Api api = new Api();
   var lists = [];
+  ScrollController scrollController = new ScrollController();
+  int page = 1;
+  bool loading = true;
 
   Page() {
     getR();
@@ -34,15 +37,48 @@ class Page extends State<ServicePage> {
 
       if(_loc!=null){
         print('1');
-        Dio().get(api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}").then((response){
+        String url = api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}&start=1&lenght=12";
+        print(url);
+        Dio().get(url).then((response){
+          print(response.data);
           setState(() {
             lists = response.data['data'];
+            loading = false;
           });
         });
       }
     });
+    scrollController.addListener(() {
+//      print(scrollController.offset);
+//      print('heigth:${MediaQuery.of(context).size.height},offset:${scrollController.offset}');
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        setState(() {
+          loading = true;
+        });
+        _retrieveData();
+      }
+    });
   }
 
+  getShops(page)
+  {
+    Dio().get(api.getSearchHShopMsg+"?log=${_loc.longitude}&lat=${_loc.latitude}&start=$page&lenght=12").then((response){
+      setState(() {
+        lists.addAll(response.data['data']);
+      });
+    });
+  }
+  void _retrieveData() {
+    Future.delayed(Duration(seconds: 1)).then((e) {
+      getShops(page+1);
+      setState(() {
+        page = page+1;
+        loading = false;
+        //重新构建列表
+      });
+    });
+  }
 
   var _imageUrls = [];
 
@@ -57,6 +93,7 @@ class Page extends State<ServicePage> {
     return new Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
+              controller: scrollController,
 //      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Column(
                 children: <Widget>[
@@ -291,6 +328,7 @@ class Page extends State<ServicePage> {
                     runSpacing: 8.0, // 纵轴（垂直）方向间距
                     alignment: WrapAlignment.start,
                     children: lists.map((item){
+//                      if(item==lists.length)
                       return GestureDetector(child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Container(
                           width: 120,
@@ -361,6 +399,15 @@ class Page extends State<ServicePage> {
                       },);
                     }).toList(),
                   ),
+                  loading==true?Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                        width: 24.0,
+                        height: 24.0,
+                        child: CircularProgressIndicator(strokeWidth: 2.0)
+                    ),
+                  ):Container()
 //                  Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
 //                  Container(
 //                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),

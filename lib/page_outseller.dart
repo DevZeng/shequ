@@ -54,6 +54,9 @@ class Page extends State<OutSellerPage> {
         centerTitle: true,),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        controller: ScrollController(
+
+        ),
         child: Column(
           children: <Widget>[
             Container(
@@ -107,6 +110,7 @@ class Page extends State<OutSellerPage> {
               ),
             ),
             ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
                 itemCount: shops.length,
                 itemBuilder: (context,index){

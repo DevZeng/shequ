@@ -119,26 +119,56 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
         children: <Widget>[
           //商品列表
           Container(
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: 80,
-                height: 80,
+              height: 240,
+              color: Colors.white,
+              alignment: Alignment.topCenter,
+              child: Column(children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+//                  color: Colors.red,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),fit: BoxFit.cover)
+                  ),
+                  child: Stack(
+                    alignment: Alignment(0, 1.6),
+                    children: <Widget>[
+                      Container(
+//                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          width: 80,
+                          height: 80,
 //                color: Colors.red,
-                child: Image.network(
-                    info == null ? '' : info['shopThumbnail'] ),
-              ),
+                          child: Image.network(
+                              info == null ? '' : info['shopThumbnail'] ),
+                        ),
 //                color: Colors.red,
-            ),
-            height: 240,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                    image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter)),
-          ),
+                      )
+                    ],
+                  ),
+                )
+              ])),
+//          Container(
+//            child: Container(
+//              alignment: Alignment.bottomCenter,
+//              child: Container(
+//                width: 80,
+//                height: 80,
+////                color: Colors.red,
+//                child: Image.network(
+//                    info == null ? '' : info['shopThumbnail'] ),
+//              ),
+////                color: Colors.red,
+//            ),
+//            height: 240,
+//            width: double.infinity,
+//            decoration: BoxDecoration(
+//                color: Colors.white,
+//                image: DecorationImage(
+//                    image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),
+//                    fit: BoxFit.cover,
+//                    alignment: Alignment.topCenter)),
+//          ),
           Container(
             color: Colors.white,
             width: MediaQuery.of(context).size.width,
@@ -221,90 +251,99 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                       height: MediaQuery.of(context).size.height,
                       child: Column(children: <Widget>[
                         ListTile(title: Text(category),),
-                        ListView.builder(
-                            physics: PageScrollPhysics(),
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            shrinkWrap: true,
-                            itemCount: products.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                width:
-                                MediaQuery.of(context).size.width * 0.75,
+                        Expanded(child:
+                            SingleChildScrollView(
+                              child: Column(
+                                children: products.map((product){
+                                  return Container(
+                                    width:
+                                    MediaQuery.of(context).size.width * 0.75,
 //                                  color: Colors.deepPurpleAccent,
-                                child: Row(
-                                  children: <Widget>[
-                                    Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                      child: Container(
-                                        width: 100,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            image: DecorationImage(image: NetworkImage(products[index]['takeoutThumbnail']),fit: BoxFit.cover)
-                                        ),
-                                      ),),
-                                    Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width * 0.75-120,
-                                        height: 100,
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                              child: Text(products[index]['taketoutName'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
-                                              width: MediaQuery.of(context).size.width * 0.75-100,
-                                              height: 40,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                          child: Container(
+                                            width: 100,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                image: DecorationImage(image: NetworkImage(product['takeoutThumbnail']),fit: BoxFit.cover)
                                             ),
-                                            Container(
-                                              height: 30,
+                                          ),),
+                                        Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                          child: Container(
+                                            width: MediaQuery.of(context).size.width * 0.75-120,
+                                            height: 100,
+                                            child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  child: Text(product['taketoutName'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
+                                                  width: MediaQuery.of(context).size.width * 0.75-100,
+                                                  height: 40,
+                                                ),
+                                                Container(
+                                                  height: 30,
 //                                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                              child: Text('月售 ${products[index]['monthlySales']}',style: TextStyle(color: Colors.grey),),
-                                              width: MediaQuery.of(context).size.width * 0.75-100,
-                                            ),
-                                            Container(
-                                              height: 30,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    height: 30,
-                                                    width: MediaQuery.of(context).size.width * 0.75-170,
+                                                  child: Text('月售 ${product['monthlySales']}',style: TextStyle(color: Colors.grey),),
+                                                  width: MediaQuery.of(context).size.width * 0.75-100,
+                                                ),
+                                                Container(
+                                                  height: 30,
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        height: 30,
+                                                        width: MediaQuery.of(context).size.width * 0.75-170,
 //                                                      color: Colors.red,
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Text('￥ ${member==1?products[index]['takeoutMemberFee']:products[index]['takeoutFee']}'),
-                                                  ),
-                                                  GestureDetector(
-                                                    child: Container(
-                                                      width: 30,
-                                                      alignment: Alignment.center,
+                                                        alignment: Alignment.centerLeft,
+                                                        child: Text('￥ ${member==1?product['takeoutMemberFee']:product['takeoutFee']}'),
+                                                      ),
+                                                      GestureDetector(
+                                                        child: Container(
+                                                          width: 30,
+                                                          alignment: Alignment.center,
 //                                                    height: 40,
 //                                                    color: Colors.red,
-                                                      height: 30,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(image: AssetImage('images/add.png')),
-                                                      ),
-                                                    ),
-                                                    onTap: (){
-                                                      Product buy = new Product(
-                                                        products[index]['takeoutId'],
-                                                        products[index]['taketoutName'],
-                                                        double.parse(products[index]['takeoutFee'].toString()),
-                                                        double.parse(products[index]['takeoutMemberFee'].toString()),
-                                                        1,
-                                                        products[index]['takeoutThumbnail'],
-                                                      );
-                                                      addBuy(buy);
-                                                      price += double.parse(member==1?products[index]['takeoutMemberFee'].toString():products[index]['takeoutFee'].toString());
-                                                      showCart();
-                                                    },
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),)
-                                  ],
-                                ),
-                              );
-                            })
+                                                          height: 30,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(image: AssetImage('images/add.png')),
+                                                          ),
+                                                        ),
+                                                        onTap: (){
+                                                          Product buy = new Product(
+                                                            product['takeoutId'],
+                                                            product['taketoutName'],
+                                                            double.parse(product['takeoutFee'].toString()),
+                                                            double.parse(product['takeoutMemberFee'].toString()),
+                                                            1,
+                                                            product['takeoutThumbnail'],
+                                                          );
+                                                          addBuy(buy);
+                                                          price += double.parse(member==1?product['takeoutMemberFee'].toString():product['takeoutFee'].toString());
+                                                          showCart();
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),)
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+//                        ListView.builder(
+//                            physics: NeverScrollableScrollPhysics(),
+//                            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+//                            shrinkWrap: true,
+//                            itemCount: products.length,
+//                            itemBuilder: (BuildContext context, int index) {
+//                              return ;
+//                            })
+                        )
                       ],),
                     )
                   ],

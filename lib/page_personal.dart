@@ -160,29 +160,39 @@ class _PersonalPage extends State<PersonalPage> {
                       ),
                     ],
                   )),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey[300],
-                          blurRadius: 2.0,
-                          spreadRadius: 1.0,
-                          offset: Offset(-1.0, 1.0),
-                        )
-                      ],
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 130,
+                color: Colors.white,
+                child: Stack(
+
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment(1, 1),
+                      height: 65,
+                      color: Color.fromRGBO(243, 200, 70, 1),
+                    ),
+                    Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0),child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[300],
+                              blurRadius: 2.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(-1.0, 1.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
 //                color: Colors.white,
 //                  height: 120,
-                  width: MediaQuery.of(context).size.width - 20,
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: Row(
-                    children: <Widget>[
-                      holdType == 2
-                          ? Container()
-                          : Container(
+                      width: MediaQuery.of(context).size.width - 20,
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      child: Row(
+                        children: <Widget>[
+                          holdType == 2
+                              ? Container()
+                              : Container(
                               width: MediaQuery.of(context).size.width * 1 / 3 -
                                   10,
                               height: 80,
@@ -196,7 +206,7 @@ class _PersonalPage extends State<PersonalPage> {
                                     disabledColor: Colors.white,
                                     child: Image(
                                       image:
-                                          AssetImage('images/homemember.png'),
+                                      AssetImage('images/homemember.png'),
                                       width: 50,
                                       height: 50,
                                     ),
@@ -204,48 +214,50 @@ class _PersonalPage extends State<PersonalPage> {
                                   Text('家庭成员')
                                 ],
                               )),
-                      Container(
-                          width: MediaQuery.of(context).size.width * 1 / 3 - 10,
-                          height: 80,
-                          child: Column(
-                            children: <Widget>[
-                              FlatButton(
-                                onPressed: () {
-                                  checkLogin();
-                                  Navigator.pushNamed(context, "visitorePage");
-                                },
-                                disabledColor: Colors.white,
-                                child: Image(
-                                  image: AssetImage('images/visitors.png'),
-                                  width: 50,
-                                  height: 50,
-                                ),
-                              ),
-                              Text('访客管理')
-                            ],
-                          )),
-                      Container(
-                          width: MediaQuery.of(context).size.width * 1 / 3 - 10,
-                          height: 80,
-                          child: Column(
-                            children: <Widget>[
-                              FlatButton(
-                                onPressed: () {
-                                  checkLogin();
-                                  Navigator.of(context).pushNamed('money');
-                                },
-                                disabledColor: Colors.white,
-                                child: Image(
-                                  image: AssetImage('images/moneypacket.png'),
-                                  width: 50,
-                                  height: 50,
-                                ),
-                              ),
-                              Text('钱包')
-                            ],
-                          )),
-                    ],
-                  ),
+                          Container(
+                              width: MediaQuery.of(context).size.width * 1 / 3 - 10,
+                              height: 80,
+                              child: Column(
+                                children: <Widget>[
+                                  FlatButton(
+                                    onPressed: () {
+                                      checkLogin();
+                                      Navigator.pushNamed(context, "visitorePage");
+                                    },
+                                    disabledColor: Colors.white,
+                                    child: Image(
+                                      image: AssetImage('images/visitors.png'),
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Text('访客管理')
+                                ],
+                              )),
+                          Container(
+                              width: MediaQuery.of(context).size.width * 1 / 3 - 10,
+                              height: 80,
+                              child: Column(
+                                children: <Widget>[
+                                  FlatButton(
+                                    onPressed: () {
+                                      checkLogin();
+                                      Navigator.of(context).pushNamed('money');
+                                    },
+                                    disabledColor: Colors.white,
+                                    child: Image(
+                                      image: AssetImage('images/moneypacket.png'),
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Text('钱包')
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),)
+                  ],
                 ),
               ),
               Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
