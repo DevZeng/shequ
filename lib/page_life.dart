@@ -18,10 +18,33 @@ class Page extends State<LifePage> {
   var _imageUrls = [];
   var shops = [];
   var loc ;
+  bool loading = true;
+  ScrollController scrollController = new ScrollController();
+  int page =1;
 
   Page() {
     getR();
-
+    scrollController.addListener(() {
+//      print(scrollController.offset);
+//      print('heigth:${MediaQuery.of(context).size.height},offset:${scrollController.offset}');
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        setState(() {
+          loading = true;
+        });
+        _retrieveData();
+      }
+    });
+  }
+  void _retrieveData() {
+    Future.delayed(Duration(seconds: 1)).then((e) {
+      addShop(loc['lat'],loc['lon'],page+1);
+      setState(() {
+        page = page+1;
+        loading = false;
+        //重新构建列表
+      });
+    });
   }
 
   void getR() {
@@ -47,6 +70,24 @@ class Page extends State<LifePage> {
 //        print(content['data']);
         setState(() {
           shops = content['data'];
+          loading = false;
+        });
+      }
+    });
+  }
+  void addShop(lat ,lon,page) {
+    String url = api.getTypeHShopMsg+ '?shopType=2&start=$page&lenght=10';
+    if(lat!=0&&lat!=null){
+      url+="&lat=${lat}&log=${lon}";
+    }
+    print(url);
+    Dio().request(url).then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+//        print(content['data']);
+        setState(() {
+          shops.addAll(content['data']);
+          loading = false;
         });
       }
     });
@@ -71,7 +112,7 @@ class Page extends State<LifePage> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: new Container(
+      body: new SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: Column(
             children: <Widget>[
@@ -182,6 +223,15 @@ class Page extends State<LifePage> {
                         );
                       }).toList(),
               ),
+              loading==true?Container(
+                padding: const EdgeInsets.all(16.0),
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 24.0,
+                    height: 24.0,
+                    child: CircularProgressIndicator(strokeWidth: 2.0)
+                ),
+              ):Container()
             ],
           )),
       floatingActionButton: FloatingActionButton(onPressed: () {

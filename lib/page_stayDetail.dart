@@ -19,9 +19,12 @@ class Page extends State<StayDetail> {
   var info = null;
   List<String> remarks = [];
   int member = 0;
+  int total = 0;
   var attrs = [];
   var rooms = [
   ];
+  DateTime intime ;
+  DateTime outtime ;
 
   @override
   void initState() {
@@ -39,6 +42,8 @@ class Page extends State<StayDetail> {
 
     if(parms==null){
       parms = ModalRoute.of(context).settings.arguments;
+      intime = parms['indate'];
+      outtime =parms['outdate'];
       getDetail(parms['id']);
       getRooms(parms['id']);
 //      print(parms);
@@ -217,117 +222,113 @@ class Page extends State<StayDetail> {
               ),
             ),
             Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: rooms.length,
-                  itemBuilder: (context, index) {
-                    return Column(children: <Widget>[GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        height: 102,
-                        color: Colors.white,
-                        child: Row(
-                          children: <Widget>[
-                            GestureDetector(
-                              child: Container(
-                                width: 120,
-                                decoration: BoxDecoration(
+            Column(
+              children: rooms.map((room){
+                return Column(children: <Widget>[GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    height: 102,
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        GestureDetector(
+                          child: Container(
+                            width: 120,
+                            decoration: BoxDecoration(
 //                                  color: Colors.grey,
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            rooms[index]['hotleThumbnail'].split(',')[0]),
-                                        fit: BoxFit.cover)),
-                              ),
-                              onTap: (){
-                                print(rooms[index]['hotleThumbnail'].split(',')[0]);
-                                Navigator.of(context).pushNamed('stayImage',arguments:rooms[index]['hotleThumbnail'].split(',') );
-                              },
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width - 150,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        room['hotleThumbnail'].split(',')[0]),
+                                    fit: BoxFit.cover)),
+                          ),
+                          onTap: (){
+                            print(room['hotleThumbnail'].split(',')[0]);
+                            Navigator.of(context).pushNamed('stayImage',arguments:room['hotleThumbnail'].split(',') );
+                          },
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width - 150,
 //                              color: Colors.blue,
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
 //                                    color: Colors.amber,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(child: Text(
-                                          rooms[index]['hotleName'],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16),
-                                        ),width: MediaQuery.of(context).size.width *0.8 - 165,),
-                                        Container(
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            '¥ ${member==1?rooms[index]['hotleMemberPrice']:rooms[index]['hotlePrice']}',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 18,color: Colors.red),
-                                          ),
-                                          width: MediaQuery.of(context).size.width *0.2,
-                                        )
-                                      ],
-                                    ),
-                                    width:
-                                    MediaQuery.of(context).size.width - 150,
-                                    padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(child: Text(
+                                      room['hotleName'],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16),
+                                    ),width: MediaQuery.of(context).size.width *0.8 - 165,),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        '¥ ${member==1?room['hotleMemberPrice']:room['hotlePrice']}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18,color: Colors.red),
+                                      ),
+                                      width: MediaQuery.of(context).size.width *0.2,
+                                    )
+                                  ],
+                                ),
+                                width:
+                                MediaQuery.of(context).size.width - 150,
+                                padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
 
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(15,0, 2, 0),
-                                    width:
-                                    MediaQuery.of(context).size.width - 150,
-                                    child: Text(rooms[index]['hotleAttribute']),
-                                    height: 30,
-                                  ),
-                                  Container(child: Row(
-                                    children: <Widget>[Container(
-                                      alignment: Alignment(-1, 1),
-                                      width:
-                                      40,
-                                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '有房',
-                                          style: TextStyle(fontSize: 12),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.yellow, width: 1)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(15,0, 2, 0),
+                                width:
+                                MediaQuery.of(context).size.width - 150,
+                                child: Text(room['hotleAttribute']),
+                                height: 30,
+                              ),
+                              Container(child: Row(
+                                children: <Widget>[Container(
+                                  alignment: Alignment(-1, 1),
+                                  width:
+                                  40,
+                                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '有房',
+                                      style: TextStyle(fontSize: 12),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.yellow, width: 1)),
 //                                      height: 20,
 //                                      width: 60,
-                                      ),
-                                    )],
-                                  ),width: MediaQuery.of(context).size.width - 150,)
-                                ],
-                              ),
-                            ),
-                          ],
+                                  ),
+                                )],
+                              ),width: MediaQuery.of(context).size.width - 150,)
+                            ],
+                          ),
                         ),
-                      ),
-                      onTap: () {
+                      ],
+                    ),
+                  ),
+                  onTap: () {
 //                        print(rooms[0]);
-                        Navigator.of(context).pushNamed('stayOrder',arguments: {
-                          'id':info['shopId'],
-                          'roomid':rooms[index]['hotleId'],
-                          'name':rooms[index]['hotleName'],
-                          'indate':parms['indate'],
-                          'outdate':parms['outdate'],
-                          'livenum':rooms[index]['hotleNum'],
-                          'exist':rooms[index]['ifExistRoom']==null?1:rooms[index]['ifExistRoom'],
-                          'price':rooms[index]['hotlePrice'],
-                          'memberPrice':rooms[index]['hotleMemberPrice']
-                        });
-                      },
-                    ),Divider(height: 1,)],);
-                  }),
+                    Navigator.of(context).pushNamed('stayOrder',arguments: {
+                      'id':info['shopId'],
+                      'roomid':room['hotleId'],
+                      'name':room['hotleName'],
+                      'indate':parms['indate'],
+                      'outdate':parms['outdate'],
+                      'livenum':room['hotleNum'],
+                      'exist':room['ifExistRoom']==null?1:room['ifExistRoom'],
+                      'price':room['hotlePrice'],
+                      'memberPrice':room['hotleMemberPrice']
+                    });
+                  },
+                ),Divider(height: 1,)],);
+              }).toList(),
             )
           ],
         ),
@@ -351,8 +352,21 @@ class Page extends State<StayDetail> {
       }
     });
   }
-  getRooms(id){
+  getRoomsByAttr(id){
     Dio().get(api.getAttribute+"?hotleShopId=${id}").then((response){
+      if(response.statusCode==200){
+        var data = response.data;
+        print(data);
+        if(data['code']==200){
+          setState(() {
+            rooms = data['data'];
+          });
+        }
+      }
+    });
+  }
+  getRooms(id){
+    Dio().get(api.getQianHShopHShopHotel+"?hotleShopId=${id}&hotelOrderInTime=${intime.year}-${intime.month}-${intime.day}&hotelOrderOutTime=${outtime.year}-${outtime.month}-${outtime.day}").then((response){
       if(response.statusCode==200){
         var data = response.data;
         print(data);

@@ -23,6 +23,8 @@ class Page extends State<LifeStorePage> {
   List<String> images = [];
   List<Product> buys = [];
   int member = 0;
+  int page = 1;
+  int total = 0;
 //  var
 
   Page() {
@@ -31,9 +33,9 @@ class Page extends State<LifeStorePage> {
         member = val;
       });
     });
-    Future.delayed(Duration(seconds: 2)).then((e) {
-      print(id);
-    });
+//    Future.delayed(Duration(seconds: 2)).then((e) {
+//      print(id);
+//    });
   }
 
   @override
@@ -156,6 +158,18 @@ class Page extends State<LifeStorePage> {
               itemCount: products.length==0?0:products.length,
               //列表项构造器
               itemBuilder: (BuildContext context, int index) {
+                if(index==products.length-1&&products.length!=total){
+                  _retrieveData();
+                  return Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                        width: 24.0,
+                        height: 24.0,
+                        child: CircularProgressIndicator(strokeWidth: 2.0)
+                    ),
+                  );
+                }
                 return GestureDetector(child: Container(
                   padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
                   color: Colors.white,
@@ -298,10 +312,34 @@ class Page extends State<LifeStorePage> {
           print(content['data']);
           setState(() {
             products = content['data'];
+            total = content['total'];
           });
         }
       });
     }
+  }
+  void _retrieveData() {
+    Future.delayed(Duration(seconds: 2)).then((e) {
+      addProducts(page+1);
+      setState(() {
+        page = page+1;
+        //重新构建列表
+      });
+    });
+  }
+  void addProducts(int page) {
+//    print(products);
+    Dio()
+        .request(api.products + '?storeShopId=$id&start=$page')
+        .then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+        print(content['data']);
+        setState(() {
+          products.addAll(content['data']);
+        });
+      }
+    });
   }
 
   void addBuy(Product product) {

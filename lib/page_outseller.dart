@@ -21,9 +21,33 @@ class Page extends State<OutSellerPage> {
   int sort = 0;
   var shops = [];
   var loc ;
+  int page =1;
+  bool loading = true;
+  ScrollController scrollController = new ScrollController();
 
   Page() {
     getR();
+    scrollController.addListener(() {
+//      print(scrollController.offset);
+//      print('heigth:${MediaQuery.of(context).size.height},offset:${scrollController.offset}');
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        setState(() {
+          loading = true;
+        });
+        _retrieveData();
+      }
+    });
+  }
+  void _retrieveData() {
+    Future.delayed(Duration(seconds: 1)).then((e) {
+      addShop(loc['lat'],loc['lon'],page+1);
+      setState(() {
+        page = page+1;
+        loading = false;
+        //重新构建列表
+      });
+    });
   }
 
   void getR() {
@@ -99,12 +123,16 @@ class Page extends State<OutSellerPage> {
                   FlatButton(onPressed: (){
                     setState(() {
                       sort = 0;
+                      loading = true;
                     });
+                    getShop(loc==null?0:loc['lat'],loc==null?0:loc['lon']);
                   }, child: Text('综合排序',style: TextStyle(color: sort==0?Color.fromRGBO(243, 200, 70, 1):Colors.black),)),
                   FlatButton(onPressed: (){
                     setState(() {
                       sort = 1;
+                      loading = true;
                     });
+                    getShop(loc==null?0:loc['lat'],loc==null?0:loc['lon']);
                   }, child: Text('销量',style: TextStyle(color: sort==1?Color.fromRGBO(243, 200, 70, 1):Colors.black),))
                 ],
               ),
@@ -180,14 +208,23 @@ class Page extends State<OutSellerPage> {
                   ),onTap: (){
                     Navigator.of(context).pushNamed('outsellerDetail',arguments: shops[index]['shopId']);
                   },);
-                })
+                }),
+            loading==true?Container(
+              padding: const EdgeInsets.all(16.0),
+              alignment: Alignment.center,
+              child: SizedBox(
+                  width: 24.0,
+                  height: 24.0,
+                  child: CircularProgressIndicator(strokeWidth: 2.0)
+              ),
+            ):Container()
           ],
         ),
       )
     );
   }
   void getShop(lat , lon) {
-    String url = api.getTypeHShopMsg+ '?shopType=1&start=1&lenght=10';
+    String url = api.getTypeHShopMsg+ '?shopType=1&start=1&lenght=10&sales=$sort';
     if(lat!=0&&lat!=null){
       url+="&lat=${lat}&log=${lon}";
     }
@@ -197,6 +234,22 @@ class Page extends State<OutSellerPage> {
         print(content['data']);
         setState(() {
           shops = content['data'];
+          loading = false;
+        });
+      }
+    });
+  }
+  void addShop(lat , lon,page) {
+    String url = api.getTypeHShopMsg+ '?shopType=1&start=$page&lenght=10';
+    if(lat!=0&&lat!=null){
+      url+="&lat=${lat}&log=${lon}";
+    }
+    Dio().request(url).then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+        print(content['data']);
+        setState(() {
+          shops.addAll(content['data']);
         });
       }
     });

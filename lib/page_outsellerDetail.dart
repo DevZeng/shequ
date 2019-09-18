@@ -50,29 +50,8 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
       });
     });
     _tabController = TabController(length: tabs.length, vsync: this);
-//    AMapLocationClient.startup(new AMapLocationOption(
-//        desiredAccuracy: CLLocationAccuracy.kCLLocationAccuracyHundredMeters))
-//        .catchError((error) {
-//      print(error);
-//    });
 
   }
-//  _checkPersmission() async {
-//    PermissionStatus permission = await PermissionHandler()
-//        .checkPermissionStatus(PermissionGroup.location);
-//    if (permission == PermissionStatus.denied) {
-//      Map<PermissionGroup,
-//          PermissionStatus> permissions = await PermissionHandler()
-//          .requestPermissions([PermissionGroup.location]);
-//      if (permissions[PermissionGroup.location] == PermissionStatus.denied) {
-//
-//      }
-//    }
-//    AMapLocation loc = await AMapLocationClient.getLocation(true);
-//    setState(() {
-//      _loc = loc;
-//    });
-//  }
   getProducts(takeoutCategoryId) {
     String url = api.getClassHShopTakeout+'?takeoutShopId=${id}';
     if(takeoutCategoryId!=0){
@@ -114,539 +93,506 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
 //          backgroundColor: Color.fromRGBO(251, 239, 199, 1),
 //        elevation: 0,
 //      ),
-      body: ListView(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-        children: <Widget>[
-          //商品列表
-          Container(
-              height: 240,
-              color: Colors.white,
-              alignment: Alignment.topCenter,
-              child: Column(children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+                height: 240,
+                color: Colors.white,
+                alignment: Alignment.topCenter,
+                child: Column(children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
 //                  color: Colors.red,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),fit: BoxFit.cover)
-                  ),
-                  child: Stack(
-                    alignment: Alignment(0, 1.6),
-                    children: <Widget>[
-                      Container(
-//                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          width: 80,
-                          height: 80,
-//                color: Colors.red,
-                          child: Image.network(
-                              info == null ? '' : info['shopThumbnail'] ),
-                        ),
-//                color: Colors.red,
-                      )
-                    ],
-                  ),
-                )
-              ])),
-//          Container(
-//            child: Container(
-//              alignment: Alignment.bottomCenter,
-//              child: Container(
-//                width: 80,
-//                height: 80,
-////                color: Colors.red,
-//                child: Image.network(
-//                    info == null ? '' : info['shopThumbnail'] ),
-//              ),
-////                color: Colors.red,
-//            ),
-//            height: 240,
-//            width: double.infinity,
-//            decoration: BoxDecoration(
-//                color: Colors.white,
-//                image: DecorationImage(
-//                    image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),
-//                    fit: BoxFit.cover,
-//                    alignment: Alignment.topCenter)),
-//          ),
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Text(
-                info == null ? '' : info['shopName'],
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-          ),
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Text('评价${info == null ? '' : ''}    月售${info == null ? '' : ''}'),
-            ),
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-          ),
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Text(
-                  '起送￥${info == null ? 0 : info['shopStartFee']}    配送￥${info == null ? 0 : info['shopDeliveryFee']}'),
-            ),
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-          ),
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            child: TabBar(
-              //是否可以滚动
-              controller: _tabController,
-              tabs: tabs.map((item) {
-                return Tab(
-                  text: item,
-                );
-              }).toList(),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height,
-              child: TabBarView(
-            controller: _tabController,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height,
-//                    color: Colors.red,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      height: MediaQuery.of(context).size.height,
-//                      color: Colors.green,
-                      child: ListView.builder(
-                        physics: PageScrollPhysics(),
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          itemCount: types.length,
-                          itemExtent: 50,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(child: Container(
-                              color: types[index]['categoryId']==select?Colors.white:Colors.grey[100],
-                              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                              child: Center(
-                                child: Text(types[index]['categoryName']),
-                              ),
-                            ),onTap: (){
-                              getProducts(types[index]['categoryId']);
-                              setState(() {
-                                select = types[index]['categoryId'];
-                                category = types[index]['categoryName'];
-                              });
-                            },);
-                          }),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(image: NetworkImage(info==null?'':info['shopRotation'].split(',')[0]),fit: BoxFit.cover)
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      color: Colors.white,
-                      height: MediaQuery.of(context).size.height,
-                      child: Column(children: <Widget>[
-                        ListTile(title: Text(category),),
-                        Expanded(child:
-                            SingleChildScrollView(
-                              child: Column(
-                                children: products.map((product){
-                                  return Container(
-                                    width:
-                                    MediaQuery.of(context).size.width * 0.75,
-//                                  color: Colors.deepPurpleAccent,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                          child: Container(
-                                            width: 100,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                image: DecorationImage(image: NetworkImage(product['takeoutThumbnail']),fit: BoxFit.cover)
-                                            ),
-                                          ),),
-                                        Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                          child: Container(
-                                            width: MediaQuery.of(context).size.width * 0.75-120,
-                                            height: 100,
-                                            child: Column(
-                                              children: <Widget>[
-                                                Container(
-                                                  child: Text(product['taketoutName'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
-                                                  width: MediaQuery.of(context).size.width * 0.75-100,
-                                                  height: 40,
-                                                ),
-                                                Container(
-                                                  height: 30,
-//                                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                                  child: Text('月售 ${product['monthlySales']}',style: TextStyle(color: Colors.grey),),
-                                                  width: MediaQuery.of(context).size.width * 0.75-100,
-                                                ),
-                                                Container(
-                                                  height: 30,
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Container(
-                                                        height: 30,
-                                                        width: MediaQuery.of(context).size.width * 0.75-170,
-//                                                      color: Colors.red,
-                                                        alignment: Alignment.centerLeft,
-                                                        child: Text('￥ ${member==1?product['takeoutMemberFee']:product['takeoutFee']}'),
-                                                      ),
-                                                      GestureDetector(
-                                                        child: Container(
-                                                          width: 30,
-                                                          alignment: Alignment.center,
-//                                                    height: 40,
-//                                                    color: Colors.red,
-                                                          height: 30,
-                                                          decoration: BoxDecoration(
-                                                            image: DecorationImage(image: AssetImage('images/add.png')),
-                                                          ),
-                                                        ),
-                                                        onTap: (){
-                                                          Product buy = new Product(
-                                                            product['takeoutId'],
-                                                            product['taketoutName'],
-                                                            double.parse(product['takeoutFee'].toString()),
-                                                            double.parse(product['takeoutMemberFee'].toString()),
-                                                            1,
-                                                            product['takeoutThumbnail'],
-                                                          );
-                                                          addBuy(buy);
-                                                          price += double.parse(member==1?product['takeoutMemberFee'].toString():product['takeoutFee'].toString());
-                                                          showCart();
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),)
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-//                        ListView.builder(
-//                            physics: NeverScrollableScrollPhysics(),
-//                            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-//                            shrinkWrap: true,
-//                            itemCount: products.length,
-//                            itemBuilder: (BuildContext context, int index) {
-//                              return ;
-//                            })
+                    child: Stack(
+                      alignment: Alignment(0, 1.6),
+                      children: <Widget>[
+                        Container(
+//                        alignment: Alignment.bottomCenter,
+                          child: Container(
+                            width: 80,
+                            height: 80,
+//                color: Colors.red,
+                            child: Image.network(
+                                info == null ? '' : info['shopThumbnail'] ),
+                          ),
+//                color: Colors.red,
                         )
-                      ],),
-                    )
-                  ],
+                      ],
+                    ),
+                  )
+                ])),
+            Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Text(
+                  info == null ? '' : info['shopName'],
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.fromLTRB(0, 3, 0, 0)),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            ),
+            Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Text('评价${info == null ? '' : ''}    月售${info == null ? '' : ''}'),
+              ),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            ),
+            Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Text(
+                    '起送￥${info == null ? 0 : info['shopStartFee']}    配送￥${info == null ? 0 : info['shopDeliveryFee']}'),
+              ),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            ),
+            Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: TabBar(
+                //是否可以滚动
+                controller: _tabController,
+                tabs: tabs.map((item) {
+                  return Tab(
+                    text: item,
+                  );
+                }).toList(),
+              ),
+            ),
+            Container(
+            height: MediaQuery.of(context).size.height,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
                     Container(
-                      color: Colors.white,
-                      height: 120,
+                      height: double.infinity,
+//                    color: Colors.red,
                       child: Row(
                         children: <Widget>[
                           Container(
-//                            color: Colors.grey,
-                            width: MediaQuery.of(context).size.width*0.4,
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(15, 20, 0, 20),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(comments==null?'':'${comments['comprehensiveScore']}',style: TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.red
-                                    ),),
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          width: MediaQuery.of(context).size.width*0.4-62,
-//                                          color: Colors.red,
-                                          child: Text('商家评价'),
-                                          padding: EdgeInsets.fromLTRB(15, 10, 0, 0),
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context).size.width*0.4-62,
-//                                          color: Colors.red,
-                                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                                          child: SmoothStarRating(
-                                            allowHalfRating: false,
-                                            starCount: 5,
-                                            rating: comments==null?0:comments['comprehensiveScore'],
-                                            size: 14.0,
-                                            color: Colors.orange,
-                                            borderColor: Colors.orange,
-                                            spacing:0.0
-                                        ),),
-                                      ],
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            height: MediaQuery.of(context).size.height,
+//                      color: Colors.green,
+                            child: ListView.builder(
+                                physics: PageScrollPhysics(),
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                itemCount: types.length,
+                                itemExtent: 50,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(child: Container(
+                                    color: types[index]['categoryId']==select?Colors.white:Colors.grey[100],
+                                    padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                                    child: Center(
+                                      child: Text(types[index]['categoryName']),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
+                                  ),onTap: (){
+                                    getProducts(types[index]['categoryId']);
+                                    setState(() {
+                                      select = types[index]['categoryId'];
+                                      category = types[index]['categoryName'];
+                                    });
+                                  },);
+                                }),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                            width: MediaQuery.of(context).size.width*0.17,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Text('味道'),
-                                ),
-                                Container(
-                                  child: Text(comments==null?'':'${comments['tcommentWd']}',style: TextStyle(fontSize: 24),),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                            width: MediaQuery.of(context).size.width*0.17,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Text('包装'),
-                                ),
-                                Container(
-                                  child: Text(comments==null?'':'${comments['tcommentBz']}',style: TextStyle(fontSize: 24),),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                            width: MediaQuery.of(context).size.width*0.26,
-//                            color: Colors.red,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Text('配送'),
-                                ),
-                                Container(
-                                  child: Text(comments==null?'':'${comments['tcommentPs']}',style: TextStyle(fontSize: 24),),
-                                )
-                              ],
-                            ),
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            color: Colors.white,
+//                      height: MediaQuery.of(context).size.height,
+                            child: Column(children: <Widget>[
+                              ListTile(title: Text(category),),
+                              Expanded(child: ListView.builder(
+                                padding: EdgeInsets.fromLTRB(0 ,0 , 0, 0),
+                                  itemCount: products.length,
+                                  itemBuilder: (context,index){
+                                    return Container(
+                                      width:
+                                      MediaQuery.of(context).size.width * 0.75,
+//                                  color: Colors.deepPurpleAccent,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                            child: Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                  image: DecorationImage(image: NetworkImage(products[index]['takeoutThumbnail']),fit: BoxFit.cover)
+                                              ),
+                                            ),),
+                                          Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                            child: Container(
+                                              width: MediaQuery.of(context).size.width * 0.75-120,
+                                              height: 100,
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Container(
+                                                    child: Text(products[index]['taketoutName'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
+                                                    width: MediaQuery.of(context).size.width * 0.75-100,
+                                                    height: 40,
+                                                  ),
+                                                  Container(
+                                                    height: 30,
+//                                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                                    child: Text('月售 ${products[index]['monthlySales']}',style: TextStyle(color: Colors.grey),),
+                                                    width: MediaQuery.of(context).size.width * 0.75-100,
+                                                  ),
+                                                  Container(
+                                                    height: 30,
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          height: 30,
+                                                          width: MediaQuery.of(context).size.width * 0.75-170,
+//                                                      color: Colors.red,
+                                                          alignment: Alignment.centerLeft,
+                                                          child: Text('￥ ${member==1?products[index]['takeoutMemberFee']:products[index]['takeoutFee']}'),
+                                                        ),
+                                                        GestureDetector(
+                                                          child: Container(
+                                                            width: 30,
+                                                            alignment: Alignment.center,
+//                                                    height: 40,
+//                                                    color: Colors.red,
+                                                            height: 30,
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(image: AssetImage('images/add.png')),
+                                                            ),
+                                                          ),
+                                                          onTap: (){
+                                                            Product buy = new Product(
+                                                              products[index]['takeoutId'],
+                                                              products[index]['taketoutName'],
+                                                              double.parse(products[index]['takeoutFee'].toString()),
+                                                              double.parse(products[index]['takeoutMemberFee'].toString()),
+                                                              1,
+                                                              products[index]['takeoutThumbnail'],
+                                                            );
+                                                            addBuy(buy);
+                                                            price += double.parse(member==1?products[index]['takeoutMemberFee'].toString():products[index]['takeoutFee'].toString());
+                                                            showCart();
+                                                          },
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),)
+                                        ],
+                                      ),
+                                    );
+                                  }))
+                            ],),
                           )
                         ],
                       ),
                     ),
-//                    Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
                     Container(
-                      child: ListView.builder(
-                        padding: EdgeInsets.fromLTRB(0,10, 0, 0),
-                          itemCount: lists.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context,index){
-                            return Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    height: 70,
-                                    color: Colors.white,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(padding: EdgeInsets.fromLTRB(0, 3, 0, 0)),
+                          Container(
+                            color: Colors.white,
+                            height: 120,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+//                            color: Colors.grey,
+                                  width: MediaQuery.of(context).size.width*0.4,
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(15, 20, 0, 20),
                                     child: Row(
                                       children: <Widget>[
                                         Container(
-                                          padding: EdgeInsets.fromLTRB(20 , 10, 10  , 10),
-                                          child: ClipRRect( //圆角图片
-                                            borderRadius: BorderRadius.circular(8),
-                                            child: Image.network(lists[index]['userMsgHead'],
-                                                width: 50,
-                                                height: 50
-                                            ),
-                                          ),
+                                          child: Text(comments==null?'':'${comments['comprehensiveScore']}',style: TextStyle(
+                                              fontSize: 30,
+                                              color: Colors.red
+                                          ),),
                                         ),
-                                        Column(
-                                          children: <Widget>[
-                                            Container(
-                                              height: 35,
-                                              width: MediaQuery.of(context).size.width-80,
-                                              color: Colors.white,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width: MediaQuery.of(context).size.width*0.7-80,
-                                                    child: Text(lists[index]['userMsgNike']),
-                                                    alignment: Alignment.centerLeft,
-                                                  ),
-                                                  Container(
-                                                    alignment: Alignment.centerRight,
-                                                    width: MediaQuery.of(context).size.width*0.3,
-                                                    child: Text(lists[index]['createTime'],style: TextStyle(color: Colors.grey),),
-                                                  )
-                                                ],
+                                        Container(
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                width: MediaQuery.of(context).size.width*0.4-62,
+//                                          color: Colors.red,
+                                                child: Text('商家评价'),
+                                                padding: EdgeInsets.fromLTRB(15, 10, 0, 0),
                                               ),
-                                            ),
-                                            Container(
-                                              height: 35,
-                                              width: MediaQuery.of(context).size.width-80,
-                                              color: Colors.white,
-                                              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                              child: SmoothStarRating(
-                                                  allowHalfRating: false,
-                                                  starCount: 5,
-                                                  rating: (lists[index]['tcommentWd']+lists[index]['tcommentBz']+lists[index]['tcommentPs'])/3,
-                                                  size: 14.0,
-                                                  color: Colors.orange,
-                                                  borderColor: Colors.orange,
-                                                  spacing:0.0
-                                              ),
-                                            )
-                                          ],
+                                              Container(
+                                                width: MediaQuery.of(context).size.width*0.4-62,
+//                                          color: Colors.red,
+                                                padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                                                child: SmoothStarRating(
+                                                    allowHalfRating: false,
+                                                    starCount: 5,
+                                                    rating: comments==null?0:comments['comprehensiveScore'],
+                                                    size: 14.0,
+                                                    color: Colors.orange,
+                                                    borderColor: Colors.orange,
+                                                    spacing:0.0
+                                                ),),
+                                            ],
+                                          ),
                                         )
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(80, 10, 0, 0),
-                                    width: MediaQuery.of(context).size.width,
-//                            height: 80,
-                                    color: Colors.white,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                  width: MediaQuery.of(context).size.width*0.17,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text('味道'),
+                                      ),
+                                      Container(
+                                        child: Text(comments==null?'':'${comments['tcommentWd']}',style: TextStyle(fontSize: 24),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                  width: MediaQuery.of(context).size.width*0.17,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text('包装'),
+                                      ),
+                                      Container(
+                                        child: Text(comments==null?'':'${comments['tcommentBz']}',style: TextStyle(fontSize: 24),),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                  width: MediaQuery.of(context).size.width*0.26,
+//                            color: Colors.red,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text('配送'),
+                                      ),
+                                      Container(
+                                        child: Text(comments==null?'':'${comments['tcommentPs']}',style: TextStyle(fontSize: 24),),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+//                    Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
+                          Container(
+                            child: ListView.builder(
+                                padding: EdgeInsets.fromLTRB(0,10, 0, 0),
+                                itemCount: lists.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context,index){
+                                  return Container(
                                     child: Column(
                                       children: <Widget>[
                                         Container(
-                                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                          width:MediaQuery.of(context).size.width,
-                                          child: Text(lists[index]['tcommentContent']),
+                                          height: 70,
+                                          color: Colors.white,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(20 , 10, 10  , 10),
+                                                child: ClipRRect( //圆角图片
+                                                  borderRadius: BorderRadius.circular(8),
+                                                  child: Image.network(lists[index]['userMsgHead'],
+                                                      width: 50,
+                                                      height: 50
+                                                  ),
+                                                ),
+                                              ),
+                                              Column(
+                                                children: <Widget>[
+                                                  Container(
+                                                    height: 35,
+                                                    width: MediaQuery.of(context).size.width-80,
+                                                    color: Colors.white,
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          width: MediaQuery.of(context).size.width*0.7-80,
+                                                          child: Text(lists[index]['userMsgNike']),
+                                                          alignment: Alignment.centerLeft,
+                                                        ),
+                                                        Container(
+                                                          alignment: Alignment.centerRight,
+                                                          width: MediaQuery.of(context).size.width*0.3,
+                                                          child: Text(lists[index]['createTime'],style: TextStyle(color: Colors.grey),),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: MediaQuery.of(context).size.width-80,
+                                                    color: Colors.white,
+                                                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                                    child: SmoothStarRating(
+                                                        allowHalfRating: false,
+                                                        starCount: 5,
+                                                        rating: (lists[index]['tcommentWd']+lists[index]['tcommentBz']+lists[index]['tcommentPs'])/3,
+                                                        size: 14.0,
+                                                        color: Colors.orange,
+                                                        borderColor: Colors.orange,
+                                                        spacing:0.0
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                         Container(
-                                          height: 150,
+                                          padding: EdgeInsets.fromLTRB(80, 10, 0, 0),
                                           width: MediaQuery.of(context).size.width,
+//                            height: 80,
                                           color: Colors.white,
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: lists[index]['tcommentPicture'].split(',').length,
-                                              itemBuilder: (context,index){
-                                                return Padding(padding: EdgeInsets.fromLTRB(0, 0, 30, 0),child: Container(
-                                                  height: 120,
-                                                  width: 120,
-                                                  decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(lists[index]['tcommentPicture'].split(',')[index]))
-                                                  ),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                                width:MediaQuery.of(context).size.width,
+                                                child: Text(lists[index]['tcommentContent']),
+                                              ),
+                                              Container(
+                                                height: 150,
+                                                width: MediaQuery.of(context).size.width,
+                                                color: Colors.white,
+                                                child: ListView.builder(
+                                                    scrollDirection: Axis.horizontal,
+                                                    itemCount: lists[index]['tcommentPicture'].split(',').length,
+                                                    itemBuilder: (context,index){
+                                                      return Padding(padding: EdgeInsets.fromLTRB(0, 0, 30, 0),child: Container(
+                                                        height: 120,
+                                                        width: 120,
+                                                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(lists[index]['tcommentPicture'].split(',')[index]))
+                                                        ),
 //                        child: ,
-                                                ),);
-                                              }),
-                                        )
+                                                      ),);
+                                                    }),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(height: 1,),
                                       ],
                                     ),
-                                  ),
-                                  Divider(height: 1,),
-                                ],
-                              ),
 //                      height: MediaQuery.of(context).size.height,
-                            );
-                          }),
-                      height: MediaQuery.of(context).size.height-123,
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
-                    child: Column(
+                                  );
+                                }),
+                            height: MediaQuery.of(context).size.height-123,
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
                       children: <Widget>[
                         Container(
-                          child: Text(
-                            '商家信息',
-                            style: TextStyle(fontSize: 20),
+                          color: Colors.white,
+                          padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  '商家信息',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                width: MediaQuery.of(context).size.width,
+                              ),
+                              Container(
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: images.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                        child: Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image:
+                                                  NetworkImage(images[index]),
+                                                  fit: BoxFit.fill)),
+                                        ),
+                                      );}),
+                                height: 80,
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+//                              color: Colors.red,
+                              )
+                            ],
                           ),
-                          width: MediaQuery.of(context).size.width,
+                        ),
+                        Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        Container(
+                          color: Colors.white,
+                          child: ListTile(
+                            leading: Text(
+                              '商家名称',
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            trailing: Text(info == null ? '' : info['shopName']),
+                          ),
                         ),
                         Container(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: images.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                  child: Container(
-                                    width: 80,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image:
-                                            NetworkImage(images[index]),
-                                            fit: BoxFit.fill)),
-                                  ),
-                                );}),
-                          height: 80,
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-//                              color: Colors.red,
-                        )
+                            color: Colors.white,
+                            child: ListTile(
+                              leading: Text(
+                                '商家地址',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                              trailing: Container(
+                                child:
+                                Text(info == null ? '' : info['shopAddress']),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                              ),
+                            )),
+                        Container(
+                          color: Colors.white,
+                          child: ListTile(
+                            leading: Text(
+                              '商家电话',
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            trailing: Text(info == null ? '' : info['shopPhone']),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          child: ListTile(
+                            leading: Text(
+                              '营业时间',
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            trailing:
+                            Text(info == null ? '' : info['shopDoTime']),
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: Text(
-                        '商家名称',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      trailing: Text(info == null ? '' : info['shopName']),
-                    ),
-                  ),
-                  Container(
-                      color: Colors.white,
-                      child: ListTile(
-                        leading: Text(
-                          '商家地址',
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        trailing: Container(
-                          child:
-                          Text(info == null ? '' : info['shopAddress']),
-                          width: MediaQuery.of(context).size.width * 0.4,
-                        ),
-                      )),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: Text(
-                        '商家电话',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      trailing: Text(info == null ? '' : info['shopPhone']),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: Text(
-                        '营业时间',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      trailing:
-                      Text(info == null ? '' : info['shopDoTime']),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ))
-        ],
-//        physics: ScrollPhysics(),
+                  ],
+                ))
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         print(info);

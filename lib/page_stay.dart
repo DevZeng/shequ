@@ -19,6 +19,9 @@ class Page extends State<StayPage> {
   var stores = [];
   var loc;
   ScrollController scrollController = new ScrollController();
+  int total = 0;
+  int page = 1;
+  bool loading = true;
 
   @override
   void initState() {
@@ -30,7 +33,14 @@ class Page extends State<StayPage> {
 //      print('heigth:${MediaQuery.of(context).size.height},offset:${scrollController.offset}');
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        print('bottom');
+        if(total != stores.length){
+          print(total);
+          print(stores.length);
+          setState(() {
+            loading = true;
+          });
+          _retrieveData();
+        }
       }
     });
   }
@@ -289,7 +299,16 @@ class Page extends State<StayPage> {
                           },);
                         }).toList(),
                       ),
-                    )
+                    ),
+                    loading==true?Container(
+                      padding: const EdgeInsets.all(16.0),
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                          width: 24.0,
+                          height: 24.0,
+                          child: CircularProgressIndicator(strokeWidth: 2.0)
+                      ),
+                    ):Container()
                   ],
                 ),
               )
@@ -314,6 +333,43 @@ class Page extends State<StayPage> {
         print(content);
         setState(() {
           stores = content['data'];
+          total = content['total'];
+          loading = false;
+        });
+      }
+    });
+  }
+  void _retrieveData() {
+    if(total!=stores.length){
+      Future.delayed(Duration(seconds: 1)).then((e) {
+        addShop(loc['lat'],loc['lon'],page+1);
+        setState(() {
+          page = page+1;
+          loading = false;
+          //重新构建列表
+        });
+      });
+    }else{
+      setState(() {
+//        page = page+1;
+        loading = false;
+        //重新构建列表
+      });
+    }
+  }
+  void addShop(lat ,lon,page) {
+    String url = api.getTypeHShopMsg+ '?shopType=3&start=$page&lenght=10';
+    if(lat!=0&&lat!=null){
+      url+="&lat=${lat}&log=${lon}";
+    }
+    print(url);
+    Dio().request(url).then((response) {
+      if (response.statusCode == 200) {
+        var content = response.data;
+        print(content);
+        setState(() {
+          stores = content['data'];
+//          total = content['total'];
         });
       }
     });

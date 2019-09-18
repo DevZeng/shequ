@@ -39,6 +39,7 @@ class Api {
   final delHVisitorRoom = host +'appHVisitor/delHVisitorRoom';
   final getOneShopHotel = host +'appHShopHotel/getOneShopHotel';
   final getAttribute = host +'appHShopHotel/getAttribute';
+  final getQianHShopHShopHotel = host +'appHShopHotel/getQianHShopHShopHotel';
   final postHShopHotelOrder = host +'appHShopHotelOrder/postHShopHotelOrder';
   final getHShopHotelOrder = host +'appHShopHotelOrder/getHShopHotelOrder';
   final getHHouseUserFamily = host +'appHHouseUserFamily/getHHouseUserFamily';
