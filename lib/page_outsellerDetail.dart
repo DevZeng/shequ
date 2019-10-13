@@ -94,6 +94,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
 //        elevation: 0,
 //      ),
       body: SingleChildScrollView(
+//        physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: <Widget>[
             Container(
@@ -182,7 +183,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                             height: MediaQuery.of(context).size.height,
 //                      color: Colors.green,
                             child: ListView.builder(
-                                physics: PageScrollPhysics(),
+//                                physics: PageScrollPhysics(),
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 itemCount: types.length,
                                 itemExtent: 50,
@@ -205,7 +206,7 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
                           Container(
                             width: MediaQuery.of(context).size.width * 0.75,
                             color: Colors.white,
-//                      height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height,
                             child: Column(children: <Widget>[
                               ListTile(title: Text(category),),
                               Expanded(child: ListView.builder(

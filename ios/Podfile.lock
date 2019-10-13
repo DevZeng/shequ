@@ -40,7 +40,7 @@ PODS:
 DEPENDENCIES:
   - amap_location (from `.symlinks/plugins/amap_location/ios`)
   - city_pickers (from `.symlinks/plugins/city_pickers/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -66,7 +66,7 @@ EXTERNAL SOURCES:
   city_pickers:
     :path: ".symlinks/plugins/city_pickers/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: ".symlinks/flutter/ios-release"
   flutter_image_compress:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_webview_plugin:

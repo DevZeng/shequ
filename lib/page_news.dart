@@ -39,6 +39,7 @@ class Page extends State<NewsPage> {
     AMapLocationClient.startup(new AMapLocationOption(
         desiredAccuracy: CLLocationAccuracy.kCLLocationAccuracyHundredMeters))
         .catchError((error) {
+          print('locationError');
       print(error);
     });
     _checkPersmission().then((val){
@@ -388,7 +389,7 @@ class Page extends State<NewsPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        print(total);
+        print(_loc.latitude);
       }),
     );
   }

@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'api.dart';
 import 'model.dart';
 import 'page_login.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 //import '';
 
 class addPageInfo extends StatefulWidget {
@@ -331,10 +332,35 @@ class Page extends State<addPageInfo> {
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    _upLoadImage(image);
-    setState(() {
-      _image = image;
+    showModalBottomSheet(context: context, builder: (context){
+      return Column(
+        children: <Widget>[
+          ListTile(title:Text('拍照'),onTap: (){Navigator.of(context).pop(1);},),
+          ListTile(title:Text('相册'),onTap: (){Navigator.of(context).pop(2);}),
+        ],
+      );
+    }).then((val){
+      if(val==null){
+        return ;
+      }
+      if(val==1){
+        ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 60).then((image){
+          FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
+            print('compress');
+            _upLoadImage(newImage);
+          });
+
+        });
+
+      }
+      if(val==2){
+        ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 60).then((image){
+          FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
+            print('compress');
+            _upLoadImage(newImage);
+          });
+        });
+      }
     });
   }
 

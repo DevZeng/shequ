@@ -323,7 +323,7 @@ class Page extends State<ServicePage> {
                   ),
                   Container(child: Text('附近推荐',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),width: MediaQuery.of(context).size.width,padding: EdgeInsets.fromLTRB(15, 15, 15, 0),),
                   Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
-                  Wrap(
+                  lists==null?Container():Wrap(
                     spacing: 8.0, // 主轴(水平)方向间距
                     runSpacing: 8.0, // 纵轴（垂直）方向间距
                     alignment: WrapAlignment.start,
@@ -332,7 +332,7 @@ class Page extends State<ServicePage> {
                       return GestureDetector(child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Container(
                           width: 120,
-                          height: 165,
+                          height: 166,
 //          color: Colors.red,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),

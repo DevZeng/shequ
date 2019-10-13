@@ -301,8 +301,6 @@ class Page extends State<addFamily> {
       }
       if(val==1){
         ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 60).then((image){
-          print('select');
-//          _upLoadImage(image);
           FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
             print('compress');
             _upLoadImage(newImage);
@@ -313,7 +311,10 @@ class Page extends State<addFamily> {
       }
       if(val==2){
         ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 60).then((image){
-          _upLoadImage(image);
+          FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
+            print('compress');
+            _upLoadImage(newImage);
+          });
         });
       }
     });

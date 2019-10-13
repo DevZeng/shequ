@@ -8,6 +8,7 @@ import 'api.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class FamilyDetail extends StatefulWidget {
   @override
@@ -114,7 +115,7 @@ class Page extends State<FamilyDetail> {
           ),
         ),
       ),
-      floatingActionButton: type==1?Container(
+      floatingActionButton: type==1&&info['identity']!=1?Container(
         width: MediaQuery
             .of(context)
             .size
@@ -173,8 +174,36 @@ class Page extends State<FamilyDetail> {
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    _upLoadImage(image);
+    showModalBottomSheet(context: context, builder: (context){
+      return Column(
+        children: <Widget>[
+          ListTile(title:Text('拍照'),onTap: (){Navigator.of(context).pop(1);},),
+          ListTile(title:Text('相册'),onTap: (){Navigator.of(context).pop(2);}),
+        ],
+      );
+    }).then((val){
+      if(val==null){
+        return ;
+      }
+      if(val==1){
+        ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 60).then((image){
+          FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
+            print('compress');
+            _upLoadImage(newImage);
+          });
+
+        });
+
+      }
+      if(val==2){
+        ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 60).then((image){
+          FlutterImageCompress.compressAndGetFile(image.path,image.path).then((newImage){
+            print('compress');
+            _upLoadImage(newImage);
+          });
+        });
+      }
+    });
   }
 
   saveInfo() {

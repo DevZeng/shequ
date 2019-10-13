@@ -42,6 +42,7 @@ class Page extends State<HouseInfoPage> {
 //    });
   }
   getInfos() {
+    List<HouseInfo> infos = [];
     getUser().then((val){
       Dio().get(api.getHHouseUserHold+'?token=$val').then((response){
         var data = response.data;
@@ -63,10 +64,11 @@ class Page extends State<HouseInfoPage> {
               houseInfo.holdDyId = list['holdDyId'];
               houseInfo.id = list['holdId'];
               houseInfo.state = list['holdStatus'];
-              houseInfos.add(houseInfo);
+              infos.add(houseInfo);
             });
           }
           setState(() {
+            houseInfos = infos;
           });
         }
       });
@@ -113,14 +115,14 @@ class Page extends State<HouseInfoPage> {
                       });
                     }),
                       decoration: BoxDecoration(
-                          color: Colors.orange,
+                          color: Color.fromRGBO(243, 200, 70, 1),
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           )
                   ):Container(
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Color.fromRGBO(243, 200, 70, 1),
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         image: DecorationImage(
                             image: NetworkImage(

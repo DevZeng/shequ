@@ -43,13 +43,16 @@ import 'page_addFamily.dart';
 import 'page_stayImage.dart';
 import 'page_show_visitorList.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:amap_location/amap_location.dart';
+//import 'package:amap_base_location/amap_base_location.dart';
+import 'page_location.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
 //  if(Platform.isIOS){
-//    AMapLocationClient.setApiKey("975cc40659857357ff77d093d50ba770");
+    AMapLocationClient.setApiKey("975cc40659857357ff77d093d50ba770");
 //  }
+//  await AMap.init('975cc40659857357ff77d093d50ba770');
   runApp(MyApp());
 }
 
@@ -107,8 +110,6 @@ class _MyApp extends State<MyApp> {
         enableMTA: false);
     var result = await fluwx.isWeChatInstalled();
     print("is installed $result");
-//    bool result = await SyFlutterWechat.register('wx00ce24906ff638d4');
-//    print(result);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -158,7 +159,8 @@ class _MyApp extends State<MyApp> {
         'search':(context)=>SearchPage(),
         'addFamily':(context)=>addFamily(),
         'stayImage':(context)=>StayImagePage(),
-        'showVisitorList':(context)=>showVisitorListPage()
+        'showVisitorList':(context)=>showVisitorListPage(),
+        'location':(context)=>LocationPage()
       },
         localizationsDelegates: [
           //此处
