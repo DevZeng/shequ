@@ -595,9 +595,9 @@ class _OutSellerDetailPage extends State<OutSellerDetailPage>
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        print(info);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: () {
+//        print(info);
+//      }),
     );
   }
 

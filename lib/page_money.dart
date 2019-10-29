@@ -248,10 +248,10 @@ class Page extends State<MoneyPage> {
           ),
         ),
       )),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        print(amount);
-//        fluwx.share(model)
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: () {
+//        print(amount);
+////        fluwx.share(model)
+//      }),
     );
   }
   Future<AlertDialog> myDialog(BuildContext context) {

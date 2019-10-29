@@ -24,9 +24,53 @@ class _family extends State<Family>{
     // TODO: implement initState
     super.initState();
     getUser().then((val){
-
       getHold().then((hold){
-        Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${hold}").then((response){
+        if(hold==null){
+          Fluttertoast.showToast(
+              msg: '请添加住户信息！',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.white,
+              textColor: Colors.black,
+              fontSize: 16.0);
+          Navigator.of(context).pushNamed('listHouseInfo');
+          return;
+//          Dio().get(api.getHHouseUserHold+'?token=$val').then((response){
+//            var data = response.data;
+//            if(data['code']==200){
+//              var listMsg = data['data']['listMsg'];
+//              if(listMsg!=null){
+//                Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${listMsg[0]['holdId']}").then((response){
+//                  if(response.statusCode==200){
+//                    print(response);
+//                    var data = response.data;
+//                    if(data['code']==200){
+//                      setState(() {
+//                        print(data['data']);
+//                        type = listMsg[0]['holdIdentity'];
+//                        parsons = data['data'];
+//                      });
+//                    }else{
+//                      Fluttertoast.showToast(
+//                          msg: data['msg'],
+//                          toastLength: Toast.LENGTH_SHORT,
+//                          gravity: ToastGravity.BOTTOM,
+//                          timeInSecForIos: 1,
+//                          backgroundColor: Colors.white,
+//                          textColor: Colors.black,
+//                          fontSize: 16.0);
+//                      Navigator.of(context).pushNamed('listHouseInfo');
+//                    }
+//                  }
+//                });
+//              }
+//
+//            }
+//          });
+//          return;
+        }
+          Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${hold}").then((response){
           if(response.statusCode==200){
             print(response);
             var data = response.data;
@@ -36,15 +80,49 @@ class _family extends State<Family>{
                 parsons = data['data'];
               });
             }else{
-              Fluttertoast.showToast(
-                  msg: data['msg'],
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  fontSize: 16.0);
+//              Fluttertoast.showToast(
+//                  msg: data['msg'],
+//                  toastLength: Toast.LENGTH_SHORT,
+//                  gravity: ToastGravity.BOTTOM,
+//                  timeInSecForIos: 1,
+//                  backgroundColor: Colors.white,
+//                  textColor: Colors.black,
+//                  fontSize: 16.0);
               Navigator.of(context).pushNamed('listHouseInfo');
+              return;
+//              Dio().get(api.getHHouseUserHold+'?token=$val').then((response){
+//                var data = response.data;
+//                if(data['code']==200){
+//                  var listMsg = data['data']['listMsg'];
+//                  if(listMsg!=null){
+//                    Dio().get(api.getHHouseUserFamily+"?token=${val}&holdId=${listMsg[0]['holdId']}").then((response){
+//                      if(response.statusCode==200){
+//                        print(response);
+//                        var data = response.data;
+//                        if(data['code']==200){
+//                          setState(() {
+//                            print(data['data']);
+//                            type = listMsg[0]['holdIdentity'];
+//                            parsons = data['data'];
+//                          });
+//                        }else{
+//                          Fluttertoast.showToast(
+//                              msg: data['msg'],
+//                              toastLength: Toast.LENGTH_SHORT,
+//                              gravity: ToastGravity.BOTTOM,
+//                              timeInSecForIos: 1,
+//                              backgroundColor: Colors.white,
+//                              textColor: Colors.black,
+//                              fontSize: 16.0);
+//                          Navigator.of(context).pushNamed('listHouseInfo');
+//                        }
+//                      }
+//                    });
+//                  }
+//
+//                }
+//              });
+//              return;
             }
           }
         });

@@ -38,7 +38,7 @@ class _productPage extends State<ProductPage>{
     }
     // TODO: implement build
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){print(_imageUrls);}),
+//      floatingActionButton: FloatingActionButton(onPressed: (){print(_imageUrls);}),
       backgroundColor: Colors.white,
       appBar: AppBar(title: Text('商品详情'),centerTitle: true,elevation: 0,),
       body: SingleChildScrollView(

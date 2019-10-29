@@ -41,7 +41,7 @@ dependencies:
   multi_image_picker: ^4.5.1
   city_pickers: ^0.1.16
   image_picker: ^0.6.1
-  fluwx: ^1.0.4
+  fluwx: ^1.1.1+1
   path_provider: ^1.2.0
   flutter_webview_plugin: ^0.3.7
   amap_location: ^0.2.0

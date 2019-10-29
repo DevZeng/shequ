@@ -448,9 +448,9 @@ class Page extends State<NeedPayPage>
               }),
         ],
       )),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        print(cars);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: (){
+//        print(cars);
+//      }),
     );
   }
   payOrder(int type,int number) {

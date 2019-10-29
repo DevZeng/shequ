@@ -49,9 +49,9 @@ class Page extends State<ReadingPage>{
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        print(news);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: (){
+//        print(news);
+//      }),
     );
   }
   getNews(int id) {

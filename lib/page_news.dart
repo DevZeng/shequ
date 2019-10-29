@@ -388,9 +388,9 @@ class Page extends State<NewsPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        print(_loc.latitude);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: (){
+//        print(_loc.latitude);
+//      }),
     );
   }
 

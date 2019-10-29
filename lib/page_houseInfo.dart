@@ -97,7 +97,6 @@ class Page extends State<HouseInfoPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-//          color: Colors.grey[100],
           child: Column(
             children: <Widget>[
               Container(
@@ -107,7 +106,6 @@ class Page extends State<HouseInfoPage> {
                   child: houseInfos.length==0?Container(
                     width: 120,
                     height: 120,
-//                    color: Colors.red,
                     child:IconButton(icon: Icon(Icons.add,size: 50,), onPressed: (){
                       Navigator.of(context)
                           .pushNamed('addHouseInfo', arguments: new HouseInfo()).then((val){
@@ -215,15 +213,11 @@ class Page extends State<HouseInfoPage> {
                 height: 40.0,
                 child: new RaisedButton(
                   onPressed: () {
-//                    print(_index);
-//                    print(houseInfos[_index].id);
                     Navigator.of(context).pushNamed('addHouseInfo',arguments: houseInfos[_index]).then((val){
                       setState(() {
                         houseInfos[_index].state = 0;
                       });
                     });
-//          print(detailController.text);
-//          print(index);
                   },
                   color: Color.fromRGBO(243, 200, 70, 1),
                   child: new Text("修改",

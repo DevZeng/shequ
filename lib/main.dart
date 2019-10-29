@@ -95,6 +95,7 @@ class _MyApp extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     _initFluwx();
+
     fluwx.responseFromPayment.listen((data) {
       setState(() {
         _result = "${data}";
@@ -102,15 +103,26 @@ class _MyApp extends State<MyApp> {
     });
   }
 
+
   _initFluwx() async {
-    await fluwx.register(
+    await fluwx.registerWxApi(
         appId: "wx00ce24906ff638d4",
         doOnAndroid: true,
         doOnIOS: true,
-        enableMTA: false);
+        universalLink: "https://hy.gzeboat.com/");
     var result = await fluwx.isWeChatInstalled();
     print("is installed $result");
   }
+//  _initFluwx() async {
+//    await fluwx.registerWxApi(appId:"wx00ce24906ff638d4",universalLink:"https://hy.gzeboat.com/");
+////     fluwx.register(
+////        appId: "",
+////        doOnAndroid: true,
+////        doOnIOS: true,
+////        enableMTA: false);
+//    var result = await fluwx.isWeChatInstalled();
+//    print("is installed $result");
+//  }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {}

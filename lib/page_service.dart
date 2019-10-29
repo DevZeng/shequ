@@ -332,7 +332,7 @@ class Page extends State<ServicePage> {
                       return GestureDetector(child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Container(
                           width: 120,
-                          height: 166,
+                          height: 170,
 //          color: Colors.red,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -363,7 +363,7 @@ class Page extends State<ServicePage> {
                                 alignment: Alignment.center,
                                 child: Text(item['shopName'],overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 18),),
                               ),
-                              Container(
+                              Expanded(child: Container(
                                 padding: EdgeInsets.fromLTRB(30, 0, 0, 10),
 //                alignment: Alignment.center,
 //                              color: Colors.red,
@@ -373,7 +373,7 @@ class Page extends State<ServicePage> {
                                     Container(child: Text(getDistance(item['shopDistance']),style: TextStyle(color: Colors.grey,fontSize: 15),))
                                   ],
                                 ),
-                              )
+                              ))
                             ],
                           ),
                         ),),onTap: (){
@@ -422,9 +422,9 @@ class Page extends State<ServicePage> {
                 ],
               ),
             )),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        print(lists);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: (){
+//        print(lists);
+//      }),
     );
   }
 

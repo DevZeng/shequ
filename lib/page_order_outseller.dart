@@ -591,9 +591,9 @@ class _outSellerOrderPage extends State<OutSellerOrderPage>
               })
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        print(unPayOrders[0].store.products[0].number);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: () {
+//        print(unPayOrders[0].store.products[0].number);
+//      }),
     );
   }
 

@@ -556,9 +556,9 @@ class _PersonalPage extends State<PersonalPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.pushNamed(context, "location");
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: () {
+//        Navigator.pushNamed(context, "location");
+//      }),
     );
   }
 

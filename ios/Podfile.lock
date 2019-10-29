@@ -3,11 +3,11 @@ PODS:
     - AMapLocation
     - Flutter
   - AMapFoundation (1.5.7)
-  - AMapLocation (2.6.2):
+  - AMapLocation (2.6.3):
     - AMapFoundation (~> 1.4)
-  - BSGridCollectionViewLayout (1.2.3)
-  - BSImagePicker (2.10.0):
-    - BSGridCollectionViewLayout (= 1.2.3)
+  - BSGridCollectionViewLayout (1.2.5)
+  - BSImagePicker (2.10.3):
+    - BSGridCollectionViewLayout (= 1.2.5)
     - BSImageView (= 1.0.3)
   - BSImageView (1.0.3)
   - city_pickers (0.0.1):
@@ -27,12 +27,12 @@ PODS:
   - Mantle (2.1.0):
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
-  - multi_image_picker (4.5.1):
-    - BSImagePicker (~> 2.10.0)
+  - multi_image_picker (4.5.8):
+    - BSImagePicker (~> 2.10.3)
     - Flutter
   - path_provider (0.0.1):
     - Flutter
-  - permission_handler (3.2.2):
+  - permission_handler (3.3.0):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
@@ -52,7 +52,7 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - AMapFoundation
     - AMapLocation
     - BSGridCollectionViewLayout
@@ -89,23 +89,23 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   amap_location: a3e2a140bb25950d4e97560ce1b00e53a121e4f4
   AMapFoundation: 216d58448c80356434ac4332250a8fdb2f5c4d1e
-  AMapLocation: 89a7e4eb6040d32ba73c77a4966ecc66e46aa7c3
-  BSGridCollectionViewLayout: 568273e113fbc815f868f1898ef0465aee68f955
-  BSImagePicker: fa0c15b6740e8aa7a7b7f0fe38a71ad4cfa0ec4a
+  AMapLocation: dc2c4fde95d72087d73934338160fadc72104bb7
+  BSGridCollectionViewLayout: 333dcb457a5a3bdd9212607ab5756553dcfe06cb
+  BSImagePicker: 07404254f2fcdaf5a2eb403c0f8c337267ce8738
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   city_pickers: b0370f4c35c201723b5b7fcce10ec29b59d5bc35
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
-  fluwx: 19524c5e4c9c539a646407259139c9c1e4eaf9e5
-  image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
+  fluwx: 765c6052398eaf6fe13c73409488b0d0b9d00fd6
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  multi_image_picker: fc88872db7d5fe97fd6ee4529d46fd6cc57e3c86
-  path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
-  permission_handler: d59f41439f5bc6c4d1005f3355e98f05ddc68ece
-  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
+  multi_image_picker: b1f4d88e59966c2083848c605dbe36a5d05a3fb2
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  permission_handler: 67637977b227d62d46bfbf524f335f8568de5a73
+  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
 
-PODFILE CHECKSUM: d231b65d6bea6d24555f84ca7901720538b5791f
+PODFILE CHECKSUM: b18dfa913f83145e53f4b6a99ff5d82288a09bdf
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.8.4

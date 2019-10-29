@@ -278,10 +278,10 @@ class Page extends State<LifeStorePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        print(info);
-//        test();
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: () {
+//        print(info);
+////        test();
+//      }),
     );
   }
 

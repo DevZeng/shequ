@@ -41,18 +41,19 @@ class Page extends State<OpenDoorPage> {
           if(data['code']==200){
             saveMember(data['data']['userMsgType']);
             getHold().then((val){
+              if(val==null){
+                Fluttertoast.showToast(
+                    msg: '请先选择住户',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIos: 1,
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                    fontSize: 16.0);
+                Navigator.of(context).pushNamed('listHouseInfo');
+                return;
+              }
               Dio().get(api.getUserOnekeyDoor+'?holdId=${val}').then((response){
-                if(val==null){
-                  Fluttertoast.showToast(
-                      msg: '请先选择住户',
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIos: 1,
-                      backgroundColor: Colors.white,
-                      textColor: Colors.black,
-                      fontSize: 16.0);
-                  Navigator.of(context).pushNamed('listHouseInfo');
-                }
                 if(response.statusCode==200){
                   var data  = response.data;
                   if(data['code']==200){

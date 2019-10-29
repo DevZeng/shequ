@@ -434,15 +434,15 @@ class _countPage extends State<countPage>{
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        print(store.products[0].name);
-//        products.add({'storeId':1,'storeNum':3});
-//        List store = [];
-//        store.add(6);
-//        var formData =
-//            '{"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjU1MjcyNjIsInVzZXJuYW1lIjoiMTU2MDg0OTc4NDYyMzkzIn0.u2dUcu7rfVqcazNnCbZaUg6KV59XsYshsowEVQRjxp0", "storeId": $store, "store":"$products", "storeIdentity":1, "storeShopId":6, "addressId":"156540640128178"}';
-//        print(formData);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: (){
+//        print(store.products[0].name);
+////        products.add({'storeId':1,'storeNum':3});
+////        List store = [];
+////        store.add(6);
+////        var formData =
+////            '{"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjU1MjcyNjIsInVzZXJuYW1lIjoiMTU2MDg0OTc4NDYyMzkzIn0.u2dUcu7rfVqcazNnCbZaUg6KV59XsYshsowEVQRjxp0", "storeId": $store, "store":"$products", "storeIdentity":1, "storeShopId":6, "addressId":"156540640128178"}';
+////        print(formData);
+//      }),
     );
   }
   getUserAddress() async {

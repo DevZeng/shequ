@@ -234,11 +234,11 @@ class Page extends State<LifePage> {
               ):Container()
             ],
           )),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-//       print(AM)
-        print(shops);
-//        print(_loc.formattedAddress);
-      }),
+//      floatingActionButton: FloatingActionButton(onPressed: () {
+////       print(AM)
+//        print(shops);
+////        print(_loc.formattedAddress);
+//      }),
     );
   }
 
