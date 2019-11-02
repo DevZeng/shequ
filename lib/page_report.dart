@@ -6,6 +6,7 @@ import 'package:dio/dio.dart' ;
 import 'package:path_provider/path_provider.dart';
 import 'model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ReportPage extends StatefulWidget {
@@ -22,7 +23,23 @@ class Page extends State<ReportPage> {
   TextEditingController contentController = new TextEditingController();
   int type = 1 ;
   Api api = new Api();
+  int holdId = 0;
   List<String> imgUrls = [];
+
+  Page() {
+    getHold().then((val){
+      if(val!=null){
+        setState(() {
+          holdId = val;
+        });
+      }
+    });
+  }
+  getHold() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int holdId = prefs.getInt('holdId');
+    return holdId;
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -270,7 +287,10 @@ class Page extends State<ReportPage> {
   }
   void submit() async {
     getUser().then((val){
-      var formData = {"token": val, "complaintContent": contentController.text, "complaintPicture":imgUrls.join(','),"complaintType":type};
+      var formData = {"token": val, "complaintContent": contentController.text, "complaintPicture":imgUrls.join(','),
+        "complaintType":type,
+        "complaintHoldId":holdId
+      };
       Dio().post(api.postHComplaint,data: formData).then((response){
         var data = response.data;
         if(data['code']==200){

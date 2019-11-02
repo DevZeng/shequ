@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RepairPage extends StatefulWidget{
   @override
@@ -22,6 +23,7 @@ class _repairPage extends State<RepairPage>{
   var types = [];
   Api api = new Api();
   String typeName = '';
+  int holdId = 0 ;
   List<String> imgUrls = [];
   TextEditingController titleController = new TextEditingController();
   TextEditingController detailController = new TextEditingController();
@@ -37,6 +39,18 @@ class _repairPage extends State<RepairPage>{
         addressController.text = val;
       });
     });
+    getHold().then((val){
+      if(val!=null){
+        setState(() {
+          holdId=val;
+        });
+      }
+    });
+  }
+  getHold() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int holdId = prefs.getInt('holdId');
+    return holdId;
   }
 //  List<Asset> images = List<Asset>();
   @override
@@ -328,16 +342,19 @@ class _repairPage extends State<RepairPage>{
     }
   }
   getTypes() {
-    Dio().get(api.getAllHRepairType).then((response){
-      if(response.statusCode==200){
-        var data = response.data;
-        if(data['code']==200){
-          setState(() {
-            types = data['data'];
-          });
+    getHold().then((val){
+      Dio().get(api.getAllHRepairType+'holdId=${val}').then((response){
+        if(response.statusCode==200){
+          var data = response.data;
+          if(data['code']==200){
+            setState(() {
+              types = data['data'];
+            });
+          }
         }
-      }
+      });
     });
+
   }
   Future<File> getImageFileFromAssets(Asset image) async {
     print('makefile');
@@ -383,6 +400,7 @@ class _repairPage extends State<RepairPage>{
         "repairMakeTime":"${time.year}-${time.month}-${time.day} ${day.hour}:${day.minute}",
         "repairUserPhone":phoneController.text,
         "repairTypeName":typeName,
+        "repairHoldId":holdId
       };
       print(fromData);
       Dio().post(api.postHRepair,data: fromData).then((response){

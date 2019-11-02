@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'model.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RepairList extends StatefulWidget{
   @override
@@ -17,11 +18,24 @@ class _repairList extends State<RepairList>{
   List<String> status = [
     '预约中','预约成功','预约失败'
   ];
+  int holdId = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getLists();
+    getHold().then((val){
+      if(val!=null){
+        setState(() {
+          holdId = val;
+        });
+      }
+    });
+  }
+  getHold() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int holdId = prefs.getInt('holdId');
+    return holdId;
   }
   @override
   Widget build(BuildContext context) {
@@ -83,8 +97,8 @@ class _repairList extends State<RepairList>{
     );
   }
   getLists() {
-    getUser().then((Val){
-      Dio().get(api.getUserHRepair+"?token=${Val}").then((response){
+    getHold().then((Val){
+      Dio().get(api.getUserHRepair+"?holdId=${Val}").then((response){
         if(response.statusCode==200){
           var data = response.data;
           if(data['code']==200){
