@@ -4,6 +4,7 @@ import 'model.dart';
 import 'package:dio/dio.dart';
 import 'page_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalPage extends StatefulWidget {
   @override
@@ -21,6 +22,12 @@ class _PersonalPage extends State<PersonalPage> {
   Api api = new Api();
   int member = 0;
   int holdType = 0;
+  int holdId = 0 ;
+  getHold() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int holdId = prefs.getInt('holdId');
+    return holdId;
+  }
 
   @override
   void initState() {
@@ -32,6 +39,13 @@ class _PersonalPage extends State<PersonalPage> {
       setState(() {
         holdType = val;
       });
+    });
+    getHold().then((hold){
+      if(hold!=null){
+        setState(() {
+          holdId = holdId;
+        });
+      }
     });
   }
 
@@ -438,7 +452,7 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    holdType == 2
+                    holdId==0||holdType==null||holdType==2
                         ? Container()
                         : GestureDetector(
                       child: Container(
@@ -468,7 +482,7 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    GestureDetector(
+                    holdId==0?Container():GestureDetector(
                       child: Container(
                         height: 55,
                         child: Row(
@@ -496,7 +510,7 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    GestureDetector(
+                    holdId==0?Container():GestureDetector(
                       child: Container(
                         height: 55,
                         child: Row(
@@ -524,7 +538,7 @@ class _PersonalPage extends State<PersonalPage> {
                     Divider(
                       height: 1,
                     ),
-                    GestureDetector(
+                    holdId==0?Container():GestureDetector(
                       child: Container(
                         height: 55,
                         child: Row(
