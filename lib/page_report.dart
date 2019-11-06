@@ -50,7 +50,7 @@ class Page extends State<ReportPage> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Container(
+      body: SingleChildScrollView(
 //        padding: EdgeInsets.fromLTRB(15, 0 , 15, 0),
         child: Column(
           children: <Widget>[
@@ -291,6 +291,7 @@ class Page extends State<ReportPage> {
         "complaintType":type,
         "complaintHoldId":holdId
       };
+      print(formData);
       Dio().post(api.postHComplaint,data: formData).then((response){
         var data = response.data;
         if(data['code']==200){

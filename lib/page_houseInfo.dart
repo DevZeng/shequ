@@ -189,7 +189,7 @@ class Page extends State<HouseInfoPage> {
                   }),
                 ),
               ),
-              houseInfos.length<=1&&defaultHold!=null?Container():Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
+              defaultHold!=null?Container():Padding(padding: EdgeInsets.fromLTRB(15, 20, 15, 0),child:Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 40.0,
                 child: new RaisedButton(
@@ -197,7 +197,7 @@ class Page extends State<HouseInfoPage> {
                     switchHold(houseInfos[_index]);
                   },
                   color: Color.fromRGBO(243, 200, 70, 1),
-                  child: new Text("切换",
+                  child: new Text(houseInfos.length<=1?'选择':"切换",
                       style: TextStyle(
                         color: Colors.white,
                       )),

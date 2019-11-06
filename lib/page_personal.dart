@@ -41,9 +41,10 @@ class _PersonalPage extends State<PersonalPage> {
       });
     });
     getHold().then((hold){
+//      print(hold);
       if(hold!=null){
         setState(() {
-          holdId = holdId;
+          holdId = hold;
         });
       }
     });
@@ -571,7 +572,7 @@ class _PersonalPage extends State<PersonalPage> {
         ),
       ),
 //      floatingActionButton: FloatingActionButton(onPressed: () {
-//        Navigator.pushNamed(context, "location");
+//        print(holdId);
 //      }),
     );
   }

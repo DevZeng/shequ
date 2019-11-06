@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RepairPage extends StatefulWidget{
   @override
@@ -89,8 +90,8 @@ class _repairPage extends State<RepairPage>{
                         scrollDirection: Axis.horizontal,
 //                      itemExtent: 25,
                         itemBuilder: (context,index){
-                          return Padding(padding: EdgeInsets.fromLTRB(0, 10, 0,10),child: Container(
-                            width: MediaQuery.of(context).size.width*0.16,
+                          return Padding(padding: EdgeInsets.fromLTRB(0, 10, 5,10),child: Container(
+//                            width: MediaQuery.of(context).size.width*0.16,
                             child: RaisedButton(
                               onPressed: (){setState(() {
                                 type = types[index]['repairTypeId'];
@@ -343,7 +344,9 @@ class _repairPage extends State<RepairPage>{
   }
   getTypes() {
     getHold().then((val){
-      Dio().get(api.getAllHRepairType+'holdId=${val}').then((response){
+      String url = api.getAllHRepairType+'?holdId=${val}';
+      print(url);
+      Dio().get(url).then((response){
         if(response.statusCode==200){
           var data = response.data;
           if(data['code']==200){
@@ -400,6 +403,7 @@ class _repairPage extends State<RepairPage>{
         "repairMakeTime":"${time.year}-${time.month}-${time.day} ${day.hour}:${day.minute}",
         "repairUserPhone":phoneController.text,
         "repairTypeName":typeName,
+        "repairContent":detailController.text,
         "repairHoldId":holdId
       };
       print(fromData);
@@ -408,7 +412,24 @@ class _repairPage extends State<RepairPage>{
           var data = response.data;
           print(data);
           if(data['code']==200){
-
+//            Fluttertoast.showToast(
+//                msg: "保修成功！",
+//                toastLength: Toast.LENGTH_SHORT,
+//                gravity: ToastGravity.BOTTOM,
+//                timeInSecForIos: 1,
+//                backgroundColor: Colors.white,
+//                textColor: Colors.black,
+//                fontSize: 16.0);
+            Navigator.pop(context);
+          }else{
+            Fluttertoast.showToast(
+                msg: data['msg'],
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                fontSize: 16.0);
           }
         }
       });
