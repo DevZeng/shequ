@@ -38,11 +38,12 @@ class NewsWebPageState extends State<NewsWebPage> {
 
   // 插件提供的对象，该对象用于WebView的各种操作
   FlutterWebviewPlugin flutterWebViewPlugin = new FlutterWebviewPlugin();
-
+  
   NewsWebPageState(this.news_url, this.title);
 
   @override
   void initState() {
+//    onUrlChanged =
     onStateChanged =
         flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
           // state.type是一个枚举类型，取值有：WebViewState.shouldStart, WebViewState.startLoad, WebViewState.finishLoad
@@ -73,6 +74,14 @@ class NewsWebPageState extends State<NewsWebPage> {
               break;
           }
         });
+    onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
+      print(url);
+      if(url.matchAsPrefix("weixin://")==true){
+        print('weixin');
+      }else{
+        print('http');
+      }
+    });
   }
 
   // 解析WebView中的数据

@@ -4,6 +4,7 @@ class Api {
   final getHRotation = host + 'appHRotation/getHRotation'; //获取轮播
   static final sendMessage = host + 'appHUserAccount/sendMessage';
   static final register = host + 'appHUserAccount/postHUserAccount';
+  static final putHUserPwd = host + 'appHUserAccount/putHUserPwd';
   static final login = host + 'appHUserAccount/postLogin';
   final informationClass = host + 'appHInformationClass/getInformationClass';
   final information = host + 'appHInformation/getHInformation';
@@ -66,4 +67,5 @@ class Api {
   final getHVisitor = host +'appHVisitor/getHVisitor';
   final passVisitorRoom = host +'appHVisitor/passVisitorRoom';
   final searchHotel = host +'appHShopHotel/searchHotel';
+  final getOneUserHold = host +'appHHouseUserHold/getOneUserHold';
 }

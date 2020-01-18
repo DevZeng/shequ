@@ -31,8 +31,13 @@ class Page extends State<NewsPage> {
   AMapLocation _loc ;
   String wicon = 'images/weather/999.png';
   String weather = '';
+  String url = 'weixin://wap/pay?prepayid%3Dwx1816530649113367206df6211552649900&package=888735486&noncestr=1579337587&sign=51054e513126d4509a84a877da34eb51';
 
   Page() {
+    if(url.compareTo('weixin://')==1){
+      url = url.replaceAll('weixin://wap/pay?', '');
+      print(url.replaceAll('%3D','='));
+    }
     getR();
     getIconsData();
     getNewsData(1, 0);
@@ -76,7 +81,7 @@ class Page extends State<NewsPage> {
         var content = response.data;
         setState(() {
           _imageUrls = content['data'];
-          print(_imageUrls);
+//          print(_imageUrls);
         });
       }
     });
@@ -118,7 +123,7 @@ class Page extends State<NewsPage> {
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
-        print(content);
+//        print(content);
         setState(() {
           _news = content['data'];
           total = content['total'];
@@ -131,11 +136,11 @@ class Page extends State<NewsPage> {
     if (type != 0) {
       url = api.information + '?start=$page&inforClassId=$type&length=10';
     }
-    print(url);
+//    print(url);
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
-        print(content);
+//        print(content);
         setState(() {
           _news.addAll(content['data']);
 //          total = content['total'];
@@ -153,7 +158,7 @@ class Page extends State<NewsPage> {
     Dio().request(url).then((response) {
       if (response.statusCode == 200) {
         var content = response.data;
-        print(content);
+//        print(content);
         setState(() {
           _news.addAll(content['data']);
         });

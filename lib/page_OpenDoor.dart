@@ -18,6 +18,7 @@ class OpenDoorPage extends StatefulWidget {
 class Page extends State<OpenDoorPage> {
   var _imageUrls = [] ;
   Api api = new Api();
+  int hold=0;
   var lists = [] ;
   var colors = [
     Color.fromRGBO(230,33,24 ,100),
@@ -59,6 +60,7 @@ class Page extends State<OpenDoorPage> {
                   if(data['code']==200){
                     setState(() {
                       lists = data['data'];
+                      hold = val;
                     });
                   }else{
                     Fluttertoast.showToast(
@@ -266,7 +268,8 @@ class Page extends State<OpenDoorPage> {
   }
   openDoor(number){
     getUser().then((val){
-      Dio().get(api.OpenDoor+"?token=${val}&DriveNumber=${number}").then((response){
+      print(hold);
+      Dio().get(api.OpenDoor+"?token=${val}&DriveNumber=${number}&holdId=${hold}").then((response){
         print(response);
         if(response.statusCode==200){
           var data = response.data;

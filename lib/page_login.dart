@@ -108,17 +108,37 @@ class LoginPageState extends State<LoginPage>{
                 padding: EdgeInsets.fromLTRB(15, 20, 0, 15),
               ),
               Container(
-                  alignment: Alignment.bottomRight,
+                width: MediaQuery.of(context).size.width,
+//                  color: Colors.red,
+//                  alignment: Alignment.bottomRight,
                   padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                  child: FlatButton(
-                    child: Text(
-                      '注册',
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                    onPressed: (){
-                      Navigator.pushNamed(context, "register");
-                    },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+//                    direction: Axis.horizontal,
+//                    direction: AxisDirection.right,
+//                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text(
+                          '忘记密码',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
+                        onPressed: (){
+                          Navigator.pushNamed(context, "forget");
+                        },
+                      ),
+                      FlatButton(
+                        child: Text(
+                          '注册',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
+                        onPressed: (){
+                          Navigator.pushNamed(context, "register");
+                        },
+                      )
+                    ],
                   ))
             ],
           ),

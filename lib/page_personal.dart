@@ -29,23 +29,55 @@ class _PersonalPage extends State<PersonalPage> {
     return holdId;
   }
 
+  getUserHold() async{
+    print('getUserHold');
+    getUser().then((token){
+//      print(token);
+      Dio().get(api.getOneUserHold + '?token=$token').then((response) {
+        var data = response.data;
+        if (data['code'] == 200) {
+//          print(data['data']);
+          if(data['data']!=null){
+//            print('d');
+            saveXq(data['data']['holdXqId']);
+            saveHold(data['data']['holdId']);
+            saveHoldType(data['data']['holdIdentity']);
+            saveAddress("${data['data']['holdXqName']}${data['data']['holdLdName']}${data['data']['holdDyName']}");
+          }
+          //
+//          if (element['holdStatus']==1){
+//            saveXq(element['holdXqId']);
+//            saveHold(element['holdId']);
+//            saveHoldType(element['holdIdentity']);
+//            saveAddress("${element['holdXqName']}${element['holdLdName']}${element['holdDyName']}");
+//            break;
+//          }
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUserInfo();
-    getInfos();
+//    getInfos();
+//    getUserHold();
     getHoldType().then((val) {
       setState(() {
         holdType = val;
       });
     });
+
     getHold().then((hold){
 //      print(hold);
       if(hold!=null){
         setState(() {
           holdId = hold;
         });
+      }else{
+        getUserHold();
       }
     });
   }

@@ -46,6 +46,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:amap_location/amap_location.dart';
 //import 'package:amap_base_location/amap_base_location.dart';
 import 'page_location.dart';
+import 'page_forget.dart';
 
 void main() async {
 //  debugPrint('main方法运行');
@@ -172,7 +173,8 @@ class _MyApp extends State<MyApp> {
         'addFamily':(context)=>addFamily(),
         'stayImage':(context)=>StayImagePage(),
         'showVisitorList':(context)=>showVisitorListPage(),
-        'location':(context)=>LocationPage()
+        'location':(context)=>LocationPage(),
+        'forget':(context)=>ForgetPage()
       },
         localizationsDelegates: [
           //此处
