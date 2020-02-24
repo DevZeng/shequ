@@ -31,13 +31,9 @@ class Page extends State<NewsPage> {
   AMapLocation _loc ;
   String wicon = 'images/weather/999.png';
   String weather = '';
-  String url = 'weixin://wap/pay?prepayid%3Dwx1816530649113367206df6211552649900&package=888735486&noncestr=1579337587&sign=51054e513126d4509a84a877da34eb51';
 
   Page() {
-    if(url.compareTo('weixin://')==1){
-      url = url.replaceAll('weixin://wap/pay?', '');
-      print(url.replaceAll('%3D','='));
-    }
+
     getR();
     getIconsData();
     getNewsData(1, 0);

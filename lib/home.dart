@@ -29,7 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
   String user;
 
   _MyHomePageState() {
-    _retrieveData();
     getUser();
     _pageList = [
       new NewsPage(),
@@ -44,51 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print('update');
     super.didUpdateWidget(oldWidget);
   }
-  void _retrieveData() {
-    assert((){
-      // Do something for debug
-      print('这是asset下的输出内容');
 
-      return true;
-    }());
-    Future.delayed(Duration(seconds: 1)).then((e) {
-      print('debug');
-      Dio().request('http://app.ankekan.com/getdebug').then((response) {
-        if (response.statusCode == 200) {
-          print(response);
-          var data = response.data;
-          if(data['return_code']=='OK'){
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (_) => new Dialog(
-                  child: new Container(
-                    alignment: FractionalOffset.center,
-                    height: 80.0,
-//              padding: const EdgeInsets.all(20.0),
-                    child: new Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-//                  new CircularProgressIndicator(),
-                        Text("当前版本为Debug版本，请更新到Release版本",maxLines: 3,overflow: TextOverflow.fade,)
-                      ],
-                    ),
-                  ),
-                ));
-          }else{
-            print('FAIL');
-          }
-
-        }else{
-          print('dafd');
-        }
-      });
-
-//      setState(() {
-//        //重新构建列表
-//      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

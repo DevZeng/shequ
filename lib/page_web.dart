@@ -2,7 +2,12 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'dart:io';
+import 'package:android_intent/android_intent.dart';
 
+import 'package:fluwx/fluwx.dart' as fluwx;
+
+import 'package:fluttertoast/fluttertoast.dart';
 /**
  * @Description  新闻网页，h5
  * @Author  zhibuyu
@@ -44,6 +49,32 @@ class NewsWebPageState extends State<NewsWebPage> {
   @override
   void initState() {
 //    onUrlChanged =
+    fluwx.responseFromPayment.listen((data) {
+
+      if(data.errCode==0){
+        Fluttertoast.showToast(
+            msg: "支付成功 ！",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0);
+        flutterWebViewPlugin.goBack();
+      }else{
+        Fluttertoast.showToast(
+            msg: "取消支付！",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.white,
+            textColor: Colors.black,
+            fontSize: 16.0);
+      }
+      setState(() {
+//        code = data.errCode;
+      });
+    });
     onStateChanged =
         flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
           // state.type是一个枚举类型，取值有：WebViewState.shouldStart, WebViewState.startLoad, WebViewState.finishLoad
@@ -74,12 +105,23 @@ class NewsWebPageState extends State<NewsWebPage> {
               break;
           }
         });
+//    flutterWebViewPlugin.launch()
     onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
-      print(url);
-      if(url.matchAsPrefix("weixin://")==true){
-        print('weixin');
-      }else{
-        print('http');
+
+      if(url.compareTo('weixin://wap/pay')==1){
+        flutterWebViewPlugin.stopLoading();
+        if (Platform.isAndroid) {
+          AndroidIntent intent = AndroidIntent(
+            action: 'action_view',
+            data: url,
+          );
+          intent.launch();
+          return true;
+        }
+        else{
+
+        }
+//        flutterWebViewPlugin.stopLoading();
       }
     });
   }
@@ -94,7 +136,6 @@ class NewsWebPageState extends State<NewsWebPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(news_url);
     List<Widget> titleContent = [];
     titleContent.add(new Text(
       title,overflow: TextOverflow
