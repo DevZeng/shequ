@@ -68,6 +68,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
+    - images/wb_his.png
     - images/weather.png
     - images/search.png
     - images/open_door_background.png

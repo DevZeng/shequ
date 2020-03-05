@@ -118,16 +118,6 @@ class Page extends State<ServicePage> {
                           Text('搜索周边服务')
                         ],
                       ),
-//                    child: TextField(
-//                      decoration: InputDecoration(
-//                          contentPadding: new EdgeInsets.only(left: 0.0),
-//                          border: InputBorder.none,
-//                          icon: Icon(Icons.search),
-//                          hintText: "搜索周边服务",
-//                          hintStyle: new TextStyle(
-//                              fontSize: 14, color: Colors.grey)),
-//                      style: new TextStyle(fontSize: 14, color: Colors.grey),
-//                    ),
                     ),
                     onTap: (){
                       checkLogin();
@@ -305,7 +295,7 @@ class Page extends State<ServicePage> {
                                 },
                                 disabledColor: Colors.white,
                                 child: Image(
-                                  image: AssetImage('images/outseller.png'),
+                                  image: AssetImage('images/wb_his.png'),
                                   width: 50,
                                 ),
                                 shape: CircleBorder(
